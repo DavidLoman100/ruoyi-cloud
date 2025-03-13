@@ -1,0 +1,14 @@
+#spring:
+#  datasource:
+#    dynamic:
+#      primary: master   # 设置主数据源名称
+#      datasource:
+#        master:
+#          url: jdbc:mysql://192.168.1.100:3306/ry-cloud?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+#          username: root
+#          password: 404040
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+#
+#mybatis-plus:
+#  mapper-locations: classpath*:mapper/system/*.xml
+#  type-aliases-package: com.ruoyi.system.domain

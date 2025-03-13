@@ -2,12 +2,14 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.SysConfig;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 参数配置 数据层
  * 
  * @author ruoyi
  */
+@Mapper
 public interface SysConfigMapper
 {
     /**
@@ -16,7 +18,7 @@ public interface SysConfigMapper
      * @param config 参数配置信息
      * @return 参数配置信息
      */
-    public SysConfig selectConfig(SysConfig config);
+    public SysConfig selectConfig( SysConfig config);
 
     /**
      * 通过ID查询配置
