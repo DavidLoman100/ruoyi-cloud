@@ -85,17 +85,4 @@ public class PageDomain
         }
     }
 
-    public Boolean getReasonable()
-    {
-        if (StringUtils.isNull(reasonable))
-        {
-            return Boolean.TRUE;
-        }
-        return reasonable;
-    }
-
-    public void setReasonable(Boolean reasonable)
-    {
-        this.reasonable = reasonable;
-    }
 }

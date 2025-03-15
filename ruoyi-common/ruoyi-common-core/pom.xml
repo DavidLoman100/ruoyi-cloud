@@ -47,10 +47,11 @@
             <artifactId>transmittable-thread-local</artifactId>
         </dependency>
 
-        <!-- Pagehelper -->
+        <!-- mybatisPlus -->
         <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.1</version>
         </dependency>
 
         <!-- Hibernate Validator -->
