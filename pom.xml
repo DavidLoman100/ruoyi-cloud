@@ -32,7 +32,6 @@
         <jjwt.version>0.9.1</jjwt.version>
         <minio.version>8.2.2</minio.version>
         <poi.version>4.1.2</poi.version>
-        <springdoc.version>1.6.9</springdoc.version>
         <transmittable-thread-local.version>2.14.4</transmittable-thread-local.version>
 
         <!-- override dependency version -->
@@ -118,13 +117,6 @@
                 <groupId>com.github.tobato</groupId>
                 <artifactId>fastdfs-client</artifactId>
                 <version>${tobato.version}</version>
-            </dependency>
-
-            <!-- Springdoc webmvc 依赖配置 -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${springdoc.version}</version>
             </dependency>
 
             <!-- 验证码 -->
