@@ -3,7 +3,10 @@ server:
   port: 8080
 
 # Spring
-spring: 
+spring:
+  main:
+    # gateway基于 WebFlux 的响应式 Web 应用程序
+    web-application-type: reactive
   application:
     # 应用名称
     name: ruoyi-gateway
