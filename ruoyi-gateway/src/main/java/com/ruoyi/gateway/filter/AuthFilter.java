@@ -47,7 +47,9 @@ public class AuthFilter implements GlobalFilter, Ordered
 
         String url = request.getURI().getPath();
         // 跳过不需要验证的路径
-        if (StringUtils.matches(url, ignoreWhite.getWhites()))
+        //TODO 暂时关闭uri的校验
+//        if (StringUtils.matches(url, ignoreWhite.getWhites()))
+        if (true)
         {
             return chain.filter(exchange);
         }
