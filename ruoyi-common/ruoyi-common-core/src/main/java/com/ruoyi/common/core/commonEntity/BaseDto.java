@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Data
 @Schema(description = "基础返回对象")
-public class BaseDTO {
+public class BaseDto {
     @Schema(description = "创建者")
     private String createBy;
     @Schema(description = "创建时间")
