@@ -1,4 +1,4 @@
-package com.ruoyi.system.service;
+package com.ruoyi.system.service2;
 
 import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.domain.SysUserOnline;

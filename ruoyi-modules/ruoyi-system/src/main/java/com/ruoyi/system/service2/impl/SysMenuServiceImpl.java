@@ -1,4 +1,4 @@
-package com.ruoyi.system.service.impl;
+package com.ruoyi.system.service2.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +23,7 @@ import com.ruoyi.system.domain.vo.TreeSelect;
 import com.ruoyi.system.mapper.SysMenuMapper;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysRoleMenuMapper;
-import com.ruoyi.system.service.ISysMenuService;
+import com.ruoyi.system.service2.ISysMenuService;
 
 /**
  * 菜单 业务层处理

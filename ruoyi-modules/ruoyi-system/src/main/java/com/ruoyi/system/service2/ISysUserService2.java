@@ -1,4 +1,4 @@
-package com.ruoyi.system.service;
+package com.ruoyi.system.service2;
 
 import java.util.List;
 import com.ruoyi.system.api.domain.SysUser;
@@ -8,7 +8,7 @@ import com.ruoyi.system.api.domain.SysUser;
  * 
  * @author ruoyi
  */
-public interface ISysUserService
+public interface ISysUserService2
 {
     /**
      * 根据条件分页查询用户列表
@@ -203,4 +203,6 @@ public interface ISysUserService
      * @return 结果
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
+
+//    void pageQrySysUser(SysUserQryRequest request);
 }

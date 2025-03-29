@@ -1,4 +1,4 @@
-package com.ruoyi.system.service;
+package com.ruoyi.system.service2;
 
 import java.util.List;
 import java.util.Set;

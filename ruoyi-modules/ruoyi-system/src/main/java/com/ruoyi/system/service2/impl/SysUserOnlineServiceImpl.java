@@ -1,10 +1,10 @@
-package com.ruoyi.system.service.impl;
+package com.ruoyi.system.service2.impl;
 
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.domain.SysUserOnline;
-import com.ruoyi.system.service.ISysUserOnlineService;
+import com.ruoyi.system.service2.ISysUserOnlineService;
 
 /**
  * 在线用户 服务层处理
