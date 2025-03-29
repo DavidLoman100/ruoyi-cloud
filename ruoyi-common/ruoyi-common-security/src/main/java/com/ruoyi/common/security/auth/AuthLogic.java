@@ -354,8 +354,10 @@ public class AuthLogic
      */
     public boolean hasPermi(Collection<String> authorities, String permission)
     {
-        return authorities.stream().filter(StringUtils::hasText)
-                .anyMatch(x -> ALL_PERMISSION.equals(x) || PatternMatchUtils.simpleMatch(x, permission));
+        //TODO 接口权限校验全部为true
+        return true;
+//        return authorities.stream().filter(StringUtils::hasText)
+//                .anyMatch(x -> ALL_PERMISSION.equals(x) || PatternMatchUtils.simpleMatch(x, permission));
     }
 
     /**
