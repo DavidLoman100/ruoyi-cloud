@@ -9,6 +9,7 @@ import com.ruoyi.system.dto.user.UserResDTO;
 import com.ruoyi.system.infrastructure.user.repository.mapper.SysUserMapper;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.service.SysUserService;
+import com.ruoyi.system.service.assembler.UserAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserPo> im
     @Override
     public PageListDto<UserResDTO> pageQrySysUser(UserQryReqDTO request) {
         Page<SysUserPo> sysUserPage = sysUserDomainService.pageQrySysUser(request);
-        PageListDto<UserResDTO> pageListDto = com.ruoyi.system.service.assembler.SysUserMapper.INSTANCE.toPageListDto(sysUserPage);
+        PageListDto<UserResDTO> pageListDto = UserAssembler.INSTANCE.toPageListDto(sysUserPage);
         return pageListDto;
     }
 
