@@ -3,7 +3,7 @@ package com.ruoyi.system.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ruoyi.system.service2.ISysUserService2;
+import com.ruoyi.system.service2.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +42,7 @@ public class SysRoleController extends BaseController
     private ISysRoleService roleService;
 
     @Autowired
-    private ISysUserService2 userService;
+    private ISysUserService userService;
 
     @Autowired
     private ISysDeptService deptService;

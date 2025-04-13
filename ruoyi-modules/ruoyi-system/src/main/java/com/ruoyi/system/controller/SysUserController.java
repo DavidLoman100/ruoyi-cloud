@@ -5,6 +5,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.commonEntity.PageListDto;
+import com.ruoyi.common.core.commonEntity.Response;
+import com.ruoyi.system.dto.SysUserDto;
+import com.ruoyi.system.request.SysUserQryRequest;
+import com.ruoyi.system.service.SysUserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -33,24 +41,28 @@ import com.ruoyi.system.api.domain.SysDept;
 import com.ruoyi.system.api.domain.SysRole;
 import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.api.model.LoginUser;
-import com.ruoyi.system.service.ISysConfigService;
-import com.ruoyi.system.service.ISysDeptService;
-import com.ruoyi.system.service.ISysPermissionService;
-import com.ruoyi.system.service.ISysPostService;
-import com.ruoyi.system.service.ISysRoleService;
-import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.system.service2.ISysConfigService;
+import com.ruoyi.system.service2.ISysDeptService;
+import com.ruoyi.system.service2.ISysPermissionService;
+import com.ruoyi.system.service2.ISysPostService;
+import com.ruoyi.system.service2.ISysRoleService;
+import com.ruoyi.system.service2.ISysUserService;
 
 /**
  * 用户信息
  * 
  * @author ruoyi
  */
+@Tag(name = "用户管理", description = "提供用户的增删改查 API")
 @RestController
 @RequestMapping("/user")
 public class SysUserController extends BaseController
 {
     @Autowired
     private ISysUserService userService;
+
+    @Autowired
+    private SysUserService sysUserService;
 
     @Autowired
     private ISysRoleService roleService;
@@ -75,6 +87,7 @@ public class SysUserController extends BaseController
      */
     @RequiresPermissions("system:user:list")
     @GetMapping("/list")
+    @Deprecated
     public TableDataInfo list(SysUser user)
     {
         startPage();
@@ -82,6 +95,16 @@ public class SysUserController extends BaseController
         return getDataTable(list);
     }
 
+    @RequiresPermissions("system:user:list")
+    @Operation(summary = "分页获取用户列表")
+    @PostMapping("/pageQrySysUser")
+    public Response<PageListDto<SysUserDto>> pageQrySysUser(@RequestBody SysUserQryRequest request)
+    {
+        PageListDto<SysUserDto> result = sysUserService.pageQrySysUser(request);
+        return Response.ok(result);
+    }
+
+    @Operation(summary = "导出用户信息excel" )
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:user:export")
     @PostMapping("/export")
@@ -92,6 +115,7 @@ public class SysUserController extends BaseController
         util.exportExcel(response, list, "用户数据");
     }
 
+    @Operation(summary = "导入用户信息excel" )
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
     @RequiresPermissions("system:user:import")
     @PostMapping("/importData")
@@ -104,6 +128,7 @@ public class SysUserController extends BaseController
         return success(message);
     }
 
+    @Operation(summary = "导入用户信息 流方式" )
     @PostMapping("/importTemplate")
     public void importTemplate(HttpServletResponse response) throws IOException
     {
@@ -111,9 +136,7 @@ public class SysUserController extends BaseController
         util.importTemplateExcel(response, "用户数据");
     }
 
-    /**
-     * 获取当前用户信息
-     */
+    @Operation(summary = "获取当前用户信息" )
     @InnerAuth
     @GetMapping("/info/{username}")
     public R<LoginUser> info(@PathVariable("username") String username)
@@ -134,9 +157,7 @@ public class SysUserController extends BaseController
         return R.ok(sysUserVo);
     }
 
-    /**
-     * 注册用户信息
-     */
+    @Operation(summary = "注册用户信息" )
     @InnerAuth
     @PostMapping("/register")
     public R<Boolean> register(@RequestBody SysUser sysUser)
@@ -153,9 +174,7 @@ public class SysUserController extends BaseController
         return R.ok(userService.registerUser(sysUser));
     }
 
-    /**
-     *记录用户登录IP地址和登录时间
-     */
+    @Operation(summary = "记录登录信息")
     @InnerAuth
     @PutMapping("/recordlogin")
     public R<Boolean> recordlogin(@RequestBody SysUser sysUser)
@@ -163,11 +182,7 @@ public class SysUserController extends BaseController
         return R.ok(userService.updateUserProfile(sysUser));
     }
 
-    /**
-     * 获取用户信息
-     * 
-     * @return 用户信息
-     */
+    @Operation(summary = "获取用户信息")
     @GetMapping("getInfo")
     public AjaxResult getInfo()
     {
@@ -189,9 +204,7 @@ public class SysUserController extends BaseController
         return ajax;
     }
 
-    /**
-     * 根据用户编号获取详细信息
-     */
+    @Operation(summary = "根据用户编号获取详细信息")
     @RequiresPermissions("system:user:query")
     @GetMapping(value = { "/", "/{userId}" })
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId)
@@ -211,9 +224,7 @@ public class SysUserController extends BaseController
         return ajax;
     }
 
-    /**
-     * 新增用户
-     */
+    @Operation(summary = "新增用户")
     @RequiresPermissions("system:user:add")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping
@@ -238,9 +249,7 @@ public class SysUserController extends BaseController
         return toAjax(userService.insertUser(user));
     }
 
-    /**
-     * 修改用户
-     */
+    @Operation(summary = "修改用户")
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -266,9 +275,7 @@ public class SysUserController extends BaseController
         return toAjax(userService.updateUser(user));
     }
 
-    /**
-     * 删除用户
-     */
+    @Operation(summary = "删除用户")
     @RequiresPermissions("system:user:remove")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{userIds}")
@@ -281,9 +288,7 @@ public class SysUserController extends BaseController
         return toAjax(userService.deleteUserByIds(userIds));
     }
 
-    /**
-     * 重置密码
-     */
+    @Operation(summary = "重置密码")
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
@@ -296,9 +301,7 @@ public class SysUserController extends BaseController
         return toAjax(userService.resetPwd(user));
     }
 
-    /**
-     * 状态修改
-     */
+    @Operation(summary = "状态修改")
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
@@ -310,9 +313,7 @@ public class SysUserController extends BaseController
         return toAjax(userService.updateUserStatus(user));
     }
 
-    /**
-     * 根据用户编号获取授权角色
-     */
+    @Operation(summary = "根据用户编号获取详细信息")
     @RequiresPermissions("system:user:query")
     @GetMapping("/authRole/{userId}")
     public AjaxResult authRole(@PathVariable("userId") Long userId)
@@ -325,9 +326,7 @@ public class SysUserController extends BaseController
         return ajax;
     }
 
-    /**
-     * 用户授权角色
-     */
+    @Operation(summary = "用户授权角色")
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PutMapping("/authRole")
@@ -339,9 +338,7 @@ public class SysUserController extends BaseController
         return success();
     }
 
-    /**
-     * 获取部门树列表
-     */
+    @Operation(summary = "获取部门树列表")
     @RequiresPermissions("system:user:list")
     @GetMapping("/deptTree")
     public AjaxResult deptTree(SysDept dept)

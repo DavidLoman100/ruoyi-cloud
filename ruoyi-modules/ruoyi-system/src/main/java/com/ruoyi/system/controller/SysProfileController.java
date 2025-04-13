@@ -3,7 +3,7 @@ package com.ruoyi.system.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-import com.ruoyi.system.service2.ISysUserService2;
+import com.ruoyi.system.service2.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +38,7 @@ import com.ruoyi.system.api.model.LoginUser;
 public class SysProfileController extends BaseController
 {
     @Autowired
-    private ISysUserService2 userService;
+    private ISysUserService userService;
     
     @Autowired
     private TokenService tokenService;
