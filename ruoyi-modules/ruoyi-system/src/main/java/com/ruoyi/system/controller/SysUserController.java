@@ -82,18 +82,7 @@ public class SysUserController extends BaseController
     @Autowired
     private TokenService tokenService;
 
-    /**
-     * 获取用户列表
-     */
-    @RequiresPermissions("system:user:list")
-    @GetMapping("/list")
-    @Deprecated
-    public TableDataInfo list(SysUser user)
-    {
-        startPage();
-        List<SysUser> list = userService.selectUserList(user);
-        return getDataTable(list);
-    }
+
 
     @RequiresPermissions("system:user:list")
     @Operation(summary = "分页获取用户列表")
