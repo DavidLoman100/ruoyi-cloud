@@ -3,11 +3,13 @@ package com.ruoyi.common.core.web.controller;
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
 import java.util.List;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.core.constant.HttpStatus;
 import com.ruoyi.common.core.utils.DateUtils;
 import com.ruoyi.common.core.utils.PageUtils;
@@ -42,19 +44,14 @@ public class BaseController
 
     /**
      * 设置请求分页数据
+     *
+     * @return
      */
-    protected void startPage()
+    protected Page<T> startPage()
     {
-        PageUtils.startPage();
+        return PageUtils.startPage();
     }
 
-    /**
-     * 清理分页的线程变量
-     */
-    protected void clearPage()
-    {
-        PageUtils.clearPage();
-    }
 
     /**
      * 响应请求分页数据
@@ -66,7 +63,7 @@ public class BaseController
         rspData.setCode(HttpStatus.SUCCESS);
         rspData.setRows(list);
         rspData.setMsg("查询成功");
-        rspData.setTotal(new PageInfo(list).getTotal());
+//        rspData.setTotal(new PageInfo(list).getTotal());
         return rspData;
     }
 
