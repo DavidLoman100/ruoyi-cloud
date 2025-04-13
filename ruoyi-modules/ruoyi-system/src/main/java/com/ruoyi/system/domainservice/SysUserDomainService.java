@@ -24,7 +24,7 @@ public class SysUserDomainService {
 
 
     public Page<SysUser> pageQrySysUser(SysUserQryRequest request) {
-        Page<SysUser> page = new Page<>(request.getPage(), request.getSize());
+        Page<SysUser> page = new Page<>(request.getPageNum(), request.getPageSize());
         LambdaQueryWrapper<SysUser> wrapper = Wrappers.<SysUser>lambdaQuery()
                 .eq(!Objects.isNull(request.getUserId()), SysUser::getUserId, request.getUserId())
                 .eq(!Objects.isNull(request.getDeptId()), SysUser::getDeptId, request.getDeptId())

@@ -12,7 +12,7 @@ import lombok.Data;
 @Schema(description = "分页参数")
 public class PageRequest {
     @Schema(description = "每页数量", required = true)
-    private Integer size;
+    private Integer pageSize;
     @Schema(description = "页码", required = true)
-    private Integer page;
+    private Integer pageNum;
 }
