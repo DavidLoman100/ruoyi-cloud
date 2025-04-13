@@ -12,7 +12,7 @@ import com.ruoyi.system.api.domain.SysUser;
  * @author ruoyi
  */
 @Mapper
-public interface SysUserMapper
+public interface SysUserMapper2
 {
     /**
      * 根据条件分页查询用户列表

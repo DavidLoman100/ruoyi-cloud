@@ -204,5 +204,5 @@ public interface ISysUserService
      */
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
 
-//    void pageQrySysUser(SysUserQryRequest request);
+//    void pageQrySysUser(UserQryReqDTO request);
 }

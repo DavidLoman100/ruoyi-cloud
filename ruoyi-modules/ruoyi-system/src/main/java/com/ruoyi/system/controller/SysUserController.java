@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.core.commonEntity.PageListDto;
 import com.ruoyi.common.core.commonEntity.Response;
-import com.ruoyi.system.dto.SysUserDto;
-import com.ruoyi.system.request.SysUserQryRequest;
+import com.ruoyi.system.dto.user.UserResDTO;
+import com.ruoyi.system.dto.user.UserQryReqDTO;
 import com.ruoyi.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +30,6 @@ import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
-import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.annotation.InnerAuth;
@@ -87,9 +86,9 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:list")
     @Operation(summary = "分页获取用户列表")
     @PostMapping("/pageQrySysUser")
-    public Response<PageListDto<SysUserDto>> pageQrySysUser(@RequestBody SysUserQryRequest request)
+    public Response<PageListDto<UserResDTO>> pageQrySysUser(@RequestBody UserQryReqDTO request)
     {
-        PageListDto<SysUserDto> result = sysUserService.pageQrySysUser(request);
+        PageListDto<UserResDTO> result = sysUserService.pageQrySysUser(request);
         return Response.ok(result);
     }
 
@@ -238,6 +237,16 @@ public class SysUserController extends BaseController
         return toAjax(userService.insertUser(user));
     }
 
+
+//    @Operation(summary = "修改用户")
+//    @RequiresPermissions("system:user:edit")
+//    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+//    @PutMapping("/updUserInfo")
+//    public Response<Boolean> updUserInfo(@Validated @RequestBody SysUserPo user) {
+//        Boolean flag = sysUserService.updUserInfo();
+//    }
+
+    @Deprecated
     @Operation(summary = "修改用户")
     @RequiresPermissions("system:user:edit")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)

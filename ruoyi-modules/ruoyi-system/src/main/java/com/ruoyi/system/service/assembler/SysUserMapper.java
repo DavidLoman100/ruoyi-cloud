@@ -1,9 +1,9 @@
-package com.ruoyi.system.mapstruct;
+package com.ruoyi.system.service.assembler;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListDto;
-import com.ruoyi.system.dto.SysUserDto;
-import com.ruoyi.system.entity.SysUser;
+import com.ruoyi.system.dto.user.UserResDTO;
+import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -18,8 +18,8 @@ import java.util.List;
 public interface SysUserMapper {
     SysUserMapper INSTANCE = Mappers.getMapper(SysUserMapper.class);
 
-    List<SysUserDto> toListDto(List<SysUser> sysUserPage);
+    List<UserResDTO> toListDto(List<SysUserPo> sysUserPoPage);
 
     @Mapping(target = "list", source = "records")
-    PageListDto<SysUserDto> toPageListDto(Page<SysUser> sysUserPage);
+    PageListDto<UserResDTO> toPageListDto(Page<SysUserPo> sysUserPage);
 }

@@ -24,7 +24,7 @@ import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.domain.SysPost;
 import com.ruoyi.system.domain.SysUserPost;
 import com.ruoyi.system.domain.SysUserRole;
-import com.ruoyi.system.mapper.SysUserMapper;
+import com.ruoyi.system.mapper.SysUserMapper2;
 import com.ruoyi.system.service2.ISysConfigService;
 import com.ruoyi.system.service2.ISysDeptService;
 import com.ruoyi.system.service2.ISysUserService;
@@ -40,7 +40,7 @@ public class SysUserService2Impl implements ISysUserService
     private static final Logger log = LoggerFactory.getLogger(SysUserService2Impl.class);
 
     @Autowired
-    private SysUserMapper userMapper;
+    private SysUserMapper2 userMapper;
 
     @Autowired
     private SysRoleMapper roleMapper;
