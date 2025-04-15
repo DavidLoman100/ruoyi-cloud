@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
-import com.ruoyi.common.core.commonEntity.BaseEntity;
+import com.ruoyi.common.core.commonEntity.BasePo;
 import lombok.Data;
 
 /**
@@ -16,7 +16,7 @@ import lombok.Data;
  */
 @TableName(value ="sys_user")
 @Data
-public class SysUserPo extends BaseEntity {
+public class SysUserPo extends BasePo {
     /**
      * 用户ID
      */

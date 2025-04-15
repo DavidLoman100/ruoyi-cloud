@@ -3,7 +3,7 @@ package com.ruoyi.system.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.core.commonEntity.PageListDto;
-import com.ruoyi.system.domain.user.service.SysUserDomainService;
+import com.ruoyi.system.domain.service.SysUserDomainService;
 import com.ruoyi.system.dto.user.UserQryReqDTO;
 import com.ruoyi.system.dto.user.UserResDTO;
 import com.ruoyi.system.infrastructure.user.repository.mapper.SysUserMapper;

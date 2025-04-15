@@ -1,7 +1,7 @@
-package com.ruoyi.system.domain.user.service;
+package com.ruoyi.system.domain.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.system.domain.user.model.repository.UserRepository;
+import com.ruoyi.system.domain.user.repository.UserRepository;
 import com.ruoyi.system.dto.user.UserQryReqDTO;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import org.springframework.beans.factory.annotation.Autowired;

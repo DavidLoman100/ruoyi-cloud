@@ -11,7 +11,7 @@ import java.util.Date;
  * @create 2025-03-29 12:11
  */
 @Data
-public class BaseEntity {
+public class BasePo {
     /**
      * 创建者
      */

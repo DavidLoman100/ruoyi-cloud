@@ -1,4 +1,4 @@
-package com.ruoyi.system.domain.user.model.repository;
+package com.ruoyi.system.domain.user.repository;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;

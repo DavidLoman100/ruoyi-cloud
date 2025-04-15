@@ -3,7 +3,7 @@ package com.ruoyi.system.infrastructure.user.repository.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.system.domain.user.model.repository.UserRepository;
+import com.ruoyi.system.domain.user.repository.UserRepository;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.infrastructure.user.repository.mapper.SysUserMapper;
 import com.ruoyi.system.dto.user.UserQryReqDTO;

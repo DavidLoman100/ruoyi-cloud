@@ -1,10 +1,5 @@
-package com.ruoyi.system.domain.user.model.entity;
+package com.ruoyi.system.domain.user.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.ruoyi.common.core.commonEntity.BaseEntity;
 import lombok.Data;
 
 import java.util.Date;
@@ -14,7 +9,7 @@ import java.util.Date;
  * @TableName sys_user
  */
 @Data
-public class SysUserEntity extends BaseEntity {
+public class SysUserEntity {
     /**
      * 用户ID
      */
@@ -84,5 +79,11 @@ public class SysUserEntity extends BaseEntity {
      * 备注
      */
     private String remark;
+
+    private String createBy;
+    private Date createTime;
+    private String updateBy;
+    private Date updateTime;
+    private String isDeleted;
 
 }
