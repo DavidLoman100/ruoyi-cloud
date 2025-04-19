@@ -2,8 +2,9 @@ package com.ruoyi.system.service.assembler;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListDto;
-import com.ruoyi.system.dto.user.UserResDTO;
-import com.ruoyi.system.infrastructure.user.repository.mapper.SysUserMapper;
+import com.ruoyi.system.domain.user.entity.UserQryEntity;
+import com.ruoyi.system.dto.user.req.UserQryReqDTO;
+import com.ruoyi.system.dto.user.res.UserResDTO;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -18,6 +19,8 @@ import java.util.List;
 @Mapper
 public interface UserAssembler {
     UserAssembler INSTANCE = Mappers.getMapper(UserAssembler.class);
+
+    UserQryEntity toUserEntity(UserQryReqDTO request);
 
     List<UserResDTO> toListDto(List<SysUserPo> sysUserPoPage);
 

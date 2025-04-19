@@ -1,12 +1,10 @@
 package com.ruoyi.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.core.commonEntity.PageListDto;
 import com.ruoyi.system.domain.service.SysUserDomainService;
-import com.ruoyi.system.dto.user.UserQryReqDTO;
-import com.ruoyi.system.dto.user.UserResDTO;
-import com.ruoyi.system.infrastructure.user.repository.mapper.SysUserMapper;
+import com.ruoyi.system.dto.user.req.UserQryReqDTO;
+import com.ruoyi.system.dto.user.res.UserResDTO;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.service.SysUserService;
 import com.ruoyi.system.service.assembler.UserAssembler;
@@ -19,7 +17,7 @@ import org.springframework.stereotype.Service;
 * @createDate 2025-03-21 00:14:08
 */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserPo> implements SysUserService {
+public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserDomainService sysUserDomainService;
@@ -33,6 +31,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserPo> im
 
     @Override
     public Boolean updUserInfo() {
+//        sysUserDomainService.updUserInfo()
         return null;
     }
 

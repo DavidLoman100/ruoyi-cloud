@@ -1,9 +1,11 @@
 package com.ruoyi.system.domain.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.system.domain.user.entity.UserQryEntity;
 import com.ruoyi.system.domain.user.repository.UserRepository;
-import com.ruoyi.system.dto.user.UserQryReqDTO;
+import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
+import com.ruoyi.system.service.assembler.UserAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,13 @@ public class SysUserDomainService {
 
 
     public Page<SysUserPo> pageQrySysUser(UserQryReqDTO request) {
-        Page<SysUserPo> page = userRepository.pageQrySysUser(request);
+        UserQryEntity userQryEntity = UserAssembler.INSTANCE.toUserEntity(request);
+        Page<SysUserPo> page = userRepository.pageQrySysUser(userQryEntity);
         return page;
+    }
+
+    public void updUserInfo() {
+
+
     }
 }

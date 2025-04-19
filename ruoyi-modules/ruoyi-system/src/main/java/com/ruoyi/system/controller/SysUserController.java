@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.core.commonEntity.PageListDto;
 import com.ruoyi.common.core.commonEntity.Response;
-import com.ruoyi.system.dto.user.UserResDTO;
-import com.ruoyi.system.dto.user.UserQryReqDTO;
+import com.ruoyi.system.dto.user.res.UserResDTO;
+import com.ruoyi.system.dto.user.req.UserQryReqDTO;
+import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.service.SysUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

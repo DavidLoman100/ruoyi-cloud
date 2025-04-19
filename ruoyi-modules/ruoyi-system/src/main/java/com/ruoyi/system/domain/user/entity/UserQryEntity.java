@@ -1,16 +1,22 @@
-package com.ruoyi.system.dto.user;
+package com.ruoyi.system.domain.user.entity;
 
-import com.ruoyi.common.core.commonEntity.PageRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
- * @author DavidLoman
- * @create 2025-03-18 23:18
+ * 用户信息表
+ * @TableName sys_user
  */
 @Data
-@Schema(description = "分页查询用户参数")
-public class UserQryReqDTO extends PageRequest {
+public class UserQryEntity {
+
+    @Schema(description = "每页数量", required = true)
+    private Integer pageSize;
+
+    @Schema(description = "页码", required = true)
+    private Integer pageNum;
 
     @Schema(description = "用户ID")
     private Long userId;

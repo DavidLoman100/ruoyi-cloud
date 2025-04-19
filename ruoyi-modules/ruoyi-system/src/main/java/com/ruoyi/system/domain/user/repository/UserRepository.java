@@ -1,8 +1,8 @@
 package com.ruoyi.system.domain.user.repository;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.system.domain.user.entity.UserQryEntity;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
-import com.ruoyi.system.dto.user.UserQryReqDTO;
 
 /**
  * @author DavidLoman
@@ -10,5 +10,5 @@ import com.ruoyi.system.dto.user.UserQryReqDTO;
  */
 public interface UserRepository {
 
-    Page<SysUserPo> pageQrySysUser(UserQryReqDTO request);
+    Page<SysUserPo> pageQrySysUser(UserQryEntity userQryEntity);
 }
