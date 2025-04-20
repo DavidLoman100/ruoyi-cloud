@@ -42,11 +42,19 @@ public class Response<T extends Object>{
         return response;
     }
 
-    public static Response failed(BaseEnum baseEnum){
+    public static Response<String> failed(BaseEnum baseEnum){
         Response response =new Response();
         response.setIsSuccess(Boolean.FALSE);
         response.setCode(baseEnum.getCode());
         response.setMessage(baseEnum.getMsg());
+        return response;
+    }
+
+    public static Response<String> failed(int code,String msg){
+        Response response =new Response();
+        response.setIsSuccess(Boolean.FALSE);
+        response.setCode(code);
+        response.setMessage(msg);
         return response;
     }
 

@@ -26,7 +26,8 @@ import com.ruoyi.common.core.web.domain.AjaxResult;
  *
  * @author ruoyi
  */
-@RestControllerAdvice
+//@RestControllerAdvice
+@Deprecated
 public class GlobalExceptionHandler
 {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
