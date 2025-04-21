@@ -20,10 +20,11 @@ public class SysUserDomainService {
     private UserRepository userRepository;
 
 
-    public Page<SysUserPo> pageQrySysUser(UserQryReqDTO request) {
+    public PageListDto<UserResDTO> pageQrySysUser(UserQryReqDTO request) {
         UserQryEntity userQryEntity = UserAssembler.INSTANCE.toUserEntity(request);
         Page<SysUserPo> page = userRepository.pageQrySysUser(userQryEntity);
-        return page;
+        PageListDto<UserResDTO> pageListDto = UserAssembler.INSTANCE.toPageListDto(page);
+        return pageListDto;
     }
 
     public void updUserInfo() {

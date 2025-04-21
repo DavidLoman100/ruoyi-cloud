@@ -24,9 +24,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public PageListDto<UserResDTO> pageQrySysUser(UserQryReqDTO request) {
-        Page<SysUserPo> sysUserPage = sysUserDomainService.pageQrySysUser(request);
-        PageListDto<UserResDTO> pageListDto = UserAssembler.INSTANCE.toPageListDto(sysUserPage);
-        return pageListDto;
+        return sysUserDomainService.pageQrySysUser(request);
     }
 
     @Override
