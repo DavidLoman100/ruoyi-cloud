@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.core.commonEntity.PageListDto;
 import com.ruoyi.common.core.commonEntity.Response;
+import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
 import com.ruoyi.system.dto.user.res.UserResDTO;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
@@ -239,13 +240,14 @@ public class SysUserController extends BaseController
     }
 
 
-//    @Operation(summary = "修改用户")
-//    @RequiresPermissions("system:user:edit")
-//    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
-//    @PutMapping("/updUserInfo")
-//    public Response<Boolean> updUserInfo(@Validated @RequestBody SysUserPo user) {
-//        Boolean flag = sysUserService.updUserInfo();
-//    }
+    @Operation(summary = "修改用户")
+    @RequiresPermissions("system:user:edit")
+    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/updUserInfo")
+    public Response<Boolean> updUserInfo(@Validated @RequestBody UserUpdReqDTO userUpdReqDTO) {
+        Boolean flag = sysUserService.updUserInfo(userUpdReqDTO);
+        return Response.ok(flag);
+    }
 
     @Deprecated
     @Operation(summary = "修改用户")

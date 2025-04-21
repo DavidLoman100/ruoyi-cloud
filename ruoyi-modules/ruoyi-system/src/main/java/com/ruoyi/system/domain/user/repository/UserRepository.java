@@ -1,6 +1,7 @@
 package com.ruoyi.system.domain.user.repository;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.system.domain.user.entity.UserEntity;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 
@@ -11,4 +12,6 @@ import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 public interface UserRepository {
 
     Page<SysUserPo> pageQrySysUser(UserQryEntity userQryEntity);
+
+    Boolean updUserInfo(SysUserPo sysUserPo);
 }

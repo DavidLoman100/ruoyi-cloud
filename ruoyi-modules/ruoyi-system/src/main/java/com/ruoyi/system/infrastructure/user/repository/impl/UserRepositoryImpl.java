@@ -3,6 +3,7 @@ package com.ruoyi.system.infrastructure.user.repository.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.system.domain.user.entity.UserEntity;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
 import com.ruoyi.system.domain.user.repository.UserRepository;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
@@ -35,5 +36,11 @@ public class UserRepositoryImpl implements UserRepository {
                 .eq(StringUtils.hasText(entity.getSex()), SysUserPo::getSex, entity.getSex())
                 .eq(StringUtils.hasText(entity.getStatus()), SysUserPo::getStatus, entity.getStatus());
         return sysUserMapper.selectPage(page, wrapper);
+    }
+
+    @Override
+    public Boolean updUserInfo(SysUserPo sysUserPo) {
+        int upd = sysUserMapper.updateById(sysUserPo);
+        return upd > 0 ? true : false;
     }
 }

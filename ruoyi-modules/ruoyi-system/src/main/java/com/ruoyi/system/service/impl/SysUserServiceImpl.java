@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListDto;
 import com.ruoyi.system.domain.service.SysUserDomainService;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
+import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
 import com.ruoyi.system.dto.user.res.UserResDTO;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.service.SysUserService;
@@ -28,9 +29,8 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public Boolean updUserInfo() {
-//        sysUserDomainService.updUserInfo()
-        return null;
+    public Boolean updUserInfo(UserUpdReqDTO userUpdReqDTO) {
+        return  sysUserDomainService.updUserInfo(userUpdReqDTO);
     }
 
 }
