@@ -14,4 +14,7 @@ public interface UserRepository {
     Page<SysUserPo> pageQrySysUser(UserQryEntity userQryEntity);
 
     Boolean updUserInfo(SysUserPo sysUserPo);
+
+    SysUserPo getUserWithDc(Long userId);
+
 }

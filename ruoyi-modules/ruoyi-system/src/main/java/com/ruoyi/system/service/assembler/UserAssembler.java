@@ -30,6 +30,7 @@ public interface UserAssembler {
     PageListDto<UserResDTO> toPageListDto(Page<SysUserPo> sysUserPage);
 
     //TODO 设置更新人 用户名从线程里获取
-    @Mapping(target = "update_time",defaultValue = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "updateBy",expression  = "java(com.ruoyi.common.security.utils.SecurityUtils.getUsername())")
+    @Mapping(target = "updateTime",expression  = "java(java.time.LocalDateTime.now())")
     SysUserPo toSysUserPO(UserUpdReqDTO userUpdReqDTO);
 }
