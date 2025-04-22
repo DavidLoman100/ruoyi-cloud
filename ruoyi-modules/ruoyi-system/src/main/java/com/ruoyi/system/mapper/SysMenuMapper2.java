@@ -12,7 +12,7 @@ import com.ruoyi.system.domain.SysMenu;
  * @author ruoyi
  */
 @Mapper
-public interface SysMenuMapper
+public interface SysMenuMapper2
 {
     /**
      * 查询系统菜单列表

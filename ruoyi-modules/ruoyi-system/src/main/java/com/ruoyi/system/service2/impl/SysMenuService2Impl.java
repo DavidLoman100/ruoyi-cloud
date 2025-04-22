@@ -20,7 +20,7 @@ import com.ruoyi.system.domain.SysMenu;
 import com.ruoyi.system.domain.vo.MetaVo;
 import com.ruoyi.system.domain.vo.RouterVo;
 import com.ruoyi.system.domain.vo.TreeSelect;
-import com.ruoyi.system.mapper.SysMenuMapper;
+import com.ruoyi.system.mapper.SysMenuMapper2;
 import com.ruoyi.system.mapper.SysRoleMapper;
 import com.ruoyi.system.mapper.SysRoleMenuMapper;
 import com.ruoyi.system.service2.ISysMenuService;
@@ -31,12 +31,12 @@ import com.ruoyi.system.service2.ISysMenuService;
  * @author ruoyi
  */
 @Service
-public class SysMenuServiceImpl implements ISysMenuService
+public class SysMenuService2Impl implements ISysMenuService
 {
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
     @Autowired
-    private SysMenuMapper menuMapper;
+    private SysMenuMapper2 menuMapper;
 
     @Autowired
     private SysRoleMapper roleMapper;
