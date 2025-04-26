@@ -12,7 +12,7 @@ import com.ruoyi.system.api.domain.SysDept;
  * @author ruoyi
  */
 @Mapper
-public interface SysDeptMapper
+public interface SysDeptMapper2
 {
     /**
      * 查询部门管理数据

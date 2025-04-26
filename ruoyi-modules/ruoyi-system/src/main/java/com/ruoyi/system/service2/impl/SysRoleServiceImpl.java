@@ -19,9 +19,9 @@ import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.domain.SysRoleDept;
 import com.ruoyi.system.domain.SysRoleMenu;
 import com.ruoyi.system.domain.SysUserRole;
-import com.ruoyi.system.mapper.SysRoleDeptMapper;
-import com.ruoyi.system.mapper.SysRoleMapper;
-import com.ruoyi.system.mapper.SysRoleMenuMapper;
+import com.ruoyi.system.mapper.SysRoleDeptMapper2;
+import com.ruoyi.system.mapper.SysRoleMapper2;
+import com.ruoyi.system.mapper.SysRoleMenuMapper2;
 import com.ruoyi.system.mapper.SysUserRoleMapper;
 import com.ruoyi.system.service2.ISysRoleService;
 
@@ -34,16 +34,16 @@ import com.ruoyi.system.service2.ISysRoleService;
 public class SysRoleServiceImpl implements ISysRoleService
 {
     @Autowired
-    private SysRoleMapper roleMapper;
+    private SysRoleMapper2 roleMapper;
 
     @Autowired
-    private SysRoleMenuMapper roleMenuMapper;
+    private SysRoleMenuMapper2 roleMenuMapper;
 
     @Autowired
     private SysUserRoleMapper userRoleMapper;
 
     @Autowired
-    private SysRoleDeptMapper roleDeptMapper;
+    private SysRoleDeptMapper2 roleDeptMapper;
 
     /**
      * 根据条件分页查询角色数据

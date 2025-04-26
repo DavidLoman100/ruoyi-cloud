@@ -17,8 +17,8 @@ import com.ruoyi.system.api.domain.SysDept;
 import com.ruoyi.system.api.domain.SysRole;
 import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.domain.vo.TreeSelect;
-import com.ruoyi.system.mapper.SysDeptMapper;
-import com.ruoyi.system.mapper.SysRoleMapper;
+import com.ruoyi.system.mapper.SysDeptMapper2;
+import com.ruoyi.system.mapper.SysRoleMapper2;
 import com.ruoyi.system.service2.ISysDeptService;
 
 /**
@@ -30,10 +30,10 @@ import com.ruoyi.system.service2.ISysDeptService;
 public class SysDeptServiceImpl implements ISysDeptService
 {
     @Autowired
-    private SysDeptMapper deptMapper;
+    private SysDeptMapper2 deptMapper;
 
     @Autowired
-    private SysRoleMapper roleMapper;
+    private SysRoleMapper2 roleMapper;
 
     /**
      * 查询部门管理数据

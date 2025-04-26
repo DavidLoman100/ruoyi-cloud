@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @author ruoyi
  */
 @Mapper
-public interface SysRoleMapper
+public interface SysRoleMapper2
 {
     /**
      * 根据条件分页查询角色数据

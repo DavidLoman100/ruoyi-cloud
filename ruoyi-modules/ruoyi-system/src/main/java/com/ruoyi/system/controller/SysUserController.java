@@ -6,13 +6,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ruoyi.common.core.commonEntity.PageListDto;
+import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
 import com.ruoyi.system.dto.user.res.UserResDTO;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
-import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.service.SysUserService;
+import com.ruoyi.system.vo.UserVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.ArrayUtils;
@@ -88,9 +88,9 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:list")
     @Operation(summary = "分页获取用户列表")
     @PostMapping("/pageQrySysUser")
-    public Response<PageListDto<UserResDTO>> pageQrySysUser(@RequestBody UserQryReqDTO request)
+    public Response<PageListVo<UserVo>> pageQrySysUser(@RequestBody UserQryReqDTO request)
     {
-        PageListDto<UserResDTO> result = sysUserService.pageQrySysUser(request);
+        PageListVo<UserVo> result = sysUserService.pageQrySysUser(request);
         return Response.ok(result);
     }
 

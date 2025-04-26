@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @author ruoyi
  */
 @Mapper
-public interface SysRoleMenuMapper
+public interface SysRoleMenuMapper2
 {
     /**
      * 查询菜单使用数量

@@ -21,8 +21,8 @@ import com.ruoyi.system.domain.vo.MetaVo;
 import com.ruoyi.system.domain.vo.RouterVo;
 import com.ruoyi.system.domain.vo.TreeSelect;
 import com.ruoyi.system.mapper.SysMenuMapper2;
-import com.ruoyi.system.mapper.SysRoleMapper;
-import com.ruoyi.system.mapper.SysRoleMenuMapper;
+import com.ruoyi.system.mapper.SysRoleMapper2;
+import com.ruoyi.system.mapper.SysRoleMenuMapper2;
 import com.ruoyi.system.service2.ISysMenuService;
 
 /**
@@ -39,10 +39,10 @@ public class SysMenuService2Impl implements ISysMenuService
     private SysMenuMapper2 menuMapper;
 
     @Autowired
-    private SysRoleMapper roleMapper;
+    private SysRoleMapper2 roleMapper;
 
     @Autowired
-    private SysRoleMenuMapper roleMenuMapper;
+    private SysRoleMenuMapper2 roleMenuMapper;
 
     /**
      * 根据用户查询系统菜单列表

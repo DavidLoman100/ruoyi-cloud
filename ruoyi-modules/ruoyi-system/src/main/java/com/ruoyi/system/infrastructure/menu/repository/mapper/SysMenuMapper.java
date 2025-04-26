@@ -2,6 +2,7 @@ package com.ruoyi.system.infrastructure.menu.repository.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.system.domain.SysMenu;
+import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
 
 /**
 * @author 37504
@@ -9,7 +10,7 @@ import com.ruoyi.system.domain.SysMenu;
 * @createDate 2025-04-22 23:28:57
 * @Entity generator.domain.SysMenu
 */
-public interface SysMenuMapper extends BaseMapper<SysMenu> {
+public interface SysMenuMapper extends BaseMapper<SysMenuPo> {
 
 }
 
