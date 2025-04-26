@@ -1,24 +1,29 @@
 package com.ruoyi.system.domain.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.common.core.commonEntity.PageListDto;
+import com.ruoyi.common.core.commonEntity.PageListVo;
+import com.ruoyi.common.core.constant.SystemConstants;
 import com.ruoyi.common.core.enums.CommonEnum;
 import com.ruoyi.common.core.enums.UserEnum;
 import com.ruoyi.common.core.exception.BizException;
-import com.ruoyi.system.api.domain.SysUser;
-import com.ruoyi.system.domain.user.entity.UserEntity;
+import com.ruoyi.common.security.utils.SecurityUtils;
+import com.ruoyi.system.api.model.LoginUser;
+import com.ruoyi.system.domain.role.repository.RoleDeptRepository;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
 import com.ruoyi.system.domain.user.repository.UserRepository;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
-import com.ruoyi.system.dto.user.res.UserResDTO;
+import com.ruoyi.system.dto.user.res.RoleDeptResDTO;
+import com.ruoyi.system.infrastructure.role.repository.po.SysRoleDeptPo;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.service.assembler.UserAssembler;
-import lombok.extern.slf4j.Slf4j;
+import com.ruoyi.system.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author DavidLoman
@@ -30,29 +35,58 @@ public class SysUserDomainService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleDeptRepository roleDeptRepository;
 
-    public PageListDto<UserResDTO> pageQrySysUser(UserQryReqDTO request) {
+
+    public PageListVo<UserVo> pageQrySysUser(UserQryReqDTO request) {
         UserQryEntity userQryEntity = UserAssembler.INSTANCE.toUserEntity(request);
+        //不是超管 先查角色部门表，获取部门ID 再查询用户表
+        //超管管可以查询所有
+        boolean isAdmin = SystemConstants.ADMIN_USER.equals(SecurityUtils.getUsername());
+        if (!isAdmin) {
+            LoginUser curUser = SecurityUtils.getLoginUser();
+            Set<String> roles = curUser.getRoles();
+            if (CollectionUtils.isEmpty(roles)) {
+                throw new BizException(UserEnum.ACCOUNT_ERROR);
+            }
+            userQryEntity.setDeptId(curUser.getSysUser().getDeptId());
+        }
+
         Page<SysUserPo> page = userRepository.pageQrySysUser(userQryEntity);
-        PageListDto<UserResDTO> pageListDto = UserAssembler.INSTANCE.toPageListDto(page);
-        return pageListDto;
+        PageListVo<UserVo> pageListVo = UserAssembler.INSTANCE.toPageListVo(page);
+        return pageListVo;
     }
 
     public Boolean updUserInfo(UserUpdReqDTO userUpdReqDTO) {
         //TODO
-        //校验是否admin
+
+        //不允许修改超级管理员
         if (1L == userUpdReqDTO.getUserId()) {
             throw new BizException(UserEnum.NO_OPT_ADMIN);
         }
-        //校验用户权限
-        SysUserPo sysUserPoDb = userRepository.getUserWithDc(userUpdReqDTO.getUserId());
-        if (Objects.isNull(sysUserPoDb)) {
-            throw new BizException(CommonEnum.NO_PERMISSION);
-        }
+
+
+        checkPermission(userUpdReqDTO.getUserId());
+
         //校验部门权限
         //校验角色权限
         //校验用户名/手机号/邮箱是否重复
         SysUserPo sysUserPo = UserAssembler.INSTANCE.toSysUserPO(userUpdReqDTO);
         return userRepository.updUserInfo(sysUserPo);
+    }
+
+    private Boolean checkPermission(Long userId) {
+
+//        if (SystemConstants.SYSTEM_USER.equals(SecurityUtils.getUsername())) {
+//            return true;
+//        }
+
+        //校验用户权限
+        //SysUserPo sysUserPoDb = userRepository.getUserWithDc(userId);
+//        if (Objects.isNull(sysUserPoDb) ) {
+//            throw new BizException(CommonEnum.NO_PERMISSION);
+//        }
+        return true;
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
  * @create 2025-03-29 12:46
  */
 @Data
-public class PageListDto<T> {
+public class PageListVo<T> {
     @Schema(description ="总条数")
     int total;
     @Schema(description = "每页数量")

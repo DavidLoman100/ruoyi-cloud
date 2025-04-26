@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
-import com.ruoyi.system.dto.user.res.UserResDTO;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.service.SysUserService;
 import com.ruoyi.system.vo.UserVo;

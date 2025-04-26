@@ -11,7 +11,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum UserEnum implements BaseEnum {
-    NO_OPT_ADMIN(10100, "不允许操作超级管理员"),
+    NO_OPT_ADMIN(10100, "不允许操作超级管理员！"),
+    ACCOUNT_ERROR(10101, "账号异常！"),
     ;
     private final int code;
     private final String msg;

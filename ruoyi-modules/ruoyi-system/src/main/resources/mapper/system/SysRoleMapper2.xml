@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="menuCheckStrictly"  column="menu_check_strictly"   />
 		<result property="deptCheckStrictly"  column="dept_check_strictly"   />
 		<result property="status"             column="status"                />
-		<result property="delFlag"            column="del_flag"              />
+		<result property="delFlag"            column="is_deleted"              />
 		<result property="createBy"           column="create_by"             />
 		<result property="createTime"         column="create_time"           />
 		<result property="updateBy"           column="update_by"             />
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<sql id="selectRoleVo">
 	    select distinct r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.menu_check_strictly, r.dept_check_strictly,
-            r.status, r.del_flag, r.create_time, r.remark 
+            r.status, r.is_deleted, r.create_time, r.remark 
         from sys_role r
 	        left join sys_user_role ur on ur.role_id = r.role_id
 	        left join sys_user u on u.user_id = ur.user_id
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="selectRoleList" parameterType="com.ruoyi.system.api.domain.SysRole" resultMap="SysRoleResult">
 		<include refid="selectRoleVo"/>
-		where r.del_flag = '0'
+		where r.is_deleted = '0'
 		<if test="roleId != null and roleId != 0">
 			AND r.role_id = #{roleId}
 		</if>
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
 	<select id="selectRolePermissionByUserId" parameterType="Long" resultMap="SysRoleResult">
 		<include refid="selectRoleVo"/>
-		WHERE r.del_flag = '0' and ur.user_id = #{userId}
+		WHERE r.is_deleted = '0' and ur.user_id = #{userId}
 	</select>
 	
 	<select id="selectRoleAll" resultMap="SysRoleResult">
@@ -80,17 +80,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="selectRolesByUserName" parameterType="String" resultMap="SysRoleResult">
 		<include refid="selectRoleVo"/>
-		WHERE r.del_flag = '0' and u.user_name = #{userName}
+		WHERE r.is_deleted = '0' and u.user_name = #{userName}
 	</select>
 	
 	<select id="checkRoleNameUnique" parameterType="String" resultMap="SysRoleResult">
 		<include refid="selectRoleVo"/>
-		 where r.role_name=#{roleName} and r.del_flag = '0' limit 1
+		 where r.role_name=#{roleName} and r.is_deleted = '0' limit 1
 	</select>
 	
 	<select id="checkRoleKeyUnique" parameterType="String" resultMap="SysRoleResult">
 		<include refid="selectRoleVo"/>
-		 where r.role_key=#{roleKey} and r.del_flag = '0' limit 1
+		 where r.role_key=#{roleKey} and r.is_deleted = '0' limit 1
 	</select>
 	
  	<insert id="insertRole" parameterType="com.ruoyi.system.api.domain.SysRole" useGeneratedKeys="true" keyProperty="roleId">
@@ -139,11 +139,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<delete id="deleteRoleById" parameterType="Long">
- 		update sys_role set del_flag = '2' where role_id = #{roleId}
+ 		update sys_role set is_deleted = '2' where role_id = #{roleId}
  	</delete>
  	
  	<delete id="deleteRoleByIds" parameterType="Long">
- 	    update sys_role set del_flag = '2' where role_id in
+ 	    update sys_role set is_deleted = '2' where role_id in
  		<foreach collection="array" item="roleId" open="(" separator="," close=")">
  			#{roleId}
         </foreach> 

@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.ruoyi.common.core.commonEntity.BasePo;
 import lombok.Data;
 
 /**
@@ -14,7 +16,7 @@ import lombok.Data;
  */
 @TableName(value ="sys_dept")
 @Data
-public class SysDeptPo implements Serializable {
+public class SysDeptPo extends BasePo {
     /**
      * 部门id
      */
@@ -68,37 +70,4 @@ public class SysDeptPo implements Serializable {
      */
     @TableField(value = "status")
     private String status;
-
-    /**
-     * 删除标志（0代表存在 1代表删除）
-     */
-    @TableField(value = "is_deleted")
-    private String isDeleted;
-
-    /**
-     * 创建者
-     */
-    @TableField(value = "create_by")
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @TableField(value = "create_time")
-    private Date createTime;
-
-    /**
-     * 更新者
-     */
-    @TableField(value = "update_by")
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    @TableField(value = "update_time")
-    private Date updateTime;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

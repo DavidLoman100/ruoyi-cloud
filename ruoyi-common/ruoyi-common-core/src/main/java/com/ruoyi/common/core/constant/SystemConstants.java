@@ -6,5 +6,5 @@ package com.ruoyi.common.core.constant;
  */
 public class SystemConstants {
 
-    public static final String SYSTEM_USER = "system";
+    public static final String ADMIN_USER = "admin";
 }

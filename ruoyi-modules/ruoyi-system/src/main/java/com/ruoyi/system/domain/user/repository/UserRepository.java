@@ -15,6 +15,4 @@ public interface UserRepository {
 
     Boolean updUserInfo(SysUserPo sysUserPo);
 
-    SysUserPo getUserWithDc(Long userId);
-
 }

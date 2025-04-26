@@ -1,9 +1,10 @@
 package com.ruoyi.system.service;
 
-import com.ruoyi.common.core.commonEntity.PageListDto;
+import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
 import com.ruoyi.system.dto.user.res.UserResDTO;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
+import com.ruoyi.system.vo.UserVo;
 
 /**
 * @author 37504
@@ -12,7 +13,7 @@ import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 */
 public interface SysUserService {
 
-    PageListDto<UserResDTO> pageQrySysUser(UserQryReqDTO request);
+    PageListVo<UserVo> pageQrySysUser(UserQryReqDTO request);
 
     Boolean updUserInfo(UserUpdReqDTO userUpdReqDTO);
 }

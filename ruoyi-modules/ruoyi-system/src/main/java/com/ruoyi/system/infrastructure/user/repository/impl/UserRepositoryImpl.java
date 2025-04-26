@@ -45,9 +45,5 @@ public class UserRepositoryImpl implements UserRepository {
         return upd > 0 ? true : false;
     }
 
-    @Override
-    @DataScope(deptAlias = "d", userAlias = "u")
-    public SysUserPo getUserWithDc(Long userId) {
-        return null;
-    }
+
 }

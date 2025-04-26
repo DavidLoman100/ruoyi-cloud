@@ -1,14 +1,11 @@
 package com.ruoyi.system.service.impl;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.common.core.commonEntity.PageListDto;
+import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.system.domain.service.SysUserDomainService;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
-import com.ruoyi.system.dto.user.res.UserResDTO;
-import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.service.SysUserService;
-import com.ruoyi.system.service.assembler.UserAssembler;
+import com.ruoyi.system.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +21,7 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserDomainService sysUserDomainService;
 
     @Override
-    public PageListDto<UserResDTO> pageQrySysUser(UserQryReqDTO request) {
+    public PageListVo<UserVo> pageQrySysUser(UserQryReqDTO request) {
         return sysUserDomainService.pageQrySysUser(request);
     }
 

@@ -16,13 +16,11 @@ public class SysRoleDeptPo implements Serializable {
     /**
      * 角色ID
      */
-    @TableId(value = "role_id")
     private Long roleId;
 
     /**
      * 部门ID
      */
-    @TableId(value = "dept_id")
     private Long deptId;
 
     @TableField(exist = false)
