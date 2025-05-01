@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class Response<T extends Object>{
     @Schema(description ="返回状态 true-成功，false-失败")
     private Boolean isSuccess;
-    @Schema(description = "返回码 0-失败 1-成功",required = true)
+    @Schema(description = "返回码 0-失败 200-成功",required = true)
     private int code;
     @Schema(description ="返回信息")
     private String message;

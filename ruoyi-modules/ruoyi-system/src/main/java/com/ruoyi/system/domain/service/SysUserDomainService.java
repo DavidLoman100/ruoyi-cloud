@@ -3,18 +3,15 @@ package com.ruoyi.system.domain.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.constant.SystemConstants;
-import com.ruoyi.common.core.enums.CommonEnum;
 import com.ruoyi.common.core.enums.UserEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.domain.role.repository.RoleDeptRepository;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
-import com.ruoyi.system.domain.user.repository.UserRepository;
+import com.ruoyi.system.domain.user.repository.SysUserRepository;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
-import com.ruoyi.system.dto.user.res.RoleDeptResDTO;
-import com.ruoyi.system.infrastructure.role.repository.po.SysRoleDeptPo;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.service.assembler.UserAssembler;
 import com.ruoyi.system.vo.UserVo;
@@ -23,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author DavidLoman
@@ -33,7 +29,7 @@ import java.util.stream.Collectors;
 public class SysUserDomainService {
 
     @Autowired
-    private UserRepository userRepository;
+    private SysUserRepository sysUserRepository;
 
     @Autowired
     private RoleDeptRepository roleDeptRepository;
@@ -53,7 +49,7 @@ public class SysUserDomainService {
             userQryEntity.setDeptId(curUser.getSysUser().getDeptId());
         }
 
-        Page<SysUserPo> page = userRepository.pageQrySysUser(userQryEntity);
+        Page<SysUserPo> page = sysUserRepository.pageQrySysUser(userQryEntity);
         PageListVo<UserVo> pageListVo = UserAssembler.INSTANCE.toPageListVo(page);
         return pageListVo;
     }
@@ -73,7 +69,7 @@ public class SysUserDomainService {
         //校验角色权限
         //校验用户名/手机号/邮箱是否重复
         SysUserPo sysUserPo = UserAssembler.INSTANCE.toSysUserPO(userUpdReqDTO);
-        return userRepository.updUserInfo(sysUserPo);
+        return sysUserRepository.updUserInfo(sysUserPo);
     }
 
     private Boolean checkPermission(Long userId) {
@@ -83,7 +79,7 @@ public class SysUserDomainService {
 //        }
 
         //校验用户权限
-        //SysUserPo sysUserPoDb = userRepository.getUserWithDc(userId);
+        //SysUserPo sysUserPoDb = sysUserRepository.getUserWithDc(userId);
 //        if (Objects.isNull(sysUserPoDb) ) {
 //            throw new BizException(CommonEnum.NO_PERMISSION);
 //        }

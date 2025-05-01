@@ -3,10 +3,8 @@ package com.ruoyi.system.infrastructure.user.repository.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.ruoyi.common.datascope.annotation.DataScope;
-import com.ruoyi.system.domain.user.entity.UserEntity;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
-import com.ruoyi.system.domain.user.repository.UserRepository;
+import com.ruoyi.system.domain.user.repository.SysUserRepository;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.infrastructure.user.repository.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,7 @@ import java.util.Objects;
  * @create 2025-04-14 1:14
  */
 @Repository
-public class UserRepositoryImpl implements UserRepository {
+public class SysUserRepositoryImpl implements SysUserRepository {
 
     @Autowired
     private SysUserMapper sysUserMapper;

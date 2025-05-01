@@ -1,6 +1,12 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.common.core.commonEntity.Response;
+import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
+import com.ruoyi.system.service.SysMenuService;
+import com.ruoyi.system.vo.menu.MenuVo;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,9 +40,15 @@ public class SysMenuController extends BaseController
     @Autowired
     private ISysMenuService menuService;
 
+    @Autowired
+    private SysMenuService sysMenuService;
+
+
+
     /**
      * 获取菜单列表
      */
+    @Deprecated
     @RequiresPermissions("system:menu:list")
     @GetMapping("/list")
     public AjaxResult list(SysMenu menu)
@@ -44,6 +56,14 @@ public class SysMenuController extends BaseController
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuList(menu, userId);
         return success(menus);
+    }
+
+    @Operation(summary = "获取菜单列表")
+    @RequiresPermissions("system:menu:list")
+    @PostMapping("/qry/list")
+    public Response<List<MenuVo>> qryMenu(@RequestBody MenuQryReqDTO reqDTO) {
+        List<MenuVo> menuVos = sysMenuService.qryMenu(reqDTO);
+        return Response.ok(menuVos);
     }
 
     /**

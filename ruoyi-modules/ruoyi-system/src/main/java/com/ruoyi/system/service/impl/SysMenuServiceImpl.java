@@ -1,7 +1,13 @@
 package com.ruoyi.system.service.impl;
 
+import com.ruoyi.system.domain.service.SysMenuDomainService;
+import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.service.SysMenuService;
+import com.ruoyi.system.vo.menu.MenuVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author DavidLoman
@@ -9,4 +15,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysMenuServiceImpl implements SysMenuService {
+
+    @Autowired
+    private SysMenuDomainService menuDomainService;
+    @Override
+    public List<MenuVo> qryMenu(MenuQryReqDTO reqDTO) {
+        return menuDomainService.qryMenu(reqDTO);
+    }
 }
