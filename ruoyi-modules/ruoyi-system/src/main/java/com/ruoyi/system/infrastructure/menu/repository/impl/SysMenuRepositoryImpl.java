@@ -37,4 +37,8 @@ public class SysMenuRepositoryImpl implements SysMenuRepository {
         return sysMenuMapper.qryMenuByPermission(qryEntity);
     }
 
+    @Override
+    public SysMenuPo getMenuById(Long menuId) {
+        return sysMenuMapper.selectById(menuId);
+    }
 }

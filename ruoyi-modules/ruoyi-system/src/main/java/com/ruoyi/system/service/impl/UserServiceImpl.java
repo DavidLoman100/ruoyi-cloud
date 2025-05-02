@@ -4,7 +4,7 @@ import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.system.domain.service.SysUserDomainService;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
-import com.ruoyi.system.service.SysUserService;
+import com.ruoyi.system.service.UserService;
 import com.ruoyi.system.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @createDate 2025-03-21 00:14:08
  */
 @Service
-public class SysUserServiceImpl implements SysUserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private SysUserDomainService sysUserDomainService;

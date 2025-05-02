@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain.service;
 
 import com.ruoyi.common.core.constant.SystemConstants;
+import com.ruoyi.common.core.enums.CommonEnum;
+import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.domain.SysRole;
 import com.ruoyi.system.api.domain.SysUser;
@@ -45,5 +47,14 @@ public class SysMenuDomainService {
             return MenuAssembler.INSTANCE.toMenuVoList(sysMenuPos);
         }
         return Collections.EMPTY_LIST;
+    }
+
+    public MenuVo getMenuInfo(Long menuId) {
+        SysMenuPo sysMenuPo = sysMenuRepository.getMenuById(menuId);
+        if (Objects.isNull(sysMenuPo)) {
+            throw new BizException(CommonEnum.INVALID_INFO);
+        }
+        MenuVo menuVo = MenuAssembler.INSTANCE.toMenuVo(sysMenuPo);
+        return menuVo;
     }
 }

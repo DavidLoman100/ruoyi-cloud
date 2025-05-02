@@ -10,7 +10,7 @@ import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
-import com.ruoyi.system.service.SysUserService;
+import com.ruoyi.system.service.UserService;
 import com.ruoyi.system.vo.UserVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -59,10 +59,10 @@ import com.ruoyi.system.service2.ISysUserService;
 public class SysUserController extends BaseController
 {
     @Autowired
-    private ISysUserService userService;
+    private ISysUserService sysUserService;
 
     @Autowired
-    private SysUserService sysUserService;
+    private UserService userService;
 
     @Autowired
     private ISysRoleService roleService;
@@ -89,7 +89,7 @@ public class SysUserController extends BaseController
     @PostMapping("/pageQrySysUser")
     public Response<PageListVo<UserVo>> pageQrySysUser(@RequestBody UserQryReqDTO request)
     {
-        PageListVo<UserVo> result = sysUserService.pageQrySysUser(request);
+        PageListVo<UserVo> result = userService.pageQrySysUser(request);
         return Response.ok(result);
     }
 
@@ -99,7 +99,7 @@ public class SysUserController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysUser user)
     {
-        List<SysUser> list = userService.selectUserList(user);
+        List<SysUser> list = sysUserService.selectUserList(user);
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         util.exportExcel(response, list, "用户数据");
     }
@@ -113,7 +113,7 @@ public class SysUserController extends BaseController
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         List<SysUser> userList = util.importExcel(file.getInputStream());
         String operName = SecurityUtils.getUsername();
-        String message = userService.importUser(userList, updateSupport, operName);
+        String message = sysUserService.importUser(userList, updateSupport, operName);
         return success(message);
     }
 
@@ -130,7 +130,7 @@ public class SysUserController extends BaseController
     @GetMapping("/info/{username}")
     public R<LoginUser> info(@PathVariable("username") String username)
     {
-        SysUser sysUser = userService.selectUserByUserName(username);
+        SysUser sysUser = sysUserService.selectUserByUserName(username);
         if (StringUtils.isNull(sysUser))
         {
             return R.fail("用户名或密码错误");
@@ -156,11 +156,11 @@ public class SysUserController extends BaseController
         {
             return R.fail("当前系统没有开启注册功能！");
         }
-        if (!userService.checkUserNameUnique(sysUser))
+        if (!sysUserService.checkUserNameUnique(sysUser))
         {
             return R.fail("保存用户'" + username + "'失败，注册账号已存在");
         }
-        return R.ok(userService.registerUser(sysUser));
+        return R.ok(sysUserService.registerUser(sysUser));
     }
 
     @Operation(summary = "记录登录信息")
@@ -168,7 +168,7 @@ public class SysUserController extends BaseController
     @PutMapping("/recordlogin")
     public R<Boolean> recordlogin(@RequestBody SysUser sysUser)
     {
-        return R.ok(userService.updateUserProfile(sysUser));
+        return R.ok(sysUserService.updateUserProfile(sysUser));
     }
 
     @Operation(summary = "获取用户信息")
@@ -201,8 +201,8 @@ public class SysUserController extends BaseController
         AjaxResult ajax = AjaxResult.success();
         if (StringUtils.isNotNull(userId))
         {
-            userService.checkUserDataScope(userId);
-            SysUser sysUser = userService.selectUserById(userId);
+            sysUserService.checkUserDataScope(userId);
+            SysUser sysUser = sysUserService.selectUserById(userId);
             ajax.put(AjaxResult.DATA_TAG, sysUser);
             ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
@@ -221,21 +221,21 @@ public class SysUserController extends BaseController
     {
         deptService.checkDeptDataScope(user.getDeptId());
         roleService.checkRoleDataScope(user.getRoleIds());
-        if (!userService.checkUserNameUnique(user))
+        if (!sysUserService.checkUserNameUnique(user))
         {
             return error("新增用户'" + user.getUserName() + "'失败，登录账号已存在");
         }
-        else if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(user))
+        else if (StringUtils.isNotEmpty(user.getPhonenumber()) && !sysUserService.checkPhoneUnique(user))
         {
             return error("新增用户'" + user.getUserName() + "'失败，手机号码已存在");
         }
-        else if (StringUtils.isNotEmpty(user.getEmail()) && !userService.checkEmailUnique(user))
+        else if (StringUtils.isNotEmpty(user.getEmail()) && !sysUserService.checkEmailUnique(user))
         {
             return error("新增用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setCreateBy(SecurityUtils.getUsername());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
-        return toAjax(userService.insertUser(user));
+        return toAjax(sysUserService.insertUser(user));
     }
 
 
@@ -244,7 +244,7 @@ public class SysUserController extends BaseController
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/updUserInfo")
     public Response<Boolean> updUserInfo(@Validated @RequestBody UserUpdReqDTO userUpdReqDTO) {
-        Boolean flag = sysUserService.updUserInfo(userUpdReqDTO);
+        Boolean flag = userService.updUserInfo(userUpdReqDTO);
         return Response.ok(flag);
     }
 
@@ -255,24 +255,24 @@ public class SysUserController extends BaseController
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysUser user)
     {
-        userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+        sysUserService.checkUserAllowed(user);
+        sysUserService.checkUserDataScope(user.getUserId());
         deptService.checkDeptDataScope(user.getDeptId());
         roleService.checkRoleDataScope(user.getRoleIds());
-        if (!userService.checkUserNameUnique(user))
+        if (!sysUserService.checkUserNameUnique(user))
         {
             return error("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
         }
-        else if (StringUtils.isNotEmpty(user.getPhonenumber()) && !userService.checkPhoneUnique(user))
+        else if (StringUtils.isNotEmpty(user.getPhonenumber()) && !sysUserService.checkPhoneUnique(user))
         {
             return error("修改用户'" + user.getUserName() + "'失败，手机号码已存在");
         }
-        else if (StringUtils.isNotEmpty(user.getEmail()) && !userService.checkEmailUnique(user))
+        else if (StringUtils.isNotEmpty(user.getEmail()) && !sysUserService.checkEmailUnique(user))
         {
             return error("修改用户'" + user.getUserName() + "'失败，邮箱账号已存在");
         }
         user.setUpdateBy(SecurityUtils.getUsername());
-        return toAjax(userService.updateUser(user));
+        return toAjax(sysUserService.updateUser(user));
     }
 
     @Operation(summary = "删除用户")
@@ -285,7 +285,7 @@ public class SysUserController extends BaseController
         {
             return error("当前用户不能删除");
         }
-        return toAjax(userService.deleteUserByIds(userIds));
+        return toAjax(sysUserService.deleteUserByIds(userIds));
     }
 
     @Operation(summary = "重置密码")
@@ -294,11 +294,11 @@ public class SysUserController extends BaseController
     @PutMapping("/resetPwd")
     public AjaxResult resetPwd(@RequestBody SysUser user)
     {
-        userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+        sysUserService.checkUserAllowed(user);
+        sysUserService.checkUserDataScope(user.getUserId());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         user.setUpdateBy(SecurityUtils.getUsername());
-        return toAjax(userService.resetPwd(user));
+        return toAjax(sysUserService.resetPwd(user));
     }
 
     @Operation(summary = "状态修改")
@@ -307,10 +307,10 @@ public class SysUserController extends BaseController
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysUser user)
     {
-        userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+        sysUserService.checkUserAllowed(user);
+        sysUserService.checkUserDataScope(user.getUserId());
         user.setUpdateBy(SecurityUtils.getUsername());
-        return toAjax(userService.updateUserStatus(user));
+        return toAjax(sysUserService.updateUserStatus(user));
     }
 
     @Operation(summary = "根据用户编号获取详细信息")
@@ -319,7 +319,7 @@ public class SysUserController extends BaseController
     public AjaxResult authRole(@PathVariable("userId") Long userId)
     {
         AjaxResult ajax = AjaxResult.success();
-        SysUser user = userService.selectUserById(userId);
+        SysUser user = sysUserService.selectUserById(userId);
         List<SysRole> roles = roleService.selectRolesByUserId(userId);
         ajax.put("user", user);
         ajax.put("roles", SysUser.isAdmin(userId) ? roles : roles.stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
@@ -332,9 +332,9 @@ public class SysUserController extends BaseController
     @PutMapping("/authRole")
     public AjaxResult insertAuthRole(Long userId, Long[] roleIds)
     {
-        userService.checkUserDataScope(userId);
+        sysUserService.checkUserDataScope(userId);
         roleService.checkRoleDataScope(roleIds);
-        userService.insertUserAuth(userId, roleIds);
+        sysUserService.insertUserAuth(userId, roleIds);
         return success();
     }
 

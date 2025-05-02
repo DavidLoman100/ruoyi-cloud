@@ -20,4 +20,6 @@ public interface MenuAssembler {
     MenuQryEntity toMenuQryEntity(MenuQryReqDTO reqDTO);
 
     List<MenuVo> toMenuVoList(List<SysMenuPo> sysMenuPos);
+
+    MenuVo toMenuVo(SysMenuPo sysMenuPo);
 }

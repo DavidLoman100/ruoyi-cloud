@@ -9,6 +9,8 @@ import java.util.List;
  * @author DavidLoman
  * @create 2025-04-23 1:29
  */
-public interface SysMenuService {
+public interface MenuService {
     List<MenuVo> qryMenu(MenuQryReqDTO reqDTO);
+
+    MenuVo getMenuInfo(Long menuId);
 }

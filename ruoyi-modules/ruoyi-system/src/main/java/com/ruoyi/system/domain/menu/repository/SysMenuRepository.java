@@ -16,4 +16,6 @@ public interface SysMenuRepository {
     List<SysMenuPo> qryMenu(MenuQryEntity qryEntity);
 
     List<SysMenuPo> qryMenuByPermission(MenuQryEntity qryEntity);
+
+    SysMenuPo getMenuById(Long menuId);
 }
