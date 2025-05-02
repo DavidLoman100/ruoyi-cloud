@@ -3,12 +3,14 @@ package com.ruoyi.system.dto.menu.req;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author DavidLoman
  * @create 2025-04-30 17:37
  */
 @Data
-public class MenuQryReqDTO{
+public class MenuQryReqDTO implements Serializable {
     @Schema(description = "菜单名称")
     private String menuName;
 

@@ -1,6 +1,7 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
+import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface MenuService {
     List<MenuVo> qryMenu(MenuQryReqDTO reqDTO);
 
     MenuVo getMenuInfo(Long menuId);
+
+    List<MenuTreeVo> qryTreeMenu(MenuQryReqDTO reqDTO);
 }

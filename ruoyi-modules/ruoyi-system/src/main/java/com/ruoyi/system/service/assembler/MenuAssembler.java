@@ -3,6 +3,7 @@ package com.ruoyi.system.service.assembler;
 import com.ruoyi.system.domain.menu.entity.MenuQryEntity;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
+import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -22,4 +23,8 @@ public interface MenuAssembler {
     List<MenuVo> toMenuVoList(List<SysMenuPo> sysMenuPos);
 
     MenuVo toMenuVo(SysMenuPo sysMenuPo);
+
+    MenuTreeVo toMenuTreeVo(SysMenuPo sysMenuPo);
+    List<MenuTreeVo> toMenuTreeVos(List<SysMenuPo> sysMenuPos);
+
 }

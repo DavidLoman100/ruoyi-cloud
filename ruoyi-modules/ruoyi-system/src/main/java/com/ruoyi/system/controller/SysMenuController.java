@@ -5,6 +5,7 @@ import java.util.List;
 import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.service.MenuService;
+import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,15 +59,11 @@ public class SysMenuController extends BaseController
         return Response.ok(menuService.getMenuInfo(menuId));
     }
 
-    /**
-     * 获取菜单下拉树列表
-     */
-    @GetMapping("/treeselect")
-    public AjaxResult treeselect(SysMenu menu)
-    {
-        Long userId = SecurityUtils.getUserId();
-        List<SysMenu> menus = SysMenuService.selectMenuList(menu, userId);
-        return success(SysMenuService.buildMenuTreeSelect(menus));
+    @Operation(summary = "获取菜单下拉树列表")
+    @PostMapping("/tree/list")
+    public Response<List<MenuTreeVo>> qryTreeMenu(@RequestBody MenuQryReqDTO reqDTO){
+        List<MenuTreeVo> menuTreeVos = menuService.qryTreeMenu(reqDTO);
+        return Response.ok(menuTreeVos);
     }
 
     /**

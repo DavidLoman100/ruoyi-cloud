@@ -12,6 +12,7 @@ import com.ruoyi.system.domain.user.entity.UserQryEntity;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
 import com.ruoyi.system.service.assembler.MenuAssembler;
+import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,16 @@ public class SysMenuDomainService {
     private SysMenuRepository sysMenuRepository;
 
     public List<MenuVo> qryMenu(MenuQryReqDTO reqDTO) {
-        boolean isAdmin = SystemConstants.ADMIN_USER.equals(SecurityUtils.getUsername());
         MenuQryEntity qryEntity = MenuAssembler.INSTANCE.toMenuQryEntity(reqDTO);
+        List<SysMenuPo> sysMenuPos = getList(qryEntity);
+        if (!CollectionUtils.isEmpty(sysMenuPos)) {
+            return MenuAssembler.INSTANCE.toMenuVoList(sysMenuPos);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    private List<SysMenuPo> getList(MenuQryEntity qryEntity) {
+        boolean isAdmin = SystemConstants.ADMIN_USER.equals(SecurityUtils.getUsername());
         List<SysMenuPo> sysMenuPos;
         if (isAdmin) {
             sysMenuPos = sysMenuRepository.qryMenu(qryEntity);
@@ -42,11 +51,7 @@ public class SysMenuDomainService {
             qryEntity.setRoles(roleIds);
             sysMenuPos = sysMenuRepository.qryMenuByPermission(qryEntity);
         }
-
-        if (!CollectionUtils.isEmpty(sysMenuPos)) {
-            return MenuAssembler.INSTANCE.toMenuVoList(sysMenuPos);
-        }
-        return Collections.EMPTY_LIST;
+        return sysMenuPos;
     }
 
     public MenuVo getMenuInfo(Long menuId) {
@@ -56,5 +61,30 @@ public class SysMenuDomainService {
         }
         MenuVo menuVo = MenuAssembler.INSTANCE.toMenuVo(sysMenuPo);
         return menuVo;
+    }
+
+    public List<MenuTreeVo> qryTreeMenu(MenuQryReqDTO reqDTO) {
+        MenuQryEntity qryEntity = MenuAssembler.INSTANCE.toMenuQryEntity(reqDTO);
+        List<SysMenuPo> sysMenuPos = getList(qryEntity);
+        if (!CollectionUtils.isEmpty(sysMenuPos)) {
+            Map<Long, List<SysMenuPo>> menuMap = sysMenuPos.stream().collect(Collectors.groupingBy(SysMenuPo::getParentId));
+            Long minParentId = menuMap.keySet().stream().min(Long::compareTo).get();
+            List<SysMenuPo> rootMenuPos = menuMap.get(minParentId);
+            List<MenuTreeVo> rootMenuTreeVos = MenuAssembler.INSTANCE.toMenuTreeVos(rootMenuPos);
+            setTreeMenuChildren(rootMenuTreeVos, menuMap);
+            return rootMenuTreeVos;
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    private void setTreeMenuChildren(List<MenuTreeVo> menuTreeVos, Map<Long, List<SysMenuPo>> menuMap) {
+        for (MenuTreeVo menuTreeVo : menuTreeVos) {
+            if (menuMap.containsKey(menuTreeVo.getMenuId())) {
+                List<SysMenuPo> childMenuPos = menuMap.get(menuTreeVo.getMenuId());
+                List<MenuTreeVo> childMenuTreeVos = MenuAssembler.INSTANCE.toMenuTreeVos(childMenuPos);
+                menuTreeVo.setChildren(childMenuTreeVos);
+                setTreeMenuChildren(childMenuTreeVos, menuMap);
+            }
+        }
     }
 }

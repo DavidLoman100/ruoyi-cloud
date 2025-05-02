@@ -27,9 +27,10 @@ public class SysMenuRepositoryImpl implements SysMenuRepository {
 
     @Override
     public List<SysMenuPo> qryMenu(MenuQryEntity qryEntity) {
-        return  sysMenuMapper.selectList(Wrappers.<SysMenuPo>lambdaQuery()
+        return sysMenuMapper.selectList(Wrappers.<SysMenuPo>lambdaQuery()
                 .eq(StringUtils.hasText(qryEntity.getStatus()), SysMenuPo::getStatus, qryEntity.getStatus())
-                .like(StringUtils.hasText(qryEntity.getMenuName()), SysMenuPo::getMenuName, qryEntity.getMenuName()));
+                .like(StringUtils.hasText(qryEntity.getMenuName()), SysMenuPo::getMenuName, qryEntity.getMenuName())
+                .orderByAsc(SysMenuPo::getParentId, SysMenuPo::getOrderNum));
     }
 
     @Override
