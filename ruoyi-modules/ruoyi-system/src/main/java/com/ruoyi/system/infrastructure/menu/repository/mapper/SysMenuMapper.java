@@ -17,6 +17,8 @@ import java.util.List;
 @Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenuPo> {
     List<SysMenuPo> qryMenuByPermission(@Param("qry") MenuQryEntity qryEntity);
+
+    List<Long> getMenuIdByRole(@Param("roleId")Long roleId, @Param("menuCheckStrictly")Integer menuCheckStrictly);
 }
 
 

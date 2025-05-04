@@ -3,6 +3,7 @@ package com.ruoyi.system.service.impl;
 import com.ruoyi.system.domain.service.SysMenuDomainService;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.service.MenuService;
+import com.ruoyi.system.vo.menu.MenuTreeByRoleVo;
 import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<MenuTreeVo> qryTreeMenu(MenuQryReqDTO reqDTO) {
         return menuDomainService.qryTreeMenu(reqDTO);
+    }
+
+    @Override
+    public MenuTreeByRoleVo menuTreeByRole(Long roleId) {
+        return menuDomainService.menuTreeByRole(roleId);
     }
 
 }

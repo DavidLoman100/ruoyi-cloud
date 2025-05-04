@@ -1,6 +1,7 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
+import com.ruoyi.system.vo.menu.MenuTreeByRoleVo;
 import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 
@@ -16,4 +17,6 @@ public interface MenuService {
     MenuVo getMenuInfo(Long menuId);
 
     List<MenuTreeVo> qryTreeMenu(MenuQryReqDTO reqDTO);
+
+    MenuTreeByRoleVo menuTreeByRole(Long roleId);
 }

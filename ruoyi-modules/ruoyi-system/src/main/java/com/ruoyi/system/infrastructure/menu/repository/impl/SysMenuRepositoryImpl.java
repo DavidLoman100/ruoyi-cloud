@@ -3,12 +3,8 @@ package com.ruoyi.system.infrastructure.menu.repository.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.system.domain.menu.entity.MenuQryEntity;
 import com.ruoyi.system.domain.menu.repository.SysMenuRepository;
-import com.ruoyi.system.domain.user.entity.UserQryEntity;
-import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.infrastructure.menu.repository.mapper.SysMenuMapper;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
-import com.ruoyi.system.mapper.SysMenuMapper2;
-import com.ruoyi.system.vo.menu.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -41,5 +37,10 @@ public class SysMenuRepositoryImpl implements SysMenuRepository {
     @Override
     public SysMenuPo getMenuById(Long menuId) {
         return sysMenuMapper.selectById(menuId);
+    }
+
+    @Override
+    public List<Long> getMenuIdByRole(Long roleId, Integer menuCheckStrictly) {
+        return sysMenuMapper.getMenuIdByRole(roleId, menuCheckStrictly);
     }
 }

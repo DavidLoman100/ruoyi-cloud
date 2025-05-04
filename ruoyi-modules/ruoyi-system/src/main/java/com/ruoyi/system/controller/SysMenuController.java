@@ -5,6 +5,7 @@ import java.util.List;
 import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.service.MenuService;
+import com.ruoyi.system.vo.menu.MenuTreeByRoleVo;
 import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,18 +67,11 @@ public class SysMenuController extends BaseController
         return Response.ok(menuTreeVos);
     }
 
-    /**
-     * 加载对应角色菜单列表树
-     */
-    @GetMapping(value = "/roleMenuTreeselect/{roleId}")
-    public AjaxResult roleMenuTreeselect(@PathVariable("roleId") Long roleId)
+    @Operation(summary = "获取菜单树和角色对应菜单id集")
+    @GetMapping(value = "/tree/{roleId}")
+    public Response<MenuTreeByRoleVo> menuTreeByRole(@PathVariable("roleId") Long roleId)
     {
-        Long userId = SecurityUtils.getUserId();
-        List<SysMenu> menus = SysMenuService.selectMenuList(userId);
-        AjaxResult ajax = AjaxResult.success();
-        ajax.put("checkedKeys", SysMenuService.selectMenuListByRoleId(roleId));
-        ajax.put("menus", SysMenuService.buildMenuTreeSelect(menus));
-        return ajax;
+        return Response.ok(menuService.menuTreeByRole(roleId));
     }
 
     /**

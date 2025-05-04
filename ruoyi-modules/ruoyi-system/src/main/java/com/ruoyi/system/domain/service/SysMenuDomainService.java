@@ -5,13 +5,14 @@ import com.ruoyi.common.core.enums.CommonEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.domain.SysRole;
-import com.ruoyi.system.api.domain.SysUser;
 import com.ruoyi.system.domain.menu.entity.MenuQryEntity;
 import com.ruoyi.system.domain.menu.repository.SysMenuRepository;
-import com.ruoyi.system.domain.user.entity.UserQryEntity;
+import com.ruoyi.system.domain.role.repository.SysRoleRepository;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
+import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
 import com.ruoyi.system.service.assembler.MenuAssembler;
+import com.ruoyi.system.vo.menu.MenuTreeByRoleVo;
 import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,24 @@ public class SysMenuDomainService {
     @Autowired
     private SysMenuRepository sysMenuRepository;
 
+    @Autowired
+    private SysRoleRepository sysRoleRepository;
+
+    /**
+     * 查询菜单列表
+     * @param reqDTO
+     * @return
+     */
     public List<MenuVo> qryMenu(MenuQryReqDTO reqDTO) {
         MenuQryEntity qryEntity = MenuAssembler.INSTANCE.toMenuQryEntity(reqDTO);
-        List<SysMenuPo> sysMenuPos = getList(qryEntity);
+        List<SysMenuPo> sysMenuPos = getMenuList(qryEntity);
         if (!CollectionUtils.isEmpty(sysMenuPos)) {
             return MenuAssembler.INSTANCE.toMenuVoList(sysMenuPos);
         }
         return Collections.EMPTY_LIST;
     }
 
-    private List<SysMenuPo> getList(MenuQryEntity qryEntity) {
+    private List<SysMenuPo> getMenuList(MenuQryEntity qryEntity) {
         boolean isAdmin = SystemConstants.ADMIN_USER.equals(SecurityUtils.getUsername());
         List<SysMenuPo> sysMenuPos;
         if (isAdmin) {
@@ -63,9 +72,18 @@ public class SysMenuDomainService {
         return menuVo;
     }
 
+    /**
+     * 获取菜单树
+     * @param reqDTO
+     * @return
+     */
     public List<MenuTreeVo> qryTreeMenu(MenuQryReqDTO reqDTO) {
         MenuQryEntity qryEntity = MenuAssembler.INSTANCE.toMenuQryEntity(reqDTO);
-        List<SysMenuPo> sysMenuPos = getList(qryEntity);
+        return qryMenuTree(qryEntity);
+    }
+
+    private List<MenuTreeVo> qryMenuTree (MenuQryEntity qryEntity) {
+        List<SysMenuPo> sysMenuPos = getMenuList(qryEntity);
         if (!CollectionUtils.isEmpty(sysMenuPos)) {
             Map<Long, List<SysMenuPo>> menuMap = sysMenuPos.stream().collect(Collectors.groupingBy(SysMenuPo::getParentId));
             Long minParentId = menuMap.keySet().stream().min(Long::compareTo).get();
@@ -86,5 +104,20 @@ public class SysMenuDomainService {
                 setTreeMenuChildren(childMenuTreeVos, menuMap);
             }
         }
+    }
+
+    /**
+     * 获取菜单树 和 角色关联的菜单ID
+     * @param roleId
+     * @return
+     */
+    public MenuTreeByRoleVo menuTreeByRole(Long roleId) {
+        SysRolePo sysRolePo = sysRoleRepository.getRoleInfo(roleId);
+        if (Objects.isNull(sysRolePo)) {
+            throw new BizException(CommonEnum.INVALID_INFO);
+        }
+        List<MenuTreeVo> menuTreeVos = qryMenuTree(new MenuQryEntity());
+        List<Long> menuIds = sysMenuRepository.getMenuIdByRole(roleId,sysRolePo.getMenuCheckStrictly());
+        return new MenuTreeByRoleVo(menuIds, menuTreeVos);
     }
 }
