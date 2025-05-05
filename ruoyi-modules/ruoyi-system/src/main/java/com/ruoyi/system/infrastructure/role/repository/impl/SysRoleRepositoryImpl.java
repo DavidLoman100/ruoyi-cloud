@@ -1,5 +1,6 @@
 package com.ruoyi.system.infrastructure.role.repository.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.system.domain.role.repository.SysRoleRepository;
 import com.ruoyi.system.infrastructure.role.repository.mapper.SysRoleMapper;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;

@@ -1,4 +1,4 @@
-package com.ruoyi.common.core.enums;
+package com.ruoyi.common.core.enums.error;
 
 import com.ruoyi.common.core.commonEntity.BaseEnum;
 import lombok.Getter;
@@ -10,20 +10,11 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum UserEnum implements BaseEnum {
+public enum UserErrorEnum implements BaseEnum {
     NO_OPT_ADMIN(10100, "不允许操作超级管理员！"),
     ACCOUNT_ERROR(10101, "账号异常！"),
     ;
     private final int code;
     private final String msg;
 
-    @Override
-    public int getCode() {
-        return 0;
-    }
-
-    @Override
-    public String getMsg() {
-        return null;
-    }
 }

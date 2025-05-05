@@ -17,4 +17,10 @@ public interface SysMenuRepository {
     SysMenuPo getMenuById(Long menuId);
 
     List<Long> getMenuIdByRole(Long roleId, Integer menuCheckStrictly);
+
+    Boolean checkNameExist(Long menuId, String menuName);
+
+    Boolean addMenu(SysMenuPo sysMenuPo);
+
+    Boolean updMenu(SysMenuPo sysMenuPo);
 }

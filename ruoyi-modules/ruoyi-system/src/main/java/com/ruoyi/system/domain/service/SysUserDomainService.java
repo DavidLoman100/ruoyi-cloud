@@ -3,7 +3,7 @@ package com.ruoyi.system.domain.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.constant.SystemConstants;
-import com.ruoyi.common.core.enums.UserEnum;
+import com.ruoyi.common.core.enums.error.UserErrorEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.model.LoginUser;
@@ -44,7 +44,7 @@ public class SysUserDomainService {
             LoginUser curUser = SecurityUtils.getLoginUser();
             Set<String> roles = curUser.getRoles();
             if (CollectionUtils.isEmpty(roles)) {
-                throw new BizException(UserEnum.ACCOUNT_ERROR);
+                throw new BizException(UserErrorEnum.ACCOUNT_ERROR);
             }
             userQryEntity.setDeptId(curUser.getSysUser().getDeptId());
         }
@@ -59,7 +59,7 @@ public class SysUserDomainService {
 
         //不允许修改超级管理员
         if (1L == userUpdReqDTO.getUserId()) {
-            throw new BizException(UserEnum.NO_OPT_ADMIN);
+            throw new BizException(UserErrorEnum.NO_OPT_ADMIN);
         }
 
 
@@ -81,7 +81,7 @@ public class SysUserDomainService {
         //校验用户权限
         //SysUserPo sysUserPoDb = sysUserRepository.getUserWithDc(userId);
 //        if (Objects.isNull(sysUserPoDb) ) {
-//            throw new BizException(CommonEnum.NO_PERMISSION);
+//            throw new BizException(CommonErrorEnum.NO_PERMISSION);
 //        }
         return true;
     }

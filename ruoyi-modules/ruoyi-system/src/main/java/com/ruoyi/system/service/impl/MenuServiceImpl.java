@@ -1,7 +1,9 @@
 package com.ruoyi.system.service.impl;
 
 import com.ruoyi.system.domain.service.SysMenuDomainService;
+import com.ruoyi.system.dto.menu.req.MenuAddDTO;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
+import com.ruoyi.system.dto.menu.req.MenuUpdDTO;
 import com.ruoyi.system.service.MenuService;
 import com.ruoyi.system.vo.menu.MenuTreeByRoleVo;
 import com.ruoyi.system.vo.menu.MenuTreeVo;
@@ -38,6 +40,16 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public MenuTreeByRoleVo menuTreeByRole(Long roleId) {
         return menuDomainService.menuTreeByRole(roleId);
+    }
+
+    @Override
+    public Boolean addMenu(MenuAddDTO menuAddDTO) {
+        return menuDomainService.addMenu(menuAddDTO);
+    }
+
+    @Override
+    public Boolean updMenu(MenuUpdDTO menuUpdDTO) {
+        return menuDomainService.updMenu(menuUpdDTO);
     }
 
 }

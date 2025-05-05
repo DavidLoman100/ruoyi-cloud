@@ -3,7 +3,9 @@ package com.ruoyi.system.controller;
 import java.util.List;
 
 import com.ruoyi.common.core.commonEntity.Response;
+import com.ruoyi.system.dto.menu.req.MenuAddDTO;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
+import com.ruoyi.system.dto.menu.req.MenuUpdDTO;
 import com.ruoyi.system.service.MenuService;
 import com.ruoyi.system.vo.menu.MenuTreeByRoleVo;
 import com.ruoyi.system.vo.menu.MenuTreeVo;
@@ -29,6 +31,8 @@ import com.ruoyi.common.security.annotation.RequiresPermissions;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.domain.SysMenu;
 import com.ruoyi.system.service2.ISysMenuService;
+
+import javax.validation.Valid;
 
 /**
  * 菜单信息
@@ -74,6 +78,21 @@ public class SysMenuController extends BaseController
         return Response.ok(menuService.menuTreeByRole(roleId));
     }
 
+    @Operation(summary = "新增菜单")
+    @RequiresPermissions("system:menu:add")
+    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
+    @PostMapping("/add")
+    public Response<Boolean> addMenu(@RequestBody MenuAddDTO menuAddDTO) {
+        return Response.ok(menuService.addMenu(menuAddDTO));
+    }
+
+    @Operation(summary = "修改菜单")
+    @RequiresPermissions("system:menu:edit")
+    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/edit")
+    public Response<Boolean> updMenu(@Valid @RequestBody MenuUpdDTO menuUpdDTO) {
+        return Response.ok(menuService.updMenu(menuUpdDTO));
+    }
     /**
      * 新增菜单
      */

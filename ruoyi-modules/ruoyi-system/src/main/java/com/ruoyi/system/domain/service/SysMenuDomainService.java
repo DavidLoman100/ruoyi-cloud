@@ -1,14 +1,20 @@
 package com.ruoyi.system.domain.service;
 
+import com.ruoyi.common.core.constant.Constants;
 import com.ruoyi.common.core.constant.SystemConstants;
-import com.ruoyi.common.core.enums.CommonEnum;
+import com.ruoyi.common.core.enums.dict.IsTrueEnum;
+import com.ruoyi.common.core.enums.error.CommonErrorEnum;
+import com.ruoyi.common.core.enums.error.MenuErrorEnum;
 import com.ruoyi.common.core.exception.BizException;
+import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.domain.SysRole;
 import com.ruoyi.system.domain.menu.entity.MenuQryEntity;
 import com.ruoyi.system.domain.menu.repository.SysMenuRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleRepository;
+import com.ruoyi.system.dto.menu.req.MenuAddDTO;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
+import com.ruoyi.system.dto.menu.req.MenuUpdDTO;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
 import com.ruoyi.system.service.assembler.MenuAssembler;
@@ -66,7 +72,7 @@ public class SysMenuDomainService {
     public MenuVo getMenuInfo(Long menuId) {
         SysMenuPo sysMenuPo = sysMenuRepository.getMenuById(menuId);
         if (Objects.isNull(sysMenuPo)) {
-            throw new BizException(CommonEnum.INVALID_INFO);
+            throw new BizException(CommonErrorEnum.INVALID_INFO);
         }
         MenuVo menuVo = MenuAssembler.INSTANCE.toMenuVo(sysMenuPo);
         return menuVo;
@@ -114,10 +120,50 @@ public class SysMenuDomainService {
     public MenuTreeByRoleVo menuTreeByRole(Long roleId) {
         SysRolePo sysRolePo = sysRoleRepository.getRoleInfo(roleId);
         if (Objects.isNull(sysRolePo)) {
-            throw new BizException(CommonEnum.INVALID_INFO);
+            throw new BizException(CommonErrorEnum.INVALID_INFO);
         }
         List<MenuTreeVo> menuTreeVos = qryMenuTree(new MenuQryEntity());
         List<Long> menuIds = sysMenuRepository.getMenuIdByRole(roleId,sysRolePo.getMenuCheckStrictly());
         return new MenuTreeByRoleVo(menuIds, menuTreeVos);
+    }
+
+    public Boolean addMenu(MenuAddDTO menuAddDTO) {
+        SysMenuPo sysMenuPo = MenuAssembler.INSTANCE.toSysMenuPo(menuAddDTO);
+        checkMenuName(sysMenuPo);
+        checkPatentId(sysMenuPo);
+        return sysMenuRepository.addMenu(sysMenuPo);
+    }
+
+    private void checkMenuName(SysMenuPo sysMenuPo) {
+        Boolean nameExist = sysMenuRepository.checkNameExist(sysMenuPo.getMenuId(), sysMenuPo.getMenuName());
+        if (nameExist) {
+            throw new BizException(MenuErrorEnum.NAME_EXIST);
+        }
+        if (Integer.valueOf(IsTrueEnum.TRUE.getCode()) == sysMenuPo.getIsFrame()
+                && StringUtils.isNotBlank(sysMenuPo.getPath())
+                && !StringUtils.startsWithAny(sysMenuPo.getPath(), Constants.HTTP, Constants.HTTPS)) {
+            throw new BizException(MenuErrorEnum.NO_VALID_PATH);
+        }
+    }
+
+    private void checkPatentId(SysMenuPo sysMenuPo) {
+        if (sysMenuPo.getParentId() == 0L) {
+            return;
+        }
+        SysMenuPo pSysMenuPo = sysMenuRepository.getMenuById(sysMenuPo.getParentId());
+        if (Objects.isNull(pSysMenuPo)) {
+            throw new BizException(MenuErrorEnum.NO_VALID_PARENT);
+        }
+    }
+
+    public Boolean updMenu(MenuUpdDTO menuUpdDTO) {
+        SysMenuPo sysMenuPo = MenuAssembler.INSTANCE.toSysMenuPo(menuUpdDTO);
+        SysMenuPo menuPoDb = sysMenuRepository.getMenuById(sysMenuPo.getMenuId());
+        if (Objects.isNull(menuPoDb)) {
+            throw new BizException(CommonErrorEnum.INVALID_INFO);
+        }
+        checkMenuName(sysMenuPo);
+        checkPatentId(sysMenuPo);
+        return sysMenuRepository.updMenu(sysMenuPo);
     }
 }
