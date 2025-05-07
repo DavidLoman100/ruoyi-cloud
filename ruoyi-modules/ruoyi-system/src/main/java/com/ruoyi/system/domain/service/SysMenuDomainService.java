@@ -11,6 +11,7 @@ import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.domain.SysRole;
 import com.ruoyi.system.domain.menu.entity.MenuQryEntity;
 import com.ruoyi.system.domain.menu.repository.SysMenuRepository;
+import com.ruoyi.system.domain.role.repository.SysRoleMenuRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleRepository;
 import com.ruoyi.system.dto.menu.req.MenuAddDTO;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
@@ -40,6 +41,9 @@ public class SysMenuDomainService {
 
     @Autowired
     private SysRoleRepository sysRoleRepository;
+
+    @Autowired
+    private SysRoleMenuRepository sysRoleMenuRepository;
 
     /**
      * 查询菜单列表
@@ -165,5 +169,19 @@ public class SysMenuDomainService {
         checkMenuName(sysMenuPo);
         checkPatentId(sysMenuPo);
         return sysMenuRepository.updMenu(sysMenuPo);
+    }
+
+    public Boolean removeMenu(Long menuId) {
+        SysMenuPo menuPo = sysMenuRepository.getMenuById(menuId);
+        if (Objects.isNull(menuPo)) {
+            throw new BizException(CommonErrorEnum.INVALID_INFO);
+        }
+        if (sysMenuRepository.hasChild(menuId)) {
+            throw new BizException(MenuErrorEnum.HAS_CHILD);
+        }
+        if (sysRoleMenuRepository.hasRoleMenu(menuId)) {
+            throw new BizException(MenuErrorEnum.HAS_ASSIGNED);
+        }
+        return sysMenuRepository.deleteMenu(menuId);
     }
 }

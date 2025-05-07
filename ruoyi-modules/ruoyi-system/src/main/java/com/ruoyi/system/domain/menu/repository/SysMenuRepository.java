@@ -23,4 +23,8 @@ public interface SysMenuRepository {
     Boolean addMenu(SysMenuPo sysMenuPo);
 
     Boolean updMenu(SysMenuPo sysMenuPo);
+
+    Boolean hasChild(Long menuId);
+
+    Boolean deleteMenu(Long menuId);
 }

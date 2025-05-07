@@ -9,6 +9,6 @@ import java.util.Set;
  * @author DavidLoman
  * @create 2025-04-26 18:03
  */
-public interface RoleDeptRepository {
+public interface SysRoleDeptRepository {
     List<SysRoleDeptPo> qryRoleDept(Set<String> roles);
 }

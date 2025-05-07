@@ -12,7 +12,6 @@ import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.common.core.constant.UserConstants;
-import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.common.log.annotation.Log;
@@ -93,48 +90,13 @@ public class SysMenuController extends BaseController
     public Response<Boolean> updMenu(@Valid @RequestBody MenuUpdDTO menuUpdDTO) {
         return Response.ok(menuService.updMenu(menuUpdDTO));
     }
-    /**
-     * 新增菜单
-     */
-    @RequiresPermissions("system:menu:add")
-    @Log(title = "菜单管理", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysMenu menu)
-    {
-        if (!SysMenuService.checkMenuNameUnique(menu))
-        {
-            return error("新增菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-        }
-        else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath()))
-        {
-            return error("新增菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
-        }
-        menu.setCreateBy(SecurityUtils.getUsername());
-        return toAjax(SysMenuService.insertMenu(menu));
-    }
 
-    /**
-     * 修改菜单
-     */
-    @RequiresPermissions("system:menu:edit")
-    @Log(title = "菜单管理", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysMenu menu)
-    {
-        if (!SysMenuService.checkMenuNameUnique(menu))
-        {
-            return error("修改菜单'" + menu.getMenuName() + "'失败，菜单名称已存在");
-        }
-        else if (UserConstants.YES_FRAME.equals(menu.getIsFrame()) && !StringUtils.ishttp(menu.getPath()))
-        {
-            return error("修改菜单'" + menu.getMenuName() + "'失败，地址必须以http(s)://开头");
-        }
-        else if (menu.getMenuId().equals(menu.getParentId()))
-        {
-            return error("修改菜单'" + menu.getMenuName() + "'失败，上级菜单不能选择自己");
-        }
-        menu.setUpdateBy(SecurityUtils.getUsername());
-        return toAjax(SysMenuService.updateMenu(menu));
+    @Operation(summary = "删除菜单")
+    @RequiresPermissions("system:menu:remove")
+    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/delete/{menuId}")
+    public Response<Boolean> removeMenu(@PathVariable("menuId") Long menuId) {
+        return Response.ok(menuService.removeMenu(menuId));
     }
 
     /**

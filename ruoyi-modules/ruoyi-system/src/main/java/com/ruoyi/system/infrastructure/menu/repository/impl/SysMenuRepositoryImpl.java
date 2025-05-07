@@ -64,4 +64,17 @@ public class SysMenuRepositoryImpl implements SysMenuRepository {
         return sysMenuMapper.updateById(sysMenuPo) == 1 ? true : false;
     }
 
+    @Override
+    public Boolean hasChild(Long menuId) {
+        Long count = sysMenuMapper.selectCount(Wrappers.<SysMenuPo>lambdaQuery()
+                .eq(SysMenuPo::getParentId, menuId));
+        return count > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean deleteMenu(Long menuId) {
+        int isDel = sysMenuMapper.deleteById(menuId);
+        return isDel > 0 ? true : false;
+    }
+
 }

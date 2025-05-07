@@ -1,7 +1,7 @@
 package com.ruoyi.system.infrastructure.role.repository.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.ruoyi.system.domain.role.repository.RoleDeptRepository;
+import com.ruoyi.system.domain.role.repository.SysRoleDeptRepository;
 import com.ruoyi.system.infrastructure.role.repository.mapper.SysRoleDeptMapper;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRoleDeptPo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.Set;
  * @create 2025-04-26 18:01
  */
 @Repository
-public class RoleDeptRepositoryImpl implements RoleDeptRepository {
+public class SysRoleDeptRepositoryImpl implements SysRoleDeptRepository {
 
     @Autowired
     private SysRoleDeptMapper roleDeptMapper;

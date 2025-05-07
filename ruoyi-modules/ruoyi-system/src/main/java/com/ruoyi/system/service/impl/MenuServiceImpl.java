@@ -52,4 +52,9 @@ public class MenuServiceImpl implements MenuService {
         return menuDomainService.updMenu(menuUpdDTO);
     }
 
+    @Override
+    public Boolean removeMenu(Long menuId) {
+        return menuDomainService.removeMenu(menuId);
+    }
+
 }

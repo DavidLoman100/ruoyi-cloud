@@ -25,4 +25,6 @@ public interface MenuService {
     Boolean addMenu(MenuAddDTO menuAddDTO);
 
     Boolean updMenu(MenuUpdDTO menuUpdDTO);
+
+    Boolean removeMenu(Long menuId);
 }
