@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import com.ruoyi.system.domain.service.SysMenuDomainService;
+import com.ruoyi.system.domain.vo.RouterVo;
 import com.ruoyi.system.dto.menu.req.MenuAddDTO;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.dto.menu.req.MenuUpdDTO;
@@ -8,6 +9,7 @@ import com.ruoyi.system.service.MenuService;
 import com.ruoyi.system.vo.menu.MenuTreeByRoleVo;
 import com.ruoyi.system.vo.menu.MenuTreeVo;
 import com.ruoyi.system.vo.menu.MenuVo;
+import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.List;
  * @create 2025-04-23 1:28
  */
 @Service
+@Accessors(chain = true)
 public class MenuServiceImpl implements MenuService {
 
     @Autowired
@@ -55,6 +58,11 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Boolean removeMenu(Long menuId) {
         return menuDomainService.removeMenu(menuId);
+    }
+
+    @Override
+    public List<RouterVo> getRouters() {
+        return menuDomainService.getRouters();
     }
 
 }

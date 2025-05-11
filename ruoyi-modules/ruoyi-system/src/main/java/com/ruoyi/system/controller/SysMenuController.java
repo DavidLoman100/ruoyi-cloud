@@ -3,6 +3,7 @@ package com.ruoyi.system.controller;
 import java.util.List;
 
 import com.ruoyi.common.core.commonEntity.Response;
+import com.ruoyi.system.domain.vo.RouterVo;
 import com.ruoyi.system.dto.menu.req.MenuAddDTO;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.dto.menu.req.MenuUpdDTO;
@@ -99,35 +100,10 @@ public class SysMenuController extends BaseController
         return Response.ok(menuService.removeMenu(menuId));
     }
 
-    /**
-     * 删除菜单
-     */
-    @RequiresPermissions("system:menu:remove")
-    @Log(title = "菜单管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{menuId}")
-    public AjaxResult remove(@PathVariable("menuId") Long menuId)
-    {
-        if (SysMenuService.hasChildByMenuId(menuId))
-        {
-            return warn("存在子菜单,不允许删除");
-        }
-        if (SysMenuService.checkMenuExistRole(menuId))
-        {
-            return warn("菜单已分配,不允许删除");
-        }
-        return toAjax(SysMenuService.deleteMenuById(menuId));
+    @Operation(summary = "获取菜单路由信息")
+    @GetMapping("/getRouters")
+   public Response<List<RouterVo>> getRouters() {
+        return Response.ok(menuService.getRouters());
     }
 
-    /**
-     * 获取路由信息
-     * 
-     * @return 路由信息
-     */
-    @GetMapping("getRouters")
-    public AjaxResult getRouters()
-    {
-        Long userId = SecurityUtils.getUserId();
-         List<SysMenu> menus = SysMenuService.selectMenuTreeByUserId(userId);
-        return success(SysMenuService.buildMenus(menus));
-    }
 }

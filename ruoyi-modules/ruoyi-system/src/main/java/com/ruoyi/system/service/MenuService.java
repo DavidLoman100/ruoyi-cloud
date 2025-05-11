@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import com.ruoyi.system.domain.vo.RouterVo;
 import com.ruoyi.system.dto.menu.req.MenuAddDTO;
 import com.ruoyi.system.dto.menu.req.MenuQryReqDTO;
 import com.ruoyi.system.dto.menu.req.MenuUpdDTO;
@@ -27,4 +28,6 @@ public interface MenuService {
     Boolean updMenu(MenuUpdDTO menuUpdDTO);
 
     Boolean removeMenu(Long menuId);
+
+    List<RouterVo> getRouters();
 }
