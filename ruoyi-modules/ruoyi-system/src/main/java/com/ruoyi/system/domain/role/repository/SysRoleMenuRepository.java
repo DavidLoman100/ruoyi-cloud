@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain.role.repository;
 
-import org.springframework.stereotype.Repository;
+import com.ruoyi.system.infrastructure.role.repository.po.SysRoleMenuPo;
+
+import java.util.List;
 
 /**
  * @author DavidLoman
@@ -9,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface SysRoleMenuRepository {
 
     boolean hasRoleMenu(Long menuId);
+
+    List<SysRoleMenuPo> getInfoByMenu(Long menuId);
 }

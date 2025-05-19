@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ruoyi.system.domain.role.repository.SysRoleMenuRepository;
 import com.ruoyi.system.infrastructure.role.repository.mapper.SysRoleMenuMapper;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRoleMenuPo;
-import com.ruoyi.system.mapper.SysRoleMenuMapper2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author DavidLoman
@@ -22,5 +23,11 @@ public class SysRoleMenuRepositoryImpl implements SysRoleMenuRepository {
         Long count = sysRoleMenuMapper.selectCount(Wrappers.<SysRoleMenuPo>lambdaQuery()
                 .eq(SysRoleMenuPo::getMenuId, menuId));
         return count > 0 ? true : false;
+    }
+
+    @Override
+    public List<SysRoleMenuPo> getInfoByMenu(Long menuId) {
+        return sysRoleMenuMapper.selectList(Wrappers.<SysRoleMenuPo>lambdaQuery()
+                .eq(SysRoleMenuPo::getMenuId, menuId));
     }
 }

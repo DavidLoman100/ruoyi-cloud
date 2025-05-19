@@ -22,13 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.annotation.RequiresPermissions;
-import com.ruoyi.common.security.utils.SecurityUtils;
-import com.ruoyi.system.domain.SysMenu;
-import com.ruoyi.system.service2.ISysMenuService;
 
 import javax.validation.Valid;
 
@@ -39,13 +35,11 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/menu")
-public class SysMenuController extends BaseController
-{
-    @Autowired
-    private ISysMenuService SysMenuService;
+public class SysMenuController extends BaseController {
+
 
     @Autowired
-    private MenuService menuService;
+private MenuService menuService;
 
     @Operation(summary = "获取菜单列表")
     @RequiresPermissions("system:menu:list")

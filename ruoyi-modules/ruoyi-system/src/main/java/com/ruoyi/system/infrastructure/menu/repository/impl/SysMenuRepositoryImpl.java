@@ -42,6 +42,12 @@ public class SysMenuRepositoryImpl implements SysMenuRepository {
     }
 
     @Override
+    public SysMenuPo getMenuByPerms(String perms) {
+        return sysMenuMapper.selectOne(Wrappers.<SysMenuPo>lambdaQuery()
+                .eq(SysMenuPo::getPerms, perms));
+    }
+
+    @Override
     public List<Long> getMenuIdByRole(Long roleId, Integer menuCheckStrictly) {
         return sysMenuMapper.getMenuIdByRole(roleId, menuCheckStrictly);
     }

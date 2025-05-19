@@ -66,12 +66,6 @@ public class SysRolePo extends BasePo {
     private String status;
 
     /**
-     * 删除标志（0代表存在 1代表删除）
-     */
-    @TableField(value = "is_deleted")
-    private String isDeleted;
-
-    /**
      * 备注
      */
     @TableField(value = "remark")

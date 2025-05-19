@@ -16,6 +16,8 @@ public interface SysMenuRepository {
 
     SysMenuPo getMenuById(Long menuId);
 
+    SysMenuPo getMenuByPerms(String perms);
+
     List<Long> getMenuIdByRole(Long roleId, Integer menuCheckStrictly);
 
     Boolean checkNameExist(Long menuId, String menuName);
@@ -27,4 +29,5 @@ public interface SysMenuRepository {
     Boolean hasChild(Long menuId);
 
     Boolean deleteMenu(Long menuId);
+
 }
