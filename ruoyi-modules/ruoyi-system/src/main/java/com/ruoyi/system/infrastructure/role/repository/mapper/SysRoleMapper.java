@@ -17,6 +17,9 @@ import org.apache.ibatis.annotations.Param;
 public interface SysRoleMapper extends BaseMapper<SysRolePo> {
 
     Page<SysRolePo> pageQryRoleListByPerms(@Param("page") Page<SysRolePo> rolePoPage, @Param("qry") RolePageQryEntity entity);
+
+
+    SysRolePo getRoleByPerms(@Param("roleId") Long roleId, @Param("dataScopeSql") String dataScopeSql);
 }
 
 

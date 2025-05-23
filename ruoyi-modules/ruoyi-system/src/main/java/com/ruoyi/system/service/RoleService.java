@@ -13,5 +13,5 @@ public interface RoleService {
 
     PageListVo<RoleVo> pageQryRoleListByPerms(RolePageQryDTO reqDTO);
 
-
+    RoleVo getRoleInfo(Long roleId);
 }

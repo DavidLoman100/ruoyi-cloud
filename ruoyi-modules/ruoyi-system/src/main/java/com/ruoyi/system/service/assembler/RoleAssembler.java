@@ -23,4 +23,6 @@ public interface RoleAssembler {
 
     @Mapping(target = "list", source = "records")
     PageListVo<RoleVo> toPageListVo(Page<SysRolePo> page);
+
+    RoleVo toRoleVo(SysRolePo roleByPerms);
 }

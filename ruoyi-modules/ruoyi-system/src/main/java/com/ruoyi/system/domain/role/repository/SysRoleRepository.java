@@ -21,4 +21,6 @@ public interface SysRoleRepository {
     Page<SysRolePo> pageQryRoleList(RolePageQryEntity entity);
 
     Page<SysRolePo> pageQryRoleListByPerms(RolePageQryEntity rolePageQryEntity);
+
+    SysRolePo getRoleByPerms(Long roleId, String dataScopeSql);
 }

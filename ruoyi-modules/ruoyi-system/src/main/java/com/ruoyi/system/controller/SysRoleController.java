@@ -80,15 +80,23 @@ public class SysRoleController extends BaseController {
         util.exportExcel(response, list, "角色数据");
     }
 
-    /**
-     * 根据角色编号获取详细信息
-     */
+    @Operation(summary = "获取角色详细信息")
     @RequiresPermissions("system:role:query")
     @GetMapping(value = "/{roleId}")
-    public AjaxResult getInfo(@PathVariable Long roleId) {
-        roleService1.checkRoleDataScope(roleId);
-        return success(roleService1.selectRoleById(roleId));
+    public Response<RoleVo> getRoleInfo(@PathVariable Long roleId) {
+        RoleVo roleVo = roleService.getRoleInfo(roleId);
+        return Response.ok(roleVo);
     }
+
+//    /**
+//     * 根据角色编号获取详细信息
+//     */
+//    @RequiresPermissions("system:role:query")
+//    @GetMapping(value = "/{roleId}")
+//    public AjaxResult getInfo(@PathVariable Long roleId) {
+//        roleService1.checkRoleDataScope(roleId);
+//        return success(roleService1.selectRoleById(roleId));
+//    }
 
     /**
      * 新增角色

@@ -102,6 +102,9 @@ public class SysRoleDomainService {
             {
                 if (StringUtils.isNotBlank(userAlias)) {
                     sqlStr.append(StringUtils.format(" OR {}.user_id = {} ", userAlias, curUser.getUserid()));
+                } else {
+                    // 数据权限为仅本人且没有userAlias别名 避免查出所有的数据
+                    sqlStr.append(StringUtils.format(" OR {}.dept_id = 0 ", deptAlias));
                 }
             }
 
@@ -131,6 +134,10 @@ public class SysRoleDomainService {
             }
         }
         return null;
+    }
+
+     public SysRolePo  getRoleByPerms(Long roleId, String dataScopeSql) {
+         return sysRoleRepository.getRoleByPerms(roleId, dataScopeSql);
     }
 
 
