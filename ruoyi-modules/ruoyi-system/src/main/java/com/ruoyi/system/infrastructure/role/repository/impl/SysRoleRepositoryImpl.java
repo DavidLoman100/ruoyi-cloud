@@ -49,6 +49,17 @@ public class SysRoleRepositoryImpl implements SysRoleRepository {
     }
 
     @Override
+    public List<SysRolePo> qryRoleList(RolePageQryEntity entity) {
+        List<SysRolePo> sysRolePos = sysRoleMapper.selectList(Wrappers.<SysRolePo>lambdaQuery()
+                .eq(StringUtils.hasText(entity.getRoleName()), SysRolePo::getRoleName, entity.getRoleName())
+                .eq(StringUtils.hasText(entity.getRoleKey()), SysRolePo::getRoleKey, entity.getRoleKey())
+                .eq(Objects.nonNull(entity.getStatus()), SysRolePo::getStatus, entity.getStatus())
+                .ge(Objects.nonNull(entity.getStartCreateTime()), SysRolePo::getCreateTime, entity.getStartCreateTime())
+                .le(Objects.nonNull(entity.getEndCreateTime()), SysRolePo::getCreateTime, entity.getEndCreateTime()));
+        return sysRolePos;
+    }
+
+    @Override
     public Page<SysRolePo> pageQryRoleListByPerms(RolePageQryEntity entity) {
         Page<SysRolePo> rolePoPage = new Page<>(entity.getPageNum(), entity.getPageSize());
         return sysRoleMapper.pageQryRoleListByPerms(rolePoPage, entity);
@@ -57,6 +68,11 @@ public class SysRoleRepositoryImpl implements SysRoleRepository {
     @Override
     public SysRolePo getRoleByPerms(Long roleId, String dataScopeSql) {
         return sysRoleMapper.getRoleByPerms(roleId, dataScopeSql);
+    }
+
+    @Override
+    public Boolean addRole(SysRolePo sysRolePo) {
+        return sysRoleMapper.insert(sysRolePo) > 0 ? true : false;
     }
 
 }

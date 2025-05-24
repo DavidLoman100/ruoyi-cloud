@@ -2,12 +2,14 @@ package com.ruoyi.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
+import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.common.core.enums.error.CommonErrorEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.domain.service.SysRoleDomainService;
-import com.ruoyi.system.dto.role.RolePageQryDTO;
+import com.ruoyi.system.dto.role.req.RoleAddDTO;
+import com.ruoyi.system.dto.role.req.RolePageQryDTO;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
 import com.ruoyi.system.service.RoleService;
 import com.ruoyi.system.service.assembler.RoleAssembler;
@@ -58,5 +60,16 @@ public class RoleServiceImpl implements RoleService {
         }
         RoleVo roleVo = RoleAssembler.INSTANCE.toRoleVo(sysRolePo);
         return roleVo;
+    }
+
+    @Override
+    public Response<Boolean> addRole(RoleAddDTO roleAddDTO) {
+        RolePageQryEntity qryEntity = new RolePageQryEntity();
+        qryEntity.setRoleName(roleAddDTO.getRoleName());
+        qryEntity.setRoleKey(roleAddDTO.getRoleKey());
+        sysRoleDomainService.checkSaveRoleParam(qryEntity);
+
+        sysRoleDomainService.saveRoleAndMenu(roleAddDTO);
+        return null;
     }
 }

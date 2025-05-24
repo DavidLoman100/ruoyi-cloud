@@ -1,12 +1,13 @@
 package com.ruoyi.system.domain.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.common.core.constant.CommonConstants;
 import com.ruoyi.common.core.constant.UserConstants;
 import com.ruoyi.common.core.enums.dict.RolePermEnum;
+import com.ruoyi.common.core.enums.error.RoleErrorEnum;
 import com.ruoyi.common.core.enums.error.UserErrorEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.core.utils.StringUtils;
-import com.ruoyi.common.core.web.domain.BaseEntity;
 import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.domain.SysRole;
 import com.ruoyi.system.api.model.LoginUser;
@@ -15,11 +16,14 @@ import com.ruoyi.system.domain.menu.repository.SysMenuRepository;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.domain.role.repository.SysRoleMenuRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleRepository;
+import com.ruoyi.system.dto.role.req.RoleAddDTO;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRoleMenuPo;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
+import com.ruoyi.system.service.assembler.RoleAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -34,10 +38,8 @@ public class SysRoleDomainService {
 
     @Autowired
     private SysRoleRepository sysRoleRepository;
-
     @Autowired
     private SysRoleMenuRepository sysRoleMenuRepository;
-
     @Autowired
     private SysMenuRepository sysMenuRepository;
 
@@ -137,8 +139,41 @@ public class SysRoleDomainService {
     }
 
      public SysRolePo  getRoleByPerms(Long roleId, String dataScopeSql) {
-         return sysRoleRepository.getRoleByPerms(roleId, dataScopeSql);
+         if (StringUtils.hasText(dataScopeSql)) {
+             return sysRoleRepository.getRoleByPerms(roleId, dataScopeSql);
+         } else {
+             return sysRoleRepository.getRoleInfo(roleId);
+         }
     }
 
 
+    public Boolean checkSaveRoleParam(RolePageQryEntity entity) {
+        List<SysRolePo> sysRolePos = sysRoleRepository.qryRoleList(entity);
+        if (!CollectionUtils.isEmpty(sysRolePos)) {
+            SysRolePo sysRolePo = sysRolePos.get(CommonConstants.zero);
+            if (entity.getRoleName().equals(sysRolePo.getRoleName())) {
+                throw new BizException(RoleErrorEnum.ROLE_NAME_EXIST);
+            }
+            if (entity.getRoleKey().equals(sysRolePo.getRoleKey())) {
+                throw new BizException(RoleErrorEnum.ROLE_KEY_EXIST);
+            }
+        }
+
+        return null;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean saveRoleAndMenu(RoleAddDTO roleAddDTO) {
+        SysRolePo sysRolePo = RoleAssembler.INSTANCE.toSysRolePo(roleAddDTO);
+        sysRoleRepository.addRole(sysRolePo);
+
+        if (!CollectionUtils.isEmpty(roleAddDTO.getMenuIds())) {
+            List<SysRoleMenuPo> sysRoleMenuPos = new ArrayList<>();
+            for (Long menuId : roleAddDTO.getMenuIds()) {
+                sysRoleMenuPos.add(new SysRoleMenuPo(sysRolePo.getRoleId(), menuId));
+            }
+            sysRoleMenuRepository.addBatchRoleMenu(sysRoleMenuPos);
+        }
+        return true;
+    }
 }

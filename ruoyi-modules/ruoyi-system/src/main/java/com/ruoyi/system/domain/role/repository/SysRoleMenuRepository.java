@@ -13,4 +13,6 @@ public interface SysRoleMenuRepository {
     boolean hasRoleMenu(Long menuId);
 
     List<SysRoleMenuPo> getInfoByMenu(Long menuId);
+
+    boolean addBatchRoleMenu(List<SysRoleMenuPo> sysRoleMenuPos);
 }

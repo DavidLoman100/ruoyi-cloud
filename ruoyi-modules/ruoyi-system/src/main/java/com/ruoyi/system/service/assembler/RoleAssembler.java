@@ -2,13 +2,14 @@ package com.ruoyi.system.service.assembler;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
-import com.ruoyi.common.core.commonEntity.PageRequest;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
-import com.ruoyi.system.dto.role.RolePageQryDTO;
+import com.ruoyi.system.dto.role.req.RoleAddDTO;
+import com.ruoyi.system.dto.role.req.RolePageQryDTO;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
 import com.ruoyi.system.vo.role.RoleVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -25,4 +26,10 @@ public interface RoleAssembler {
     PageListVo<RoleVo> toPageListVo(Page<SysRolePo> page);
 
     RoleVo toRoleVo(SysRolePo roleByPerms);
+
+    @Mappings({
+            @Mapping(target = "createBy",expression = "java(com.ruoyi.common.security.utils.SecurityUtils.getUsername())"),
+            @Mapping(target = "createTime",expression = "java(java.time.LocalDateTime.now())")
+    })
+    SysRolePo toSysRolePo(RoleAddDTO roleAddDTO);
 }

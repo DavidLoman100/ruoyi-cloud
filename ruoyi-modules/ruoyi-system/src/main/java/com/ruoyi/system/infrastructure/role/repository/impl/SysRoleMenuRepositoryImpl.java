@@ -30,4 +30,10 @@ public class SysRoleMenuRepositoryImpl implements SysRoleMenuRepository {
         return sysRoleMenuMapper.selectList(Wrappers.<SysRoleMenuPo>lambdaQuery()
                 .eq(SysRoleMenuPo::getMenuId, menuId));
     }
+
+    @Override
+    public boolean addBatchRoleMenu(List<SysRoleMenuPo> sysRoleMenuPos) {
+        return sysRoleMenuMapper.insertBatch(sysRoleMenuPos) > 0 ? true : false;
+    }
+
 }

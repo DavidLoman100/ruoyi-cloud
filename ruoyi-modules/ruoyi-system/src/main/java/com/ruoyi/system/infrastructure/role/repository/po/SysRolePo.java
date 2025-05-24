@@ -51,13 +51,13 @@ public class SysRolePo extends BasePo {
      * 菜单树选择项是否关联显示
      */
     @TableField(value = "menu_check_strictly")
-    private Integer menuCheckStrictly;
+    private Boolean menuCheckStrictly;
 
     /**
      * 部门树选择项是否关联显示
      */
     @TableField(value = "dept_check_strictly")
-    private Integer deptCheckStrictly;
+    private Boolean deptCheckStrictly;
 
     /**
      * 角色状态（0正常 1停用）

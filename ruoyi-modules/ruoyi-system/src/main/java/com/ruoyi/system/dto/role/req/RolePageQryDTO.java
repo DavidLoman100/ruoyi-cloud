@@ -1,4 +1,4 @@
-package com.ruoyi.system.dto.role;
+package com.ruoyi.system.dto.role.req;
 
 import com.ruoyi.common.core.commonEntity.PageRequest;
 import io.swagger.v3.oas.annotations.media.Schema;

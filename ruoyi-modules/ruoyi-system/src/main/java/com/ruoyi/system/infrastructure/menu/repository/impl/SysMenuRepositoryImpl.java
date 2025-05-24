@@ -48,7 +48,7 @@ public class SysMenuRepositoryImpl implements SysMenuRepository {
     }
 
     @Override
-    public List<Long> getMenuIdByRole(Long roleId, Integer menuCheckStrictly) {
+    public List<Long> getMenuIdByRole(Long roleId, Boolean menuCheckStrictly) {
         return sysMenuMapper.getMenuIdByRole(roleId, menuCheckStrictly);
     }
 

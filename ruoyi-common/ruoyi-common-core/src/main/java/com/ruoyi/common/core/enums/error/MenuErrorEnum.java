@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 菜单枚举 10200
+ * 菜单枚举 10200-10299
  *
  * @author DavidLoman
  * @create 2025-05-05 10:02

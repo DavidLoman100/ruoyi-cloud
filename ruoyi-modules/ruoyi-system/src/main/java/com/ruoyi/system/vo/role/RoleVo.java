@@ -27,10 +27,10 @@ public class RoleVo extends BaseVo {
     private String dataScope;
 
     @Schema(description = "菜单树选择项是否关联显示")
-    private Integer menuCheckStrictly;
+    private Boolean menuCheckStrictly;
 
     @Schema(description = "部门树选择项是否关联显示")
-    private Integer deptCheckStrictly;
+    private Boolean deptCheckStrictly;
 
     @Schema(description = "角色状态（0正常 1停用）")
     private String status;

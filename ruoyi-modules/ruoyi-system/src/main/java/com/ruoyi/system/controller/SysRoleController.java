@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.commonEntity.Response;
-import com.ruoyi.system.dto.role.RolePageQryDTO;
+import com.ruoyi.system.dto.role.req.RoleAddDTO;
+import com.ruoyi.system.dto.role.req.RolePageQryDTO;
 import com.ruoyi.system.service.RoleService;
 import com.ruoyi.system.service2.ISysUserService;
 import com.ruoyi.system.vo.role.RoleVo;
@@ -101,19 +102,28 @@ public class SysRoleController extends BaseController {
     /**
      * 新增角色
      */
+    @Operation(summary = "新增角色")
     @RequiresPermissions("system:role:add")
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysRole role) {
-        if (!roleService1.checkRoleNameUnique(role)) {
-            return error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
-        } else if (!roleService1.checkRoleKeyUnique(role)) {
-            return error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
-        }
-        role.setCreateBy(SecurityUtils.getUsername());
-        return toAjax(roleService1.insertRole(role));
-
+    @PostMapping("/add")
+    public Response<Boolean> addRole(@Validated @RequestBody RoleAddDTO roleAddDTO) {
+        return roleService.addRole(roleAddDTO);
     }
+
+    //新增角色
+//    @RequiresPermissions("system:role:add")
+//    @Log(title = "角色管理", businessType = BusinessType.INSERT)
+//    @PostMapping
+//    public AjaxResult add(@Validated @RequestBody SysRole role) {
+//        if (!roleService1.checkRoleNameUnique(role)) {
+//            return error("新增角色'" + role.getRoleName() + "'失败，角色名称已存在");
+//        } else if (!roleService1.checkRoleKeyUnique(role)) {
+//            return error("新增角色'" + role.getRoleName() + "'失败，角色权限已存在");
+//        }
+//        role.setCreateBy(SecurityUtils.getUsername());
+//        return toAjax(roleService1.insertRole(role));
+//
+//    }
 
     /**
      * 修改保存角色

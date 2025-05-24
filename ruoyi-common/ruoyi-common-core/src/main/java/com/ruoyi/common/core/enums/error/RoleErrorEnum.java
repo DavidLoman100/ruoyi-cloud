@@ -5,17 +5,19 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 10100-10199
+ * 10300-10399
  * @author DavidLoman
- * @create 2025-04-19 9:36
+ * @create 2025-05-24 18:16
  */
 @Getter
 @RequiredArgsConstructor
-public enum UserErrorEnum implements BaseEnum {
-    NO_OPT_ADMIN(10100, "不允许操作超级管理员！"),
-    ACCOUNT_ERROR(10101, "账号异常！"),
+public enum RoleErrorEnum implements BaseEnum {
+
+    ROLE_NAME_EXIST(10300, "角色名称已存在！"),
+    ROLE_KEY_EXIST(10300, "角色名称已存在！"),
+
     ;
+
     private final int code;
     private final String msg;
-
 }

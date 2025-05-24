@@ -18,7 +18,7 @@ public interface SysMenuRepository {
 
     SysMenuPo getMenuByPerms(String perms);
 
-    List<Long> getMenuIdByRole(Long roleId, Integer menuCheckStrictly);
+    List<Long> getMenuIdByRole(Long roleId, Boolean menuCheckStrictly);
 
     Boolean checkNameExist(Long menuId, String menuName);
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
+ * 10000-10099
  * @author DavidLoman
  * @create 2025-04-19 9:36
  */
