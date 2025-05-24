@@ -15,4 +15,6 @@ public interface SysRoleMenuRepository {
     List<SysRoleMenuPo> getInfoByMenu(Long menuId);
 
     boolean addBatchRoleMenu(List<SysRoleMenuPo> sysRoleMenuPos);
+
+    boolean deleteRoleMenu(Long roleId);
 }

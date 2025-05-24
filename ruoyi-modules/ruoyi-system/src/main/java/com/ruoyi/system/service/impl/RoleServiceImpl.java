@@ -2,22 +2,29 @@ package com.ruoyi.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
-import com.ruoyi.common.core.commonEntity.Response;
+import com.ruoyi.common.core.constant.CommonConstants;
+import com.ruoyi.common.core.constant.SystemConstants;
 import com.ruoyi.common.core.enums.error.CommonErrorEnum;
+import com.ruoyi.common.core.enums.error.UserErrorEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.core.utils.StringUtils;
+import com.ruoyi.common.security.utils.SecurityUtils;
+import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.domain.service.SysRoleDomainService;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
 import com.ruoyi.system.dto.role.req.RolePageQryDTO;
+import com.ruoyi.system.dto.role.req.RoleUpdDTO;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
 import com.ruoyi.system.service.RoleService;
 import com.ruoyi.system.service.assembler.RoleAssembler;
 import com.ruoyi.system.vo.role.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author DavidLoman
@@ -63,7 +70,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Response<Boolean> addRole(RoleAddDTO roleAddDTO) {
+    public Boolean addRole(RoleAddDTO roleAddDTO) {
         RolePageQryEntity qryEntity = new RolePageQryEntity();
         qryEntity.setRoleName(roleAddDTO.getRoleName());
         qryEntity.setRoleKey(roleAddDTO.getRoleKey());
@@ -72,4 +79,24 @@ public class RoleServiceImpl implements RoleService {
         sysRoleDomainService.saveRoleAndMenu(roleAddDTO);
         return null;
     }
+
+    @Override
+    public Boolean updRole(RoleUpdDTO roleUpdDTO) {
+        if (CommonConstants.roleAdminId == roleUpdDTO.getRoleId()) {
+            throw new BizException(UserErrorEnum.NO_OPT_ADMIN_ROLE);
+        }
+        String permsSql = sysRoleDomainService.getPermsSql("d", null);
+        SysRolePo sysRolePo = sysRoleDomainService.getRoleByPerms(roleUpdDTO.getRoleId(), permsSql);
+        if (Objects.isNull(sysRolePo)) {
+            throw new BizException(CommonErrorEnum.INTERNAL_ERROR);
+        }
+        RolePageQryEntity qryEntity = new RolePageQryEntity();
+        qryEntity.setRoleId(roleUpdDTO.getRoleId());
+        qryEntity.setRoleName(roleUpdDTO.getRoleName());
+        qryEntity.setRoleKey(roleUpdDTO.getRoleKey());
+        sysRoleDomainService.checkSaveRoleParam(qryEntity);
+        sysRoleDomainService.updRoleAndMenu(roleUpdDTO);
+        return true;
+    }
+
 }

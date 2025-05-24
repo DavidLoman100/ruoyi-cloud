@@ -17,6 +17,7 @@ import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.domain.role.repository.SysRoleMenuRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleRepository;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
+import com.ruoyi.system.dto.role.req.RoleUpdDTO;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRoleMenuPo;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
@@ -158,8 +159,7 @@ public class SysRoleDomainService {
                 throw new BizException(RoleErrorEnum.ROLE_KEY_EXIST);
             }
         }
-
-        return null;
+        return true;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -170,6 +170,24 @@ public class SysRoleDomainService {
         if (!CollectionUtils.isEmpty(roleAddDTO.getMenuIds())) {
             List<SysRoleMenuPo> sysRoleMenuPos = new ArrayList<>();
             for (Long menuId : roleAddDTO.getMenuIds()) {
+                sysRoleMenuPos.add(new SysRoleMenuPo(sysRolePo.getRoleId(), menuId));
+            }
+            sysRoleMenuRepository.addBatchRoleMenu(sysRoleMenuPos);
+        }
+        return true;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean updRoleAndMenu(RoleUpdDTO roleUpdDTO) {
+        SysRolePo sysRolePo = RoleAssembler.INSTANCE.toSysRolePo(roleUpdDTO);
+        sysRoleRepository.updRole(sysRolePo);
+
+        if (sysRoleMenuRepository.hasRoleMenu(sysRolePo.getRoleId())) {
+            sysRoleMenuRepository.deleteRoleMenu(sysRolePo.getRoleId());
+        }
+        if (!CollectionUtils.isEmpty(roleUpdDTO.getMenuIds())) {
+            List<SysRoleMenuPo> sysRoleMenuPos = new ArrayList<>();
+            for (Long menuId : roleUpdDTO.getMenuIds()) {
                 sysRoleMenuPos.add(new SysRoleMenuPo(sysRolePo.getRoleId(), menuId));
             }
             sysRoleMenuRepository.addBatchRoleMenu(sysRoleMenuPos);

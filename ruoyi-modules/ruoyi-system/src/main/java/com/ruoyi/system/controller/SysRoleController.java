@@ -7,6 +7,7 @@ import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
 import com.ruoyi.system.dto.role.req.RolePageQryDTO;
+import com.ruoyi.system.dto.role.req.RoleUpdDTO;
 import com.ruoyi.system.service.RoleService;
 import com.ruoyi.system.service2.ISysUserService;
 import com.ruoyi.system.vo.role.RoleVo;
@@ -107,7 +108,8 @@ public class SysRoleController extends BaseController {
     @Log(title = "角色管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     public Response<Boolean> addRole(@Validated @RequestBody RoleAddDTO roleAddDTO) {
-        return roleService.addRole(roleAddDTO);
+        Boolean isSuc = roleService.addRole(roleAddDTO);
+        return Response.ok(isSuc);
     }
 
     //新增角色
@@ -125,23 +127,30 @@ public class SysRoleController extends BaseController {
 //
 //    }
 
-    /**
-     * 修改保存角色
-     */
+    @Operation(summary = "修改角色")
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysRole role) {
-        roleService1.checkRoleAllowed(role);
-        roleService1.checkRoleDataScope(role.getRoleId());
-        if (!roleService1.checkRoleNameUnique(role)) {
-            return error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
-        } else if (!roleService1.checkRoleKeyUnique(role)) {
-            return error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
-        }
-        role.setUpdateBy(SecurityUtils.getUsername());
-        return toAjax(roleService1.updateRole(role));
+    @PutMapping("/edit")
+    public Response<Boolean> updRole(@Validated @RequestBody RoleUpdDTO roleUpdDTO) {
+        Boolean isSuc = roleService.updRole(roleUpdDTO);
+        return Response.ok(isSuc);
     }
+
+//     修改保存角色
+//    @RequiresPermissions("system:role:edit")
+//    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+//    @PutMapping
+//    public AjaxResult edit(@Validated @RequestBody SysRole role) {
+//        roleService1.checkRoleAllowed(role);
+//        roleService1.checkRoleDataScope(role.getRoleId());
+//        if (!roleService1.checkRoleNameUnique(role)) {
+//            return error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
+//        } else if (!roleService1.checkRoleKeyUnique(role)) {
+//            return error("修改角色'" + role.getRoleName() + "'失败，角色权限已存在");
+//        }
+//        role.setUpdateBy(SecurityUtils.getUsername());
+//        return toAjax(roleService1.updateRole(role));
+//    }
 
     /**
      * 修改保存数据权限

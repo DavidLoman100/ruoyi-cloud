@@ -28,4 +28,6 @@ public interface SysRoleRepository {
     SysRolePo getRoleByPerms(Long roleId, String dataScopeSql);
 
     Boolean addRole(SysRolePo sysRolePo);
+
+    Boolean updRole(SysRolePo sysRolePo);
 }

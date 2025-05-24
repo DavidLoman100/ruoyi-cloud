@@ -51,8 +51,9 @@ public class SysRoleRepositoryImpl implements SysRoleRepository {
     @Override
     public List<SysRolePo> qryRoleList(RolePageQryEntity entity) {
         List<SysRolePo> sysRolePos = sysRoleMapper.selectList(Wrappers.<SysRolePo>lambdaQuery()
-                .eq(StringUtils.hasText(entity.getRoleName()), SysRolePo::getRoleName, entity.getRoleName())
-                .eq(StringUtils.hasText(entity.getRoleKey()), SysRolePo::getRoleKey, entity.getRoleKey())
+                .ne(Objects.nonNull(entity.getRoleId()), SysRolePo::getRoleId, entity.getRoleId())
+                .and(i -> i.eq(StringUtils.hasText(entity.getRoleKey()), SysRolePo::getRoleKey, entity.getRoleKey())
+                        .or().eq(StringUtils.hasText(entity.getRoleName()), SysRolePo::getRoleName, entity.getRoleName()))
                 .eq(Objects.nonNull(entity.getStatus()), SysRolePo::getStatus, entity.getStatus())
                 .ge(Objects.nonNull(entity.getStartCreateTime()), SysRolePo::getCreateTime, entity.getStartCreateTime())
                 .le(Objects.nonNull(entity.getEndCreateTime()), SysRolePo::getCreateTime, entity.getEndCreateTime()));
@@ -73,6 +74,11 @@ public class SysRoleRepositoryImpl implements SysRoleRepository {
     @Override
     public Boolean addRole(SysRolePo sysRolePo) {
         return sysRoleMapper.insert(sysRolePo) > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean updRole(SysRolePo sysRolePo) {
+        return sysRoleMapper.updateById(sysRolePo) > 0 ? true : false;
     }
 
 }

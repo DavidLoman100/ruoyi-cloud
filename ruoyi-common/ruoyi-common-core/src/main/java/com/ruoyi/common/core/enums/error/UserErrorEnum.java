@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 public enum UserErrorEnum implements BaseEnum {
     NO_OPT_ADMIN(10100, "不允许操作超级管理员！"),
     ACCOUNT_ERROR(10101, "账号异常！"),
+    NO_OPT_ADMIN_ROLE(10102, "不允许操作超级管理员！"),
+
     ;
     private final int code;
     private final String msg;

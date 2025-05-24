@@ -1,9 +1,9 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.common.core.commonEntity.PageListVo;
-import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
 import com.ruoyi.system.dto.role.req.RolePageQryDTO;
+import com.ruoyi.system.dto.role.req.RoleUpdDTO;
 import com.ruoyi.system.vo.role.RoleVo;
 
 /**
@@ -17,5 +17,8 @@ public interface RoleService {
 
     RoleVo getRoleInfo(Long roleId);
 
-    Response<Boolean> addRole(RoleAddDTO roleAddDTO);
+    Boolean addRole(RoleAddDTO roleAddDTO);
+
+    Boolean updRole(RoleUpdDTO roleUpdDTO);
+
 }
