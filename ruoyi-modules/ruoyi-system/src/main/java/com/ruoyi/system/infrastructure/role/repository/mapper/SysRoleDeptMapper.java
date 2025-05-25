@@ -3,6 +3,9 @@ package com.ruoyi.system.infrastructure.role.repository.mapper;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRoleDeptPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author 37504
@@ -13,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysRoleDeptMapper extends BaseMapper<SysRoleDeptPo> {
 
+    int insertBatch(@Param("list") List<SysRoleDeptPo> sysRoleDeptPos);
 }
 
 

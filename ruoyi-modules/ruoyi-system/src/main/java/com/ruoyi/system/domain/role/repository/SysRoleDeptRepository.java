@@ -11,4 +11,10 @@ import java.util.Set;
  */
 public interface SysRoleDeptRepository {
     List<SysRoleDeptPo> qryRoleDept(Set<String> roles);
+
+    Boolean hasRoleDept(Long roleId);
+
+    Boolean deleteRelatedDept(Long roleId);
+
+    Boolean addRoleDept(List<SysRoleDeptPo> sysRoleDeptPos);
 }

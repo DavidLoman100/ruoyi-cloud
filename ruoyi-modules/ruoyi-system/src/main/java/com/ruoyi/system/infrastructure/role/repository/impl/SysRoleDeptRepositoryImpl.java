@@ -25,4 +25,22 @@ public class SysRoleDeptRepositoryImpl implements SysRoleDeptRepository {
         return roleDeptMapper.selectList(Wrappers.<SysRoleDeptPo>lambdaQuery()
                 .in(SysRoleDeptPo::getRoleId, roles));
     }
+
+    @Override
+    public Boolean hasRoleDept(Long roleId) {
+        return roleDeptMapper.selectCount(Wrappers.<SysRoleDeptPo>lambdaQuery()
+                .eq(SysRoleDeptPo::getRoleId, roleId)) > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean deleteRelatedDept(Long roleId) {
+        return roleDeptMapper.delete(Wrappers.<SysRoleDeptPo>lambdaQuery()
+                .eq(SysRoleDeptPo::getRoleId, roleId)) > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean addRoleDept(List<SysRoleDeptPo> sysRoleDeptPos) {
+        return roleDeptMapper.insertBatch(sysRoleDeptPos) > 0 ? true : false;
+    }
+
 }

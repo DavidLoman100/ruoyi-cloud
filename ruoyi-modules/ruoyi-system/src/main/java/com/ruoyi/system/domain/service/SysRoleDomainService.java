@@ -14,11 +14,14 @@ import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.common.context.PermissionContext;
 import com.ruoyi.system.domain.menu.repository.SysMenuRepository;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
+import com.ruoyi.system.domain.role.repository.SysRoleDeptRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleMenuRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleRepository;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
+import com.ruoyi.system.dto.role.req.RoleDataScopeDTO;
 import com.ruoyi.system.dto.role.req.RoleUpdDTO;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
+import com.ruoyi.system.infrastructure.role.repository.po.SysRoleDeptPo;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRoleMenuPo;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
 import com.ruoyi.system.service.assembler.RoleAssembler;
@@ -43,6 +46,8 @@ public class SysRoleDomainService {
     private SysRoleMenuRepository sysRoleMenuRepository;
     @Autowired
     private SysMenuRepository sysMenuRepository;
+    @Autowired
+    private SysRoleDeptRepository sysRoleDeptRepository;
 
 
     public Page<SysRolePo> pageQryRoleList(RolePageQryEntity rolePageQryEntity) {
@@ -191,6 +196,24 @@ public class SysRoleDomainService {
                 sysRoleMenuPos.add(new SysRoleMenuPo(sysRolePo.getRoleId(), menuId));
             }
             sysRoleMenuRepository.addBatchRoleMenu(sysRoleMenuPos);
+        }
+        return true;
+    }
+
+    public Boolean updRoleDataScope(RoleDataScopeDTO reqDTO) {
+        SysRolePo sysRolePo = RoleAssembler.INSTANCE.toSysRolePo(reqDTO);
+        sysRoleRepository.updRole(sysRolePo);
+
+        Boolean isEx = sysRoleDeptRepository.hasRoleDept(sysRolePo.getRoleId());
+        if (isEx) {
+            sysRoleDeptRepository.deleteRelatedDept(sysRolePo.getRoleId());
+        }
+        if (!CollectionUtils.isEmpty(reqDTO.getDeptIds())) {
+            List<SysRoleDeptPo> sysRoleDeptPos = reqDTO.getDeptIds().stream()
+                    .map(deptId -> new SysRoleDeptPo(sysRolePo.getRoleId(), deptId))
+                    .collect(Collectors.toList());
+            sysRoleDeptRepository.addRoleDept(sysRoleDeptPos);
+
         }
         return true;
     }

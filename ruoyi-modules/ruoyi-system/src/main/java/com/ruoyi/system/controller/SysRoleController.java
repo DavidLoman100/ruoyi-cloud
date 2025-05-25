@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
+import com.ruoyi.system.dto.role.req.RoleDataScopeDTO;
 import com.ruoyi.system.dto.role.req.RolePageQryDTO;
 import com.ruoyi.system.dto.role.req.RoleUpdDTO;
 import com.ruoyi.system.service.RoleService;
@@ -152,17 +153,27 @@ public class SysRoleController extends BaseController {
 //        return toAjax(roleService1.updateRole(role));
 //    }
 
-    /**
-     * 修改保存数据权限
-     */
+
+    @Operation(summary = "修改角色的数据权限")
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.UPDATE)
-    @PutMapping("/dataScope")
-    public AjaxResult dataScope(@RequestBody SysRole role) {
-        roleService1.checkRoleAllowed(role);
-        roleService1.checkRoleDataScope(role.getRoleId());
-        return toAjax(roleService1.authDataScope(role));
+    @PutMapping("/updDataScope")
+    public Response<Boolean> updRoleDataScope(@Validated @RequestBody RoleDataScopeDTO reqDTO) {
+        Boolean isSuc = roleService.updRoleDataScope(reqDTO);
+        return Response.ok(isSuc);
     }
+
+//    /**
+//     * 修改保存数据权限
+//     */
+//    @RequiresPermissions("system:role:edit")
+//    @Log(title = "角色管理", businessType = BusinessType.UPDATE)
+//    @PutMapping("/dataScope")
+//    public AjaxResult dataScope(@RequestBody SysRole role) {
+//        roleService1.checkRoleAllowed(role);
+//        roleService1.checkRoleDataScope(role.getRoleId());
+//        return toAjax(roleService1.authDataScope(role));
+//    }
 
     /**
      * 状态修改

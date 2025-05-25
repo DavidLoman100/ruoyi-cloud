@@ -12,4 +12,11 @@
     <sql id="Base_Column_List">
         role_id,dept_id
     </sql>
+    <insert id="insertBatch">
+        INSERT INTO sys_role_dept (role_id, dept_id)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.roleId}, #{item.deptId})
+        </foreach>
+    </insert>
 </mapper>

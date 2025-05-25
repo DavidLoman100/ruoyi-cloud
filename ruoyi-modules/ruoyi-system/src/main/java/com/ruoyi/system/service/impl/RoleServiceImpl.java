@@ -9,10 +9,12 @@ import com.ruoyi.common.core.enums.error.UserErrorEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.security.utils.SecurityUtils;
+import com.ruoyi.system.api.domain.SysRole;
 import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.domain.service.SysRoleDomainService;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
+import com.ruoyi.system.dto.role.req.RoleDataScopeDTO;
 import com.ruoyi.system.dto.role.req.RolePageQryDTO;
 import com.ruoyi.system.dto.role.req.RoleUpdDTO;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
@@ -82,9 +84,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Boolean updRole(RoleUpdDTO roleUpdDTO) {
-        if (CommonConstants.roleAdminId == roleUpdDTO.getRoleId()) {
-            throw new BizException(UserErrorEnum.NO_OPT_ADMIN_ROLE);
-        }
+        checkRoleAdmin(roleUpdDTO.getRoleId());
         String permsSql = sysRoleDomainService.getPermsSql("d", null);
         SysRolePo sysRolePo = sysRoleDomainService.getRoleByPerms(roleUpdDTO.getRoleId(), permsSql);
         if (Objects.isNull(sysRolePo)) {
@@ -97,6 +97,25 @@ public class RoleServiceImpl implements RoleService {
         sysRoleDomainService.checkSaveRoleParam(qryEntity);
         sysRoleDomainService.updRoleAndMenu(roleUpdDTO);
         return true;
+    }
+
+
+
+    @Override
+    public Boolean updRoleDataScope(RoleDataScopeDTO reqDTO) {
+        checkRoleAdmin(reqDTO.getRoleId());
+        String permsSql = sysRoleDomainService.getPermsSql("d", null);
+        SysRolePo sysRolePo = sysRoleDomainService.getRoleByPerms(reqDTO.getRoleId(), permsSql);
+        if (Objects.isNull(sysRolePo)) {
+            throw new BizException(CommonErrorEnum.INTERNAL_ERROR);
+        }
+        return sysRoleDomainService.updRoleDataScope(reqDTO);
+    }
+
+    private static void checkRoleAdmin(Long roleId) {
+        if (CommonConstants.roleAdminId == roleId) {
+            throw new BizException(UserErrorEnum.NO_OPT_ADMIN_ROLE);
+        }
     }
 
 }
