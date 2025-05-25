@@ -19,6 +19,7 @@ import com.ruoyi.system.domain.role.repository.SysRoleMenuRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleRepository;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
 import com.ruoyi.system.dto.role.req.RoleDataScopeDTO;
+import com.ruoyi.system.dto.role.req.RoleStatusDTO;
 import com.ruoyi.system.dto.role.req.RoleUpdDTO;
 import com.ruoyi.system.infrastructure.menu.repository.po.SysMenuPo;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRoleDeptPo;
@@ -216,5 +217,10 @@ public class SysRoleDomainService {
 
         }
         return true;
+    }
+
+    public void updRoleStatus(RoleStatusDTO reqDTO) {
+        SysRolePo sysRolePo = RoleAssembler.INSTANCE.toSysRolePo(reqDTO);
+        sysRoleRepository.updRole(sysRolePo);
     }
 }

@@ -3,10 +3,7 @@ package com.ruoyi.system.service.assembler;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
-import com.ruoyi.system.dto.role.req.RoleAddDTO;
-import com.ruoyi.system.dto.role.req.RoleDataScopeDTO;
-import com.ruoyi.system.dto.role.req.RolePageQryDTO;
-import com.ruoyi.system.dto.role.req.RoleUpdDTO;
+import com.ruoyi.system.dto.role.req.*;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
 import com.ruoyi.system.vo.role.RoleVo;
 import org.mapstruct.Mapper;
@@ -46,4 +43,10 @@ public interface RoleAssembler {
             @Mapping(target = "updateTime",expression = "java(java.time.LocalDateTime.now())")
     })
     SysRolePo toSysRolePo(RoleDataScopeDTO reqDTO);
+
+    @Mappings({
+            @Mapping(target = "updateBy",expression = "java(com.ruoyi.common.security.utils.SecurityUtils.getUsername())"),
+            @Mapping(target = "updateTime",expression = "java(java.time.LocalDateTime.now())")
+    })
+    SysRolePo toSysRolePo(RoleStatusDTO reqDTO);
 }
