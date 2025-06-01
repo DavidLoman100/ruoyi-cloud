@@ -30,4 +30,6 @@ public interface SysRoleRepository {
     Boolean addRole(SysRolePo sysRolePo);
 
     Boolean updRole(SysRolePo sysRolePo);
+
+    Boolean delRole(List<Long> roleIds);
 }

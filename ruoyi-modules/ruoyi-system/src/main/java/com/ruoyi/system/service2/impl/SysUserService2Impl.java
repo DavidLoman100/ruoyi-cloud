@@ -49,7 +49,7 @@ public class SysUserService2Impl implements ISysUserService
     private SysPostMapper postMapper;
 
     @Autowired
-    private SysUserRoleMapper userRoleMapper;
+    private SysUserRoleMapper2 userRoleMapper;
 
     @Autowired
     private SysUserPostMapper userPostMapper;

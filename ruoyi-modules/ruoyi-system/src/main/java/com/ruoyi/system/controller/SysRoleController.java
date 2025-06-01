@@ -194,15 +194,26 @@ public class SysRoleController extends BaseController {
 //        return toAjax(roleService1.updateRoleStatus(role));
 //    }
 
+
     /**
      * 删除角色
      */
     @RequiresPermissions("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{roleIds}")
-    public AjaxResult remove(@PathVariable Long[] roleIds) {
-        return toAjax(roleService1.deleteRoleByIds(roleIds));
+    @DeleteMapping("/del/{roleIds}")
+    public Response<Boolean> delRole(@PathVariable Long[] roleIds) {
+        return Response.ok(roleService.delRole(roleIds));
     }
+
+//    /**
+//     * 删除角色
+//     */
+//    @RequiresPermissions("system:role:remove")
+//    @Log(title = "角色管理", businessType = BusinessType.DELETE)
+//    @DeleteMapping("/{roleIds}")
+//    public AjaxResult remove(@PathVariable Long[] roleIds) {
+//        return toAjax(roleService1.deleteRoleByIds(roleIds));
+//    }
 
     /**
      * 获取角色选择框列表

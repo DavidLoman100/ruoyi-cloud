@@ -21,11 +21,13 @@ public class SysRoleMenuPo implements Serializable {
     /**
      * 角色ID
      */
+    @TableId(value = "role_id")
     private Long roleId;
 
     /**
      * 菜单ID
      */
+    @TableField(value = "menu_id")
     private Long menuId;
 
     @TableField(exist = false)

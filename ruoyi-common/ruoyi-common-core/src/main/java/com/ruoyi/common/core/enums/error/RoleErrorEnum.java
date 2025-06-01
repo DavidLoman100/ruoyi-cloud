@@ -14,8 +14,9 @@ import lombok.RequiredArgsConstructor;
 public enum RoleErrorEnum implements BaseEnum {
 
     ROLE_NAME_EXIST(10300, "角色名称已存在！"),
-    ROLE_KEY_EXIST(10300, "角色权限字符已存在！"),
+    ROLE_KEY_EXIST(10301, "角色权限字符已存在！"),
 
+    USER_EXIST_ROLE(10302, "角色已被用户绑定"),
     ;
 
     private final int code;

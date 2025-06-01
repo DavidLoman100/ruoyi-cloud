@@ -5,14 +5,13 @@ import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.constant.CommonConstants;
 import com.ruoyi.common.core.constant.SystemConstants;
 import com.ruoyi.common.core.enums.error.CommonErrorEnum;
+import com.ruoyi.common.core.enums.error.RoleErrorEnum;
 import com.ruoyi.common.core.enums.error.UserErrorEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.core.utils.StringUtils;
-import com.ruoyi.common.security.utils.SecurityUtils;
-import com.ruoyi.system.api.domain.SysRole;
-import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.domain.service.SysRoleDomainService;
+import com.ruoyi.system.domain.service.SysUserRoleDomainService;
 import com.ruoyi.system.dto.role.req.*;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
 import com.ruoyi.system.service.RoleService;
@@ -20,10 +19,10 @@ import com.ruoyi.system.service.assembler.RoleAssembler;
 import com.ruoyi.system.vo.role.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author DavidLoman
@@ -33,6 +32,9 @@ import java.util.Set;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private SysRoleDomainService sysRoleDomainService;
+
+    @Autowired
+    private SysUserRoleDomainService sysUserRoleDomainService;
     @Override
     public PageListVo<RoleVo> pageQryRoleList(RolePageQryDTO reqDTO) {
         RolePageQryEntity rolePageQryEntity = RoleAssembler.INSTANCE.toRolePageQryEntity(reqDTO);
@@ -102,6 +104,21 @@ public class RoleServiceImpl implements RoleService {
         checkRoleAdmin(reqDTO.getRoleId());
         checkRolePerm(reqDTO.getRoleId());
         sysRoleDomainService.updRoleStatus(reqDTO);
+        return true;
+    }
+
+    @Override
+    public Boolean delRole(Long[] roleIds) {
+        for (Long roleId : roleIds) {
+            checkRoleAdmin(roleId);
+            checkRolePerm(roleId);
+        }
+        List<Long> roleIdList = Arrays.asList(roleIds);
+        Boolean isExist = sysUserRoleDomainService.hasUserRole(roleIdList);
+        if (isExist) {
+            throw new BizException(RoleErrorEnum.USER_EXIST_ROLE);
+        }
+        sysRoleDomainService.delRole(roleIdList);
         return true;
     }
 

@@ -14,7 +14,10 @@ public interface SysRoleDeptRepository {
 
     Boolean hasRoleDept(Long roleId);
 
-    Boolean deleteRelatedDept(Long roleId);
+    Boolean deleteRoleDept(Long roleId);
+
+    Boolean deleteBatchRoleDept(List<Long> roleIds);
+
 
     Boolean addRoleDept(List<SysRoleDeptPo> sysRoleDeptPos);
 }

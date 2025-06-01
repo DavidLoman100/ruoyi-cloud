@@ -22,7 +22,7 @@ import com.ruoyi.system.domain.SysUserRole;
 import com.ruoyi.system.mapper.SysRoleDeptMapper2;
 import com.ruoyi.system.mapper.SysRoleMapper2;
 import com.ruoyi.system.mapper.SysRoleMenuMapper2;
-import com.ruoyi.system.mapper.SysUserRoleMapper;
+import com.ruoyi.system.mapper.SysUserRoleMapper2;
 import com.ruoyi.system.service2.ISysRoleService;
 
 /**
@@ -40,7 +40,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     private SysRoleMenuMapper2 roleMenuMapper;
 
     @Autowired
-    private SysUserRoleMapper userRoleMapper;
+    private SysUserRoleMapper2 userRoleMapper;
 
     @Autowired
     private SysRoleDeptMapper2 roleDeptMapper;

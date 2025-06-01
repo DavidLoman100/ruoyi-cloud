@@ -17,6 +17,7 @@ import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.domain.role.repository.SysRoleDeptRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleMenuRepository;
 import com.ruoyi.system.domain.role.repository.SysRoleRepository;
+import com.ruoyi.system.domain.user.repository.SysUserRoleRepository;
 import com.ruoyi.system.dto.role.req.RoleAddDTO;
 import com.ruoyi.system.dto.role.req.RoleDataScopeDTO;
 import com.ruoyi.system.dto.role.req.RoleStatusDTO;
@@ -49,6 +50,8 @@ public class SysRoleDomainService {
     private SysMenuRepository sysMenuRepository;
     @Autowired
     private SysRoleDeptRepository sysRoleDeptRepository;
+    @Autowired
+    private SysUserRoleRepository sysUserRoleRepository;
 
 
     public Page<SysRolePo> pageQryRoleList(RolePageQryEntity rolePageQryEntity) {
@@ -207,7 +210,7 @@ public class SysRoleDomainService {
 
         Boolean isEx = sysRoleDeptRepository.hasRoleDept(sysRolePo.getRoleId());
         if (isEx) {
-            sysRoleDeptRepository.deleteRelatedDept(sysRolePo.getRoleId());
+            sysRoleDeptRepository.deleteRoleDept(sysRolePo.getRoleId());
         }
         if (!CollectionUtils.isEmpty(reqDTO.getDeptIds())) {
             List<SysRoleDeptPo> sysRoleDeptPos = reqDTO.getDeptIds().stream()
@@ -222,5 +225,14 @@ public class SysRoleDomainService {
     public void updRoleStatus(RoleStatusDTO reqDTO) {
         SysRolePo sysRolePo = RoleAssembler.INSTANCE.toSysRolePo(reqDTO);
         sysRoleRepository.updRole(sysRolePo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean delRole(List<Long> roleIds) {
+        sysRoleRepository.delRole(roleIds);
+        sysUserRoleRepository.delBatchUserRole(roleIds);
+        sysRoleMenuRepository.delBatchRoleMenu(roleIds);
+        sysRoleDeptRepository.deleteBatchRoleDept(roleIds);
+        return true;
     }
 }

@@ -42,4 +42,10 @@ public class SysRoleMenuRepositoryImpl implements SysRoleMenuRepository {
                 .eq(SysRoleMenuPo::getRoleId, roleId)) > 0 ? true : false;
     }
 
+    @Override
+    public boolean delBatchRoleMenu(List<Long> roleIds) {
+        return sysRoleMenuMapper.delete(Wrappers.<SysRoleMenuPo>lambdaQuery()
+                .in(SysRoleMenuPo::getRoleId, roleIds)) > 0 ? true : false;
+    }
+
 }

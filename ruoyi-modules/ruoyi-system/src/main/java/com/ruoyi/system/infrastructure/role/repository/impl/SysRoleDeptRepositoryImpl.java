@@ -33,9 +33,15 @@ public class SysRoleDeptRepositoryImpl implements SysRoleDeptRepository {
     }
 
     @Override
-    public Boolean deleteRelatedDept(Long roleId) {
+    public Boolean deleteRoleDept(Long roleId) {
         return roleDeptMapper.delete(Wrappers.<SysRoleDeptPo>lambdaQuery()
                 .eq(SysRoleDeptPo::getRoleId, roleId)) > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean deleteBatchRoleDept(List<Long> roleIds) {
+        return roleDeptMapper.delete(Wrappers.<SysRoleDeptPo>lambdaQuery()
+                .in(SysRoleDeptPo::getRoleId, roleIds)) > 0 ? true : false;
     }
 
     @Override

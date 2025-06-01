@@ -23,4 +23,6 @@ public interface RoleService {
     Boolean updRoleDataScope(RoleDataScopeDTO reqDTO);
 
     Boolean changeStatus(RoleStatusDTO role);
+
+    Boolean delRole(Long[] roleIds);
 }

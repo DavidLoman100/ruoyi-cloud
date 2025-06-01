@@ -81,4 +81,9 @@ public class SysRoleRepositoryImpl implements SysRoleRepository {
         return sysRoleMapper.updateById(sysRolePo) > 0 ? true : false;
     }
 
+    @Override
+    public Boolean delRole(List<Long> roleIds) {
+        return sysRoleMapper.deleteBatchIds(roleIds) > 0 ? true : false;
+    }
+
 }
