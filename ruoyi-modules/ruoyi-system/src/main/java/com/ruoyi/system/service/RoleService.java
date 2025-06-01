@@ -1,9 +1,10 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.common.core.commonEntity.PageListVo;
-import com.ruoyi.system.api.domain.SysRole;
 import com.ruoyi.system.dto.role.req.*;
 import com.ruoyi.system.vo.role.RoleVo;
+
+import java.util.List;
 
 /**
  * @author DavidLoman
@@ -25,4 +26,7 @@ public interface RoleService {
     Boolean changeStatus(RoleStatusDTO role);
 
     Boolean delRole(Long[] roleIds);
+
+    List<RoleVo> optionSelect();
+
 }

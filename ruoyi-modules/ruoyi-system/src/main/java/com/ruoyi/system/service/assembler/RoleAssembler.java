@@ -11,6 +11,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * @author DavidLoman
  * @create 2025-05-11 15:29
@@ -49,4 +51,7 @@ public interface RoleAssembler {
             @Mapping(target = "updateTime",expression = "java(java.time.LocalDateTime.now())")
     })
     SysRolePo toSysRolePo(RoleStatusDTO reqDTO);
+
+    List<RoleVo> toRoleVo(List<SysRolePo> sysRolePos);
+
 }

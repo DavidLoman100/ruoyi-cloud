@@ -215,14 +215,24 @@ public class SysRoleController extends BaseController {
 //        return toAjax(roleService1.deleteRoleByIds(roleIds));
 //    }
 
+
     /**
      * 获取角色选择框列表
      */
     @RequiresPermissions("system:role:query")
-    @GetMapping("/optionselect")
-    public AjaxResult optionselect() {
-        return success(roleService1.selectRoleAll());
+    @GetMapping("/optionSelect")
+    public Response<List<RoleVo>> optionSelect() {
+        return Response.ok(roleService.optionSelect());
     }
+
+//    /**
+//     * 获取角色选择框列表
+//     */
+//    @RequiresPermissions("system:role:query")
+//    @GetMapping("/optionselect")
+//    public AjaxResult optionselect() {
+//        return success(roleService1.selectRoleAll());
+//    }
 
     /**
      * 查询已分配用户角色列表

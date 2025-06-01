@@ -67,6 +67,11 @@ public class SysRoleRepositoryImpl implements SysRoleRepository {
     }
 
     @Override
+    public List<SysRolePo> qryRoleListByPerms(RolePageQryEntity entity) {
+        return sysRoleMapper.qryRoleListByPerms(entity);
+    }
+
+    @Override
     public SysRolePo getRoleByPerms(Long roleId, String dataScopeSql) {
         return sysRoleMapper.getRoleByPerms(roleId, dataScopeSql);
     }

@@ -3,7 +3,6 @@ package com.ruoyi.system.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.constant.CommonConstants;
-import com.ruoyi.common.core.constant.SystemConstants;
 import com.ruoyi.common.core.enums.error.CommonErrorEnum;
 import com.ruoyi.common.core.enums.error.RoleErrorEnum;
 import com.ruoyi.common.core.enums.error.UserErrorEnum;
@@ -120,6 +119,20 @@ public class RoleServiceImpl implements RoleService {
         }
         sysRoleDomainService.delRole(roleIdList);
         return true;
+    }
+
+    @Override
+    public List<RoleVo> optionSelect() {
+        String permsSql = sysRoleDomainService.getPermsSql("d", null);
+        List<SysRolePo> sysRolePos = null;
+        RolePageQryEntity qryEntity = new RolePageQryEntity();
+        if (StringUtils.hasText(permsSql)) {
+            qryEntity.setDataScopeSql(permsSql);
+            sysRolePos = sysRoleDomainService.qryRoleListByPerms(qryEntity);
+        } else {
+            sysRolePos = sysRoleDomainService.qryRoleList(qryEntity);
+        }
+        return RoleAssembler.INSTANCE.toRoleVo(sysRolePos);
     }
 
     private SysRolePo checkRolePerm(Long roleId) {

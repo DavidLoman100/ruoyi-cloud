@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
 * @author 37504
 * @description 针对表【sys_role(角色信息表)】的数据库操作Mapper
@@ -17,6 +19,8 @@ import org.apache.ibatis.annotations.Param;
 public interface SysRoleMapper extends BaseMapper<SysRolePo> {
 
     Page<SysRolePo> pageQryRoleListByPerms(@Param("page") Page<SysRolePo> rolePoPage, @Param("qry") RolePageQryEntity entity);
+
+    List<SysRolePo> qryRoleListByPerms(@Param("qry") RolePageQryEntity entity);
 
 
     SysRolePo getRoleByPerms(@Param("roleId") Long roleId, @Param("dataScopeSql") String dataScopeSql);

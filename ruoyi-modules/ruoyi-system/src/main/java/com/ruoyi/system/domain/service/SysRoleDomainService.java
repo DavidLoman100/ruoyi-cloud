@@ -58,6 +58,10 @@ public class SysRoleDomainService {
         return sysRoleRepository.pageQryRoleList(rolePageQryEntity);
     }
 
+    public List<SysRolePo> qryRoleList(RolePageQryEntity rolePageQryEntity) {
+        return sysRoleRepository.qryRoleList(rolePageQryEntity);
+    }
+
 
     public Page<SysRolePo> pageQryRoleListByPerms(RolePageQryEntity rolePageQryEntity) {
         return sysRoleRepository.pageQryRoleListByPerms(rolePageQryEntity);
@@ -234,5 +238,10 @@ public class SysRoleDomainService {
         sysRoleMenuRepository.delBatchRoleMenu(roleIds);
         sysRoleDeptRepository.deleteBatchRoleDept(roleIds);
         return true;
+    }
+
+
+    public List<SysRolePo> qryRoleListByPerms(RolePageQryEntity rolePageQryEntity) {
+        return sysRoleRepository.qryRoleListByPerms(rolePageQryEntity);
     }
 }

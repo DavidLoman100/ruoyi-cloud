@@ -74,5 +74,37 @@
         and r.role_id = #{roleId}
         ${dataScopeSql}
     </select>
+    <select id="qryRoleListByPerms" resultType="com.ruoyi.system.infrastructure.role.repository.po.SysRolePo">
+        select distinct r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope, r.menu_check_strictly, r.dept_check_strictly,
+        r.status, r.is_deleted, r.create_time, r.remark
+        from sys_role r
+        left join sys_user_role ur on ur.role_id = r.role_id
+        left join sys_user u on u.user_id = ur.user_id
+        left join sys_dept d on u.dept_id = d.dept_id
+        where r.is_deleted = '0'
+        and u.is_deleted = '0'
+        and d.is_deleted = '0'
+        <!--        <if test="qry.roleId != null and qry.roleId != 0">-->
+        <!--            AND r.role_id = #{qry.roleId}-->
+        <!--        </if>-->
+        <if test="qry.roleName != null and qry.roleName != ''">
+            AND r.role_name like concat('%', #{qry.roleName}, '%')
+        </if>
+        <if test="qry.status != null and qry.status != ''">
+            AND r.status = #{qry.status}
+        </if>
+        <if test="qry.roleKey != null and qry.roleKey != ''">
+            AND r.role_key like concat('%', #{qry.roleKey}, '%')
+        </if>
+        <if test="qry.startCreateTime != null and qry.startCreateTime != ''"><!-- 开始时间检索 -->
+            and date_format(r.create_time,'%Y%m%d') &gt;= date_format(#{qry.startCreateTime},'%Y%m%d')
+        </if>
+        <if test="qry.endCreateTime != null and qry.endCreateTime != ''"><!-- 结束时间检索 -->
+            and date_format(r.create_time,'%Y%m%d') &lt;= date_format(#{qry.endCreateTime},'%Y%m%d')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${qry.dataScopeSql}
+        order by r.role_sort
+    </select>
 
 </mapper>
