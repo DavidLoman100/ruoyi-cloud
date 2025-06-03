@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.commonEntity.Response;
+import com.ruoyi.system.dto.user.req.UserRolePageQryDTO;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.service.UserService;
@@ -345,4 +346,12 @@ public class SysUserController extends BaseController
     {
         return success(deptService.selectDeptTreeList(dept));
     }
+
+    @Operation(summary = "查询角色的用户列表")
+    @RequiresPermissions("system:role:list")
+    @PostMapping("/role/page/list")
+    public Response<PageListVo<UserVo>> pageQryUserRole(@RequestBody @Validated UserRolePageQryDTO qryDTO) {
+        return Response.ok(userService.pageQryUserRole(qryDTO));
+    }
+
 }

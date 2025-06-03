@@ -35,4 +35,26 @@
         create_time,update_by,update_time,
         remark
     </sql>
+    <select id="pageQryUserRoleByPerms" resultType="com.ruoyi.system.infrastructure.user.repository.po.SysUserPo">
+        select u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        left join sys_user_role ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        where u.is_deleted = '0'
+        <if test="qry.isAllocatedUser == true">
+            AND EXISTS
+        </if>
+        <if test="qry.isAllocatedUser == false">
+            AND NOT EXISTS
+        </if> (select 1  from sys_user_role t   where  t.user_id = u.user_id and  t.role_id = #{qry.roleId})
+        <if test="qry.userName != null and qry.userName != ''">
+            AND u.user_name like concat('%', #{qry.userName}, '%')
+        </if>
+        <if test="qry.phonenumber != null and qry.phonenumber != ''">
+            AND u.phonenumber like concat('%', #{qry.phonenumber}, '%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${qry.dataScopeSql}
+    </select>
 </mapper>

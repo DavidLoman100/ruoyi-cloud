@@ -9,6 +9,7 @@ import com.ruoyi.common.security.utils.SecurityUtils;
 import com.ruoyi.system.api.model.LoginUser;
 import com.ruoyi.system.domain.role.repository.SysRoleDeptRepository;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
+import com.ruoyi.system.domain.user.entity.UserRoleQryEntity;
 import com.ruoyi.system.domain.user.repository.SysUserRepository;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
@@ -84,5 +85,10 @@ public class SysUserDomainService {
 //            throw new BizException(CommonErrorEnum.NO_PERMISSION);
 //        }
         return true;
+    }
+
+    public Page<SysUserPo> pageQryUserRoleByPerms(UserRoleQryEntity qryEntity) {
+         return sysUserRepository.pageQryUserRoleByPerms(qryEntity);
+
     }
 }

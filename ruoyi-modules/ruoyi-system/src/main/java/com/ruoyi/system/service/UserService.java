@@ -1,6 +1,7 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.common.core.commonEntity.PageListVo;
+import com.ruoyi.system.dto.user.req.UserRolePageQryDTO;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
 import com.ruoyi.system.vo.UserVo;
@@ -15,4 +16,6 @@ public interface UserService {
     PageListVo<UserVo> pageQrySysUser(UserQryReqDTO request);
 
     Boolean updUserInfo(UserUpdReqDTO userUpdReqDTO);
+
+    PageListVo<UserVo> pageQryUserRole(UserRolePageQryDTO qryDTO);
 }

@@ -1,8 +1,11 @@
 package com.ruoyi.system.infrastructure.user.repository.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ruoyi.system.domain.user.entity.UserRoleQryEntity;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
 * @author 37504
@@ -13,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysUserMapper extends BaseMapper<SysUserPo> {
 
+    Page<SysUserPo> pageQryUserRoleByPerms(@Param("page") Page<SysUserPo> page, @Param("qry") UserRoleQryEntity qryEntity);
 }
 
 

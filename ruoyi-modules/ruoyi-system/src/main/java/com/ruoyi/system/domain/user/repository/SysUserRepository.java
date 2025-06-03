@@ -2,6 +2,7 @@ package com.ruoyi.system.domain.user.repository;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
+import com.ruoyi.system.domain.user.entity.UserRoleQryEntity;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 
 /**
@@ -14,4 +15,5 @@ public interface SysUserRepository {
 
     Boolean updUserInfo(SysUserPo sysUserPo);
 
+    Page<SysUserPo> pageQryUserRoleByPerms(UserRoleQryEntity qryEntity);
 }

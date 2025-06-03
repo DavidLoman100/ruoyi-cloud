@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
+import com.ruoyi.system.domain.user.entity.UserRoleQryEntity;
 import com.ruoyi.system.domain.user.repository.SysUserRepository;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
 import com.ruoyi.system.infrastructure.user.repository.mapper.SysUserMapper;
@@ -41,6 +42,12 @@ public class SysUserRepositoryImpl implements SysUserRepository {
     public Boolean updUserInfo(SysUserPo sysUserPo) {
         int upd = sysUserMapper.updateById(sysUserPo);
         return upd > 0 ? true : false;
+    }
+
+    @Override
+    public Page<SysUserPo> pageQryUserRoleByPerms(UserRoleQryEntity qryEntity) {
+        Page<SysUserPo> page = new Page<>(qryEntity.getPageNum(), qryEntity.getPageSize());
+        return sysUserMapper.pageQryUserRoleByPerms(page,qryEntity);
     }
 
 

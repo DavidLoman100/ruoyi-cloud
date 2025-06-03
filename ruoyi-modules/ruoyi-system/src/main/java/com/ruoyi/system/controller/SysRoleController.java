@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.common.core.commonEntity.Response;
 import com.ruoyi.system.dto.role.req.*;
+import com.ruoyi.system.dto.user.req.UserRolePageQryDTO;
 import com.ruoyi.system.service.RoleService;
 import com.ruoyi.system.service2.ISysUserService;
 import com.ruoyi.system.vo.role.RoleVo;
@@ -195,9 +196,7 @@ public class SysRoleController extends BaseController {
 //    }
 
 
-    /**
-     * 删除角色
-     */
+    @Operation(summary = "删除角色")
     @RequiresPermissions("system:role:remove")
     @Log(title = "角色管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/del/{roleIds}")
@@ -234,27 +233,27 @@ public class SysRoleController extends BaseController {
 //        return success(roleService1.selectRoleAll());
 //    }
 
-    /**
-     * 查询已分配用户角色列表
-     */
-    @RequiresPermissions("system:role:list")
-    @GetMapping("/authUser/allocatedList")
-    public TableDataInfo allocatedList(SysUser user) {
-        startPage();
-        List<SysUser> list = userService.selectAllocatedList(user);
-        return getDataTable(list);
-    }
+//    /**
+//     * 查询已分配用户角色列表
+//     */
+//    @RequiresPermissions("system:role:list")
+//    @GetMapping("/authUser/allocatedList")
+//    public TableDataInfo allocatedList(SysUser user) {
+//        startPage();
+//        List<SysUser> list = userService.selectAllocatedList(user);
+//        return getDataTable(list);
+//    }
 
-    /**
-     * 查询未分配用户角色列表
-     */
-    @RequiresPermissions("system:role:list")
-    @GetMapping("/authUser/unallocatedList")
-    public TableDataInfo unallocatedList(SysUser user) {
-        startPage();
-        List<SysUser> list = userService.selectUnallocatedList(user);
-        return getDataTable(list);
-    }
+//    /**
+//     * 查询未分配用户角色列表
+//     */
+//    @RequiresPermissions("system:role:list")
+//    @GetMapping("/authUser/unallocatedList")
+//    public TableDataInfo unallocatedList(SysUser user) {
+//        startPage();
+//        List<SysUser> list = userService.selectUnallocatedList(user);
+//        return getDataTable(list);
+//    }
 
     /**
      * 取消授权用户

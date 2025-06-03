@@ -3,7 +3,9 @@ package com.ruoyi.system.service.assembler;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
 import com.ruoyi.system.domain.user.entity.UserQryEntity;
+import com.ruoyi.system.domain.user.entity.UserRoleQryEntity;
 import com.ruoyi.system.dto.user.req.UserQryReqDTO;
+import com.ruoyi.system.dto.user.req.UserRolePageQryDTO;
 import com.ruoyi.system.dto.user.req.UserUpdReqDTO;
 import com.ruoyi.system.dto.user.res.UserResDTO;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserPo;
@@ -33,4 +35,7 @@ public interface UserAssembler {
     @Mapping(target = "updateBy",expression  = "java(com.ruoyi.common.security.utils.SecurityUtils.getUsername())")
     @Mapping(target = "updateTime",expression  = "java(java.time.LocalDateTime.now())")
     SysUserPo toSysUserPO(UserUpdReqDTO userUpdReqDTO);
+
+    UserRoleQryEntity toUserRoleQryEntity(UserRolePageQryDTO qryDTO);
+
 }
