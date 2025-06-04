@@ -214,10 +214,7 @@ public class SysRoleController extends BaseController {
 //        return toAjax(roleService1.deleteRoleByIds(roleIds));
 //    }
 
-
-    /**
-     * 获取角色选择框列表
-     */
+    @Operation(summary = "获取角色选择框列表")
     @RequiresPermissions("system:role:query")
     @GetMapping("/optionSelect")
     public Response<List<RoleVo>> optionSelect() {
@@ -255,36 +252,53 @@ public class SysRoleController extends BaseController {
 //        return getDataTable(list);
 //    }
 
-    /**
-     * 取消授权用户
-     */
+
+    @Operation(summary = "解除角色授权用户")
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
-    @PutMapping("/authUser/cancel")
-    public AjaxResult cancelAuthUser(@RequestBody SysUserRole userRole) {
-        return toAjax(roleService1.deleteAuthUser(userRole));
+    @PostMapping("/revokeAuthUser")
+    public Response<Boolean> roleRevokeAuthUser(@RequestBody @Validated RoleAuthUserDTO roleAuthUserDTO) {
+        return Response.ok(roleService.roleRevokeAuthUser(roleAuthUserDTO));
     }
 
-    /**
-     * 批量取消授权用户
-     */
+//    /**
+//     * 取消授权用户
+//     */
+//    @RequiresPermissions("system:role:edit")
+//    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+//    @PutMapping("/authUser/cancel")
+//    public AjaxResult cancelAuthUser(@RequestBody SysUserRole userRole) {
+//        return toAjax(roleService1.deleteAuthUser(userRole));
+//    }
+//
+//    /**
+//     * 批量取消授权用户
+//     */
+//    @RequiresPermissions("system:role:edit")
+//    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+//    @PutMapping("/authUser/cancelAll")
+//    public AjaxResult cancelAuthUserAll(Long roleId, Long[] userIds) {
+//        return toAjax(roleService1.deleteAuthUsers(roleId, userIds));
+//    }
+
+    @Operation(summary = "角色授权用户")
     @RequiresPermissions("system:role:edit")
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
-    @PutMapping("/authUser/cancelAll")
-    public AjaxResult cancelAuthUserAll(Long roleId, Long[] userIds) {
-        return toAjax(roleService1.deleteAuthUsers(roleId, userIds));
+    @PostMapping("/roleAuthUser")
+    public Response<Boolean> roleAuthUser(@RequestBody @Validated RoleAuthUserDTO roleAuthUserDTO) {
+        return Response.ok(roleService.roleAuthUser(roleAuthUserDTO));
     }
 
-    /**
-     * 批量选择用户授权
-     */
-    @RequiresPermissions("system:role:edit")
-    @Log(title = "角色管理", businessType = BusinessType.GRANT)
-    @PutMapping("/authUser/selectAll")
-    public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds) {
-        roleService1.checkRoleDataScope(roleId);
-        return toAjax(roleService1.insertAuthUsers(roleId, userIds));
-    }
+//    /**
+//     * 批量选择用户授权
+//     */
+//    @RequiresPermissions("system:role:edit")
+//    @Log(title = "角色管理", businessType = BusinessType.GRANT)
+//    @PutMapping("/authUser/selectAll")
+//    public AjaxResult selectAuthUserAll(Long roleId, Long[] userIds) {
+//        roleService1.checkRoleDataScope(roleId);
+//        return toAjax(roleService1.insertAuthUsers(roleId, userIds));
+//    }
 
     /**
      * 获取对应角色部门树列表

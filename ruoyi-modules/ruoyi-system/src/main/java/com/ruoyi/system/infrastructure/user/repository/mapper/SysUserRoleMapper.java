@@ -1,6 +1,7 @@
 package com.ruoyi.system.infrastructure.user.repository.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ruoyi.system.domain.role.entity.RoleAuthUserEntity;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserRolePo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysUserRoleMapper extends BaseMapper<SysUserRolePo> {
 
+    Boolean batchInsert(RoleAuthUserEntity authEntity);
 }
 
 

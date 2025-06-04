@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain.service;
 
+import com.ruoyi.system.domain.role.entity.RoleAuthUserEntity;
 import com.ruoyi.system.domain.user.repository.SysUserRoleRepository;
+import com.ruoyi.system.dto.role.req.RoleAuthUserDTO;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserRolePo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +27,13 @@ public class SysUserRoleDomainService {
             return Boolean.FALSE;
         }
         return Boolean.TRUE;
+    }
+
+    public Boolean deleteUserRole(RoleAuthUserEntity authEntity) {
+        return sysUserRoleRepository.delBatchUserRole(authEntity);
+    }
+
+    public Boolean createUserRole(RoleAuthUserEntity authEntity) {
+        return sysUserRoleRepository.addBatchUserRole(authEntity);
     }
 }

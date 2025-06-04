@@ -2,6 +2,7 @@ package com.ruoyi.system.service.assembler;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
+import com.ruoyi.system.domain.role.entity.RoleAuthUserEntity;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.dto.role.req.*;
 import com.ruoyi.system.infrastructure.role.repository.po.SysRolePo;
@@ -54,4 +55,5 @@ public interface RoleAssembler {
 
     List<RoleVo> toRoleVo(List<SysRolePo> sysRolePos);
 
+    RoleAuthUserEntity toRoleAuthUserEntity(RoleAuthUserDTO roleAuthUserDTO);
 }

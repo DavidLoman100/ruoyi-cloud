@@ -1,6 +1,7 @@
 package com.ruoyi.system.infrastructure.user.repository.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.ruoyi.system.domain.role.entity.RoleAuthUserEntity;
 import com.ruoyi.system.domain.user.repository.SysUserRoleRepository;
 import com.ruoyi.system.infrastructure.user.repository.mapper.SysUserRoleMapper;
 import com.ruoyi.system.infrastructure.user.repository.po.SysUserRolePo;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author DavidLoman
@@ -26,8 +28,20 @@ public class SysUserRoleRepositoryImpl implements SysUserRoleRepository {
 
     @Override
     public Boolean delBatchUserRole(List<Long> roleIds) {
-        return sysUserRoleMapper.delete(Wrappers.<SysUserRolePo>lambdaQuery()
+        return sysUserRoleMapper.delete(Wrappers. <SysUserRolePo>lambdaQuery()
                 .in(SysUserRolePo::getRoleId, roleIds)) > 0;
+    }
+
+    @Override
+    public Boolean delBatchUserRole(RoleAuthUserEntity authEntity) {
+        return sysUserRoleMapper.delete(Wrappers.<SysUserRolePo>lambdaQuery()
+                .eq(SysUserRolePo::getRoleId, authEntity.getRoleId())
+                .in(SysUserRolePo::getUserId, authEntity.getUserIds())) > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean addBatchUserRole(RoleAuthUserEntity authEntity) {
+        return sysUserRoleMapper.batchInsert(authEntity);
     }
 
 }

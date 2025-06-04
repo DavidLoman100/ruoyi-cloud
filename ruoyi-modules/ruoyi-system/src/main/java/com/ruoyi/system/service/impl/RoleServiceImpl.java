@@ -8,6 +8,7 @@ import com.ruoyi.common.core.enums.error.RoleErrorEnum;
 import com.ruoyi.common.core.enums.error.UserErrorEnum;
 import com.ruoyi.common.core.exception.BizException;
 import com.ruoyi.common.core.utils.StringUtils;
+import com.ruoyi.system.domain.role.entity.RoleAuthUserEntity;
 import com.ruoyi.system.domain.role.entity.RolePageQryEntity;
 import com.ruoyi.system.domain.service.SysRoleDomainService;
 import com.ruoyi.system.domain.service.SysUserRoleDomainService;
@@ -133,6 +134,18 @@ public class RoleServiceImpl implements RoleService {
             sysRolePos = sysRoleDomainService.qryRoleList(qryEntity);
         }
         return RoleAssembler.INSTANCE.toRoleVo(sysRolePos);
+    }
+
+    @Override
+    public Boolean roleRevokeAuthUser(RoleAuthUserDTO roleAuthUserDTO) {
+        RoleAuthUserEntity authEntity = RoleAssembler.INSTANCE.toRoleAuthUserEntity(roleAuthUserDTO);
+        return sysUserRoleDomainService.deleteUserRole(authEntity);
+    }
+
+    @Override
+    public Boolean roleAuthUser(RoleAuthUserDTO roleAuthUserDTO) {
+        RoleAuthUserEntity authEntity = RoleAssembler.INSTANCE.toRoleAuthUserEntity(roleAuthUserDTO);
+        return sysUserRoleDomainService.createUserRole(authEntity);
     }
 
     private SysRolePo checkRolePerm(Long roleId) {

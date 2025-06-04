@@ -29,4 +29,7 @@ public interface RoleService {
 
     List<RoleVo> optionSelect();
 
+    Boolean roleRevokeAuthUser(RoleAuthUserDTO roleAuthUserDTO);
+
+    Boolean roleAuthUser(RoleAuthUserDTO roleAuthUserDTO);
 }
