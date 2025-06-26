@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.infrastructure.life.repository.mapper.SysLifeDayMapper">
+
+    <resultMap id="BaseResultMap" type="com.ruoyi.system.infrastructure.life.repository.po.SysLifeDayPo">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="itMs" column="it_ms" jdbcType="INTEGER"/>
+        <result property="itSkill" column="it_skill" jdbcType="INTEGER"/>
+        <result property="itProject" column="it_project" jdbcType="INTEGER"/>
+        <result property="itMysql" column="it_mysql" jdbcType="INTEGER"/>
+        <result property="itAlgorithm" column="it_algorithm" jdbcType="INTEGER"/>
+        <result property="sport" column="sport" jdbcType="INTEGER"/>
+        <result property="financeSkill" column="finance_skill" jdbcType="INTEGER"/>
+        <result property="equityMktInterpret" column="equity_mkt_interpret" jdbcType="INTEGER"/>
+        <result property="engWord" column="eng_word" jdbcType="INTEGER"/>
+        <result property="photographySkill" column="photography_skill" jdbcType="INTEGER"/>
+        <result property="lifeDate" column="life_date" jdbcType="DATE"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="CHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,it_ms,it_skill,
+        it_project,it_mysql,it_algorithm,
+        sport,finance_skill,equity_mkt_interpret,
+        eng_word,photography_skill,leftDate,
+        create_by,create_time,update_by,
+        update_time,remark,is_deleted
+    </sql>
+</mapper>

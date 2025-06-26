@@ -10,9 +10,9 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 public enum IsTrueEnum {
-    FALSE("0", "否"),
+    FALSE("1", "否"),
 
-    TRUE("1", "是"),
+    TRUE("0", "是"),
     ;
     private String code;
     private String info;

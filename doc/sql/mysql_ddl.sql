@@ -105,3 +105,28 @@ create table
     dept_id bigint not null comment '部门ID',
     primary key (role_id, dept_id)
 ) comment '角色和部门关联表';
+-- 生活日表 ---------------------------------------------------------------------
+create table sys_life_day
+(
+    id                   bigint auto_increment comment '主键id'
+        primary key,
+    it_ms                int  default 0 null comment 'it面试',
+    it_skill             int  default 0 null comment 'it技能',
+    it_project           int  default 0 null comment 'it项目',
+    it_mysql             int  default 0 null comment 'itSQl题',
+    it_algorithm         int  default 0 null comment 'it算法',
+    sport                int  default 0 null comment '运动',
+    finance_skill        int  default 0 null comment '金融学习',
+    equity_mkt_interpret int  default 0 null comment '解读股市',
+    eng_word             int  default 0 null comment '英语单词',
+    photography_skill    int  default 0 null comment '摄影技能',
+    life_date            date             not null comment '生活时间',
+    create_by            varchar(64) null comment '创建者',
+    create_time          datetime null comment '创建时间',
+    update_by            varchar(64) null comment '更新者',
+    update_time          datetime null comment '更新时间',
+    remark               varchar(500) null comment '备注',
+    is_deleted           char default '0' not null comment '删除标志（0代表存在 1代表删除）',
+    constraint un_life_date
+        unique (life_date)
+) comment '生活日表';
