@@ -130,3 +130,23 @@ create table sys_life_day
     constraint un_life_date
         unique (life_date)
 ) comment '生活日表';
+
+-- 用电日表 ----------------------------------------------------------------
+create table sys_electricity_cost
+(
+    id            bigint auto_increment comment '主键id'
+        primary key,
+    price_per_kwh decimal(6, 2)    not null comment '每千瓦时费用',
+    total_kwh     decimal(6, 2)    not null comment '总千瓦时 单位1000',
+    cost          decimal(12, 2)   not null comment '费用合计',
+    life_date     date             not null comment '生活时间',
+    create_by     varchar(64)      null comment '创建者',
+    create_time   datetime         null comment '创建时间',
+    update_by     varchar(64)      null comment '更新者',
+    update_time   datetime         null comment '更新时间',
+    remark        varchar(500)     null comment '备注',
+    is_deleted    char default '0' not null comment '删除标志（0代表存在 1代表删除）',
+    constraint un_life_date
+        unique (life_date)
+) comment '用电支出';
+
