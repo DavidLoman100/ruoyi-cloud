@@ -36,6 +36,7 @@
         <lombok.version>1.18.24</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <springdoc.openapi.version>1.6.9</springdoc.openapi.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
 
         <!-- override dependency version -->
         <tomcat.version>9.0.98</tomcat.version>
@@ -271,6 +272,12 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.openapi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
             </dependency>
 
         </dependencies>

@@ -8,6 +8,7 @@ import com.ruoyi.system.vo.cost.ElectricityCostVo;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author DavidLoman
@@ -20,7 +21,11 @@ public interface SysElectricityCostRepository {
 
     Boolean hasExist(LocalDate lifeDate);
 
+    Boolean hasBatchExist(List<LocalDate> lifeDates);
+
     Boolean addElectricityCost(SysElectricityCostPo sysElectricityCostPo);
 
     Boolean updElectricityCost(SysElectricityCostPo sysElectricityCostPo);
+
+    Boolean addBatchElectricityCost(List<SysElectricityCostPo> sysElectricityCostPos);
 }

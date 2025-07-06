@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -47,6 +48,13 @@ public class SysElectricityCostRepositoryImpl implements SysElectricityCostRepos
     }
 
     @Override
+    public Boolean hasBatchExist(List<LocalDate> lifeDates) {
+        Long count = mapper.selectCount(Wrappers.<SysElectricityCostPo>lambdaQuery()
+                .in(SysElectricityCostPo::getLifeDate, lifeDates));
+        return count > 0 ? true : false;
+    }
+
+    @Override
     public Boolean addElectricityCost(SysElectricityCostPo sysElectricityCostPo) {
         return mapper.insert(sysElectricityCostPo) > 0 ? true : false;
     }
@@ -54,6 +62,12 @@ public class SysElectricityCostRepositoryImpl implements SysElectricityCostRepos
     @Override
     public Boolean updElectricityCost(SysElectricityCostPo sysElectricityCostPo) {
         return mapper.updateById(sysElectricityCostPo) > 0 ? true : false;
+    }
+
+    @Override
+    public Boolean addBatchElectricityCost(List<SysElectricityCostPo> sysElectricityCostPos) {
+        int insertCount = mapper.insertBatch(sysElectricityCostPos);
+        return insertCount == sysElectricityCostPos.size() ? true : false;
     }
 
 

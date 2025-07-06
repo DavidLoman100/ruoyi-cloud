@@ -13,6 +13,7 @@ import com.ruoyi.system.service.assembler.ElectricityCostAssembler;
 import com.ruoyi.system.vo.cost.ElectricityCostVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author 37504
@@ -45,6 +46,12 @@ public class ElectricityCostServiceImpl implements ElectricityCostService {
         SysElectricityCostPo sysElectricityCostPo = ElectricityCostAssembler.INSTANCE.toElectricityPo(updDTO);
         return electricityCostDomainService.updElectricityCost(sysElectricityCostPo);
     }
+
+    @Override
+    public Boolean uploadElectricityCost(MultipartFile file) {
+        return electricityCostDomainService.uploadElectricityCost(file);
+    }
+
 }
 
 

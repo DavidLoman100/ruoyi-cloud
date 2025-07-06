@@ -2,6 +2,7 @@ package com.ruoyi.system.service.assembler;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ruoyi.common.core.commonEntity.PageListVo;
+import com.ruoyi.system.domain.cost.entity.ElectricityCostExcelEntity;
 import com.ruoyi.system.domain.cost.entity.ElectricityCostQryEntity;
 import com.ruoyi.system.dto.cost.req.ElectricityCostAddDTO;
 import com.ruoyi.system.dto.cost.req.ElectricityCostPageQryDTO;
@@ -12,6 +13,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * @author DavidLoman
@@ -38,4 +41,14 @@ public interface ElectricityCostAssembler {
             @Mapping(target = "updateTime",expression = "java(java.time.LocalDateTime.now())")
     })
     SysElectricityCostPo toElectricityPo(ElectricityCostUpdDTO updDTO);
+
+
+    @Mappings({
+            @Mapping(target = "createBy",expression = "java(com.ruoyi.common.security.utils.SecurityUtils.getUsername())"),
+            @Mapping(target = "createTime",expression = "java(java.time.LocalDateTime.now())")
+    })
+    SysElectricityCostPo toElectricityPo(ElectricityCostExcelEntity entity);
+
+
+    List<SysElectricityCostPo> toElectricityPoList(List<ElectricityCostExcelEntity> entityList);
 }

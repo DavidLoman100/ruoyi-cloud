@@ -5,23 +5,46 @@
 <mapper namespace="com.ruoyi.system.infrastructure.cost.repository.mapper.SysElectricityCostMapper">
 
     <resultMap id="BaseResultMap" type="com.ruoyi.system.infrastructure.cost.repository.po.SysElectricityCostPo">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="pricePerKwh" column="price_per_kwh" jdbcType="DECIMAL"/>
-            <result property="totalKwh" column="total_kwh" jdbcType="DECIMAL"/>
-            <result property="cost" column="cost" jdbcType="DECIMAL"/>
-            <result property="lifeDate" column="life_date" jdbcType="DATE"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="isDeleted" column="is_deleted" jdbcType="CHAR"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="pricePerKwh" column="price_per_kwh" jdbcType="DECIMAL"/>
+        <result property="totalKwh" column="total_kwh" jdbcType="DECIMAL"/>
+        <result property="cost" column="cost" jdbcType="DECIMAL"/>
+        <result property="lifeDate" column="life_date" jdbcType="DATE"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="isDeleted" column="is_deleted" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,price_per_kwh,total_kwh,
+        id
+        ,price_per_kwh,total_kwh,
         cost,life_date,create_by,
         create_time,update_by,update_time,
         remark,is_deleted
     </sql>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO sys_electricity_cost (
+        price_per_kwh,
+        total_kwh,
+        cost,
+        life_date,
+        create_by,
+        create_time,
+        remark
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.pricePerKwh,jdbcType=DECIMAL},
+            #{item.totalKwh,jdbcType=DECIMAL},
+            #{item.cost,jdbcType=DECIMAL},
+            #{item.lifeDate,jdbcType=DATE},
+            #{item.createBy,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.remark,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
 </mapper>

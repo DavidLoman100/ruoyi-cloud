@@ -17,6 +17,7 @@ public enum CommonErrorEnum implements BaseEnum {
     REQ_METHOD_NOT_SPT(10002, "请求方法不支持"),
     PARAM_VALID_ERROR(10003, "参数校验异常"),
     INVALID_INFO(10004, "无效信息"),
+    READ_FILE_ERROR(10005, "读取文件失败"),
 
     ;
     private final int code;

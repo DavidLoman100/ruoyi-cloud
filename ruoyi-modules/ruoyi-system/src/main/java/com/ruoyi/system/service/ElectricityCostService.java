@@ -5,6 +5,7 @@ import com.ruoyi.system.dto.cost.req.ElectricityCostAddDTO;
 import com.ruoyi.system.dto.cost.req.ElectricityCostPageQryDTO;
 import com.ruoyi.system.dto.cost.req.ElectricityCostUpdDTO;
 import com.ruoyi.system.vo.cost.ElectricityCostVo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
 * @author 37504
@@ -18,4 +19,6 @@ public interface ElectricityCostService {
     Boolean addElectricityCost(ElectricityCostAddDTO addDTO);
 
     Boolean updElectricityCost(ElectricityCostUpdDTO updDTO);
+
+    Boolean uploadElectricityCost(MultipartFile file);
 }

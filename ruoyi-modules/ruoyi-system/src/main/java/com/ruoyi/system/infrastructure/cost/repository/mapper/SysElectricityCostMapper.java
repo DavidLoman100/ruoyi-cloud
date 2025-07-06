@@ -3,6 +3,9 @@ package com.ruoyi.system.infrastructure.cost.repository.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.system.infrastructure.cost.repository.po.SysElectricityCostPo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author 37504
@@ -13,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysElectricityCostMapper extends BaseMapper<SysElectricityCostPo> {
 
+    int insertBatch(@Param("list") List<SysElectricityCostPo> sysElectricityCostPos);
 }
 
 

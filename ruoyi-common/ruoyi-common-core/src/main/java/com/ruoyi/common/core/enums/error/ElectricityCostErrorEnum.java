@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ElectricityCostErrorEnum implements BaseEnum {
     DATE_EXIST(10501, "日期已经存在"),
+    FILE_EMPTY_ERROR(10502, "上传文件数据为空"),
+    FILE_DATE_REPEAT(10503, "上传文件日期重复"),
+
     ;
 
     private final int code;
