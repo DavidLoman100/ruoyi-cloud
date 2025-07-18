@@ -1,9 +1,9 @@
 # spring配置
 spring:
   redis:
-    host: localhost
+    host: 101.126.136.177
     port: 6379
-    password:
+    password: 404040
   datasource:
     druid:
       stat-view-servlet:
@@ -11,6 +11,7 @@ spring:
         loginUsername: ruoyi
         loginPassword: 123456
     dynamic:
+      primary: master  # 新增：指定主数据源为master（必须与下方datasource的key一致）
       druid:
         initial-size: 5
         min-idle: 5
@@ -32,9 +33,9 @@ spring:
         # 主库数据源
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://192.168.1.100:3306/ry-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+          url: jdbc:mysql://8.133.203.58:3307/ry-cloud?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
           username: root
-          password: 404040
+          password: root
           # 从库数据源
           # slave:
           # username:
@@ -50,9 +51,9 @@ spring:
     # mapperLocations: classpath:mapper/**/*.xml
 mybatis-plus:
   # 搜索指定包别名
-  typeAliasesPackage: com.ruoyi.**.domain
+  # typeAliasesPackage: com.ruoyi.**.domain
   # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  mapperLocations: classpath*:mapper/**/**.xml
+  mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
