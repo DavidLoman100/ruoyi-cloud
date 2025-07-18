@@ -150,3 +150,18 @@ create table sys_electricity_cost
         unique (life_date)
 ) comment '用电支出';
 
+-- 字典表 -
+create table sys_dict
+(
+    id          bigint primary key auto_increment comment '主键',
+    dict_code   varchar(100)             not null comment '字典类型（唯一标识）',
+    dict_name   varchar(100)             not null comment '字典名称',
+    create_by   varchar(64)  default null comment '创建者',
+    create_time datetime     default null comment '创建时间',
+    update_by   varchar(64)  default null comment '更新者',
+    update_time datetime     default null comment '更新时间',
+    remark      varchar(500) default null comment '备注',
+    is_deleted  char         default '0' not null comment '删除标志（0代表存在 1代表删除）',
+    constraint un_dict_code
+        unique (dict_code)
+) comment '字典表';
