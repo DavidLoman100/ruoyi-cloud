@@ -88,7 +88,7 @@ public class SysElectricityCostDomainService {
         List<SysElectricityCostPo> sysElectricityCostPos = ElectricityCostAssembler.INSTANCE.toElectricityPoList(entityList);
         sysElectricityCostPos.forEach(po -> {
             po.setCost(po.getPricePerKwh()
-                    .multiply(po.getTotalKwh(), new MathContext(2, RoundingMode.HALF_UP)));
+                    .multiply(po.getTotalKwh(), new MathContext(2)).setScale(2, RoundingMode.HALF_UP));
         });
         return sysElectricityCostRepository.addBatchElectricityCost(sysElectricityCostPos);
     }
